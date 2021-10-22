@@ -1,0 +1,13 @@
+   .my-table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f9f9f9 !important;
+  }
+
+  .link:hover {
+    cursor: pointer;
+  }
+
+  input:read-only {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}

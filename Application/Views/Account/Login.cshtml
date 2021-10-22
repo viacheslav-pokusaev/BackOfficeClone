@@ -1,0 +1,70 @@
+﻿@model Application.EntitiesModels.Models.AccountModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div class="container">
+    @* Login form *@
+    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Sign In</div>
+            </div>
+            <div style="padding-top:30px" class="panel-body">
+
+                @await Component.InvokeAsync("Login", Model)
+                <div class="form-group">
+                    <div class="col-md-6 control">
+                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                            I have not have an account yet
+                            <a href="#" onClick="authFormTrigger()">
+                                Sign Up Here
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 control">
+                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                            I want to update my password
+                            <a href="/Account/UpdatePassword">
+                                UpdatePassword
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Sign up form *@
+    <div id="signupbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Sign Up</div>
+            </div>
+            <div class="panel-body">
+
+                @await Component.InvokeAsync("Registration",
+               new Application.EntitiesModels.Models.AccountModels.RequestToCreateUserViewModel())
+                <div class="form-group">
+                    <div class="col-md-6 control">
+                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                            I have already have an account
+                            <a href="#" onClick="authFormTrigger()">
+                                Sign In
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 control">
+                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                            I want to update my password
+                            <a href="/Account/UpdatePassword">
+                                UpdatePassword
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,7 @@
+<div class="card" >
+    <div *ngIf="dialogRef != null && dialogRef != undefined" class="close top-right">
+        <i class="fa fa-times cancel" (click)="click()"></i>
+    </div>
+    <ng-content>
+    </ng-content>
+</div>

@@ -1,0 +1,42 @@
+<modal-wrapper [dialogRef]="dialogRef">
+    <div class="card x_panel">
+        <div class="row">
+        <div class="col-md-6">
+            <h2>Details</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="row">
+                <div class="col-md-4">
+                    
+                </div>
+                
+                <div class="col-md-4">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table my-table-striped table-bordered projects">
+                    <thead style="color: #73879C;">
+                            <tr>
+                                <th>Property</th>
+                                <th>Old value</th>
+                                <th>New value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let auditTrailValue of auditTrailEntity.AuditTrailValues; let i = index">
+                                <td><span>{{auditTrailValue.PropertyName}}</span></td>
+                                <td><span>{{auditTrailValue.OldValue}}</span></td>
+                                <td><span>{{auditTrailValue.NewValue}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-wrapper>

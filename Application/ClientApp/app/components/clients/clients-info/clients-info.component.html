@@ -1,0 +1,112 @@
+<modal-wrapper [dialogRef]="dialogRef">
+
+
+    <div class="card x_panel" *ngIf="client">
+        <div id="divDataBody" class="container entity">
+                <div class="row">
+                        <div class="col-md-6">
+                                <h2 style="color: #73879C;">Contact persons</h2>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="row">
+                                <div class="col-md-8">
+                
+                                </div>
+                
+                                <div class="col-md-4 text-right toggle-div" style="margin-top: 10px !important">
+                                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" *permission="['Super_Admin', 'Admin', 'ProjectManager']">
+                                        <button class="btn btn-primary toggle-button">
+                                            <span class="fa fa-plus"></span>
+                                        </button>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                        <li>
+                                            <a (click)="createContactPerson()" class="side-menu-link">
+                                                Add new contact person
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <div class="row">
+                <br>
+                <br>
+                        <div *ngIf="data.fullInfo == true">
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback  black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="client.OrganizationName">
+                                <span class="fa fa-bank form-control-feedback left" aria-hidden="true"></span>
+                                <span class="tooltiptext">
+                                    OrganizationName
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback  black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="client.Description">
+                                <span class="fa fa-list-ul form-control-feedback left" aria-hidden="true"></span>
+                                <span class="tooltiptext">
+                                    Description
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="client.Comment">
+                                <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                                <span class="tooltiptext">
+                                    Comment
+                                </span>
+                            </div>
+                        </div>
+            <div *ngFor="let contactPerson of client.ContactPersons">
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback black-tooltip">
+                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="contactPerson.FullName">
+                    <span class="fa fa-male form-control-feedback left" aria-hidden="true"></span>
+                    <span class="tooltiptext">
+                        Full Name
+                    </span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback black-tooltip">
+                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="contactPerson.CommunicationChannel">
+                    <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                    <span class="tooltiptext">
+                        Com. Channel
+                    </span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback black-tooltip">
+                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="contactPerson.Email">
+                    <span class="fa fa-envelope-o form-control-feedback left" aria-hidden="true"></span>
+                    <span class="tooltiptext">
+                        Email
+                    </span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback black-tooltip">
+                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="contactPerson.Phone">
+                    <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                    <span class="tooltiptext">
+                        Phone
+                    </span>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" readonly="readonly" [(ngModel)]="contactPerson.Comment">
+                    <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                    <span class="tooltiptext">
+                        Comment
+                    </span>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 text-right">
+                    <button class="btn btn-primary black-tooltip" (click)="updateContactPerson(contactPerson)">
+                        <i class="fa fa-pencil"></i>
+                        <span class="tooltiptext">Edit</span>
+                    </button>
+                    <button class="btn btn-default black-tooltip" (click)="confirmDeleteDialog(contactPerson)" style="right: -10px !important;">
+                        <i class="fa fa-trash"></i>
+                        <span class="tooltiptext">Delete</span>
+                    </button>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>    
+        </div>
+    </div>
+</div>
+</modal-wrapper>

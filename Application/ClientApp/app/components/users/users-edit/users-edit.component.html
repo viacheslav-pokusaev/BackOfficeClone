@@ -1,0 +1,176 @@
+﻿<div class="card x_panel">
+    <div id="divDataBody" class="container entity">
+        <div class="row formTitle">
+            <div class="col-md-6">
+                <h2 class="title">{{titleStatus}}</h2>
+                <br>
+            </div>
+        </div>
+        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <img [src]="user.Avatar" alt="" class="img-responsive avatar-view"
+                     style="width: -webkit-fill-available;">
+                <br>
+                <div class="text-center">
+                    <button class="btn btn-primary" (click)="showModalSelectAvatar()">
+                        Change Avatar
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9">
+                <div class="row">
+                    <div class="col-md-9 col-lg-9 col-sm-9">
+                        <form class="form-horizontal form-label-left input_mask" [formGroup]="userForm" (submit)="updateUser()">
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name" [(ngModel)]="user.FirstName" formControlName="FirstName">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <div class="error-message" *ngIf="userForm.get('FirstName').errors">
+                                    <span *ngIf="userForm.get('FirstName').errors.minlength">First Name is too short</span>
+                                    <span *ngIf="userForm.get('FirstName').errors.required">First Name is required</span>
+                                </div>
+                                <span class="tooltiptext">
+                                    FirstName
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Last Name" [(ngModel)]="user.LastName" formControlName="LastName">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <div class="error-message" *ngIf="userForm.get('LastName').errors">
+                                    <span *ngIf="userForm.get('LastName').errors.minlength">Last Name is too short</span>
+                                    <span *ngIf="userForm.get('LastName').errors.required">Last Name is required</span>
+                                </div>
+                                <span class="tooltiptext">
+                                    LastName
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" [(ngModel)]="user.Email" formControlName="Email">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                <div class="error-message" *ngIf="userForm.get('Email').errors">
+                                    <span *ngIf="userForm.get('Email').errors.pattern">Email contains prohibited characters</span>
+                                    <span *ngIf="userForm.get('Email').errors.required">Email is required</span>
+                                </div>
+                                <span class="tooltiptext">
+                                    Email
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess5" formControlName="Phone" placeholder="Phone" [(ngModel)]="user.Phone">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                <div class="error-message" *ngIf="userForm.get('Phone').errors">
+                                    <span *ngIf="userForm.get('Phone').errors.required">Phone number is required</span>
+                                </div>
+                                <span class="tooltiptext">
+                                    Phone
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                                <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess6" [matDatepicker]="picker1" placeholder="Beginning work" [min]="beginWorkMin" [max]="beginWorkMax" formControlName="DateBeginWork" [(ngModel)]="user.DateBeginWork" disabled>
+                                <mat-datepicker-toggle class="left" matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <span class="tooltiptext">
+                                    Start of work
+                                </span>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                                <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess7" [matDatepicker]="picker2" placeholder="Beginning trial work" [min]="beginWorkMin" [max]="beginWorkMax" formControlName="DateBeginTrialWork" [(ngModel)]="user.DateBeginTrialWork" disabled>
+                                <mat-datepicker-toggle class="left" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <span class="tooltiptext">
+                                    Start of trial work
+                                </span>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12  form-group has-feedback black-tooltip date-field">
+                                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess7" [matDatepicker]="picker" placeholder="Birthday" [min]="birthdayMin" [max]="birthdayMax" formControlName="Birthday" [(ngModel)]="user.DateBirthday" disabled>
+                                <mat-datepicker-toggle class="left" matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <span class="tooltiptext">
+                                    Birthday
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <span class="fa fa-skype form-control-feedback left" aria-hidden="true"></span>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess8" placeholder="Skype" formControlName="Skype" [(ngModel)]="user.Skype">
+                                <span class="tooltiptext">
+                                    Skype
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess9" placeholder="Address" formControlName="ResidentialAddress" [(ngModel)]="user.ResidentialAddress">
+                                <span class="tooltiptext">
+                                    Address
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <span class="fa fa-database form-control-feedback left" aria-hidden="true"></span>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess10" placeholder="Skills" formControlName="Skills" [(ngModel)]="user.Skills">
+                                <span class="tooltiptext">
+                                    Skills
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <span class="fa fa-coffee form-control-feedback left" aria-hidden="true"></span>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess11" placeholder="Hobbies" formControlName="Hobbies" [(ngModel)]="user.Hobbies">
+                                <span class="tooltiptext">
+                                    Hobbies
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <span class="fa fa-list-ul form-control-feedback left" aria-hidden="true"></span>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess11" placeholder="Wishes" formControlName="Wishes" [(ngModel)]="user.Wishes">
+                                <span class="tooltiptext">
+                                    Wishes
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess12" placeholder="Comment" formControlName="Comment" [(ngModel)]="user.Comment">
+                                <span class="tooltiptext">
+                                    Comment
+                                </span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 black-tooltip" *permission="['Super_Admin', 'Admin']">
+                                <select class="select2_single form-control" [(ngModel)]="user.Role" formControlName="Role" tabindex="-1">
+                                    <option *ngFor="let role of roles; let i = index" [value]="role">
+                                        {{ role }}
+                                    </option>
+                                </select>
+                                <span class="tooltiptext">
+                                    Role
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-xs-6 update-button">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary alignCenterBtn black-tooltip" [disabled]="!userForm.dirty && imageWasLoad == false">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6 update-button">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary alignCenterBtn black-tooltip" (click)="cancel()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <div class="text-center">
+                                    <button class="btn btn-success alignCenterBtn" *isCurrentUserOrHasRole="{ id: id, roles: ['Super_Admin', 'Admin']}" (click)="changePassword()">
+                                        Change password
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="nav-md">
+    <div class="container body">
+            <div class="wrapper row" *ngIf="isInited()">
+                <div class="left_col col-md-3" style="padding-right: 0px;">        
+                    <nav-menu ></nav-menu>
+                </div>
+                <div class="right_col">
+                    <top-menu></top-menu>
+                    <router-outlet></router-outlet>
+                </div>    
+            </div>
+    </div>
+</div>
+
+

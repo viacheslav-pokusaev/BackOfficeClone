@@ -1,0 +1,70 @@
+{
+  "$schema": "../node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "backoffice"
+  },
+  "apps": [
+    {
+      "root": "",
+      "outDir": "./wwwroot/dist",
+      "assets": [
+        "ClientApp/assets",
+        "ClientApp/favicon.ico"
+      ],
+      "index": "ClientApp/app/index.html",
+      "main": "ClientApp/app/main.ts",
+      "polyfills": "ClientApp/app/polyfills.ts",
+      "test": "ClientApp/app/test.ts",
+      "tsconfig": "ClientApp/app/tsconfig.app.json",
+      "testTsconfig": "ClientApp/app/tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "ClientApp/app/styles.css",
+        "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "./node_modules/ag-grid/dist/styles/ag-grid.css",
+        "./node_modules/ag-grid/dist/styles/theme-bootstrap.css",
+        "./wwwroot/css/fontawesome.css",
+        "./node_modules/gentelella/vendors/nprogress/nprogress.css",
+        "./node_modules/gentelella/vendors/iCheck/skins/flat/blue.css",
+        "./node_modules/gentelella/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css",
+        "./node_modules/gentelella/vendors/jqvmap/dist/jqvmap.min.css",
+        "./node_modules/gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css",
+        "./node_modules/gentelella/vendors/normalize-css/normalize.css",
+        "./node_modules/gentelella/vendors/ion.rangeSlider/css/ion.rangeSlider.css",
+        "./node_modules/gentelella/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css",
+        "./node_modules/gentelella/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css",
+        "./node_modules/gentelella/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css",
+        "./node_modules/gentelella/vendors/cropper/dist/cropper.min.css",
+        "./wwwroot/css/custom.css",
+        "./wwwroot/css/daterangepicker.css"
+      ],
+      "scripts": [
+        "./node_modules/jquery/dist/jquery.js",
+        "./node_modules/moment/min/moment.min.js",
+        "./node_modules/daterangepicker/daterangepicker.js"
+      ]
+    }
+  ],
+  "lint": [
+    {
+      "project": "app/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "app/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "defaults": {
+    "styleExt": "css",
+    "component": {
+    },
+    "build": {
+      "progress": true,
+      "showCircularDependencies": false
+    }
+  },
+  "warnings": {
+    "typescriptMismatch": false
+  }
+}

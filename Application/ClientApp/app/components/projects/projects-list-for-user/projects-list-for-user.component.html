@@ -1,0 +1,49 @@
+<div class="card x_panel" style="margin-top: 20px !important;">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Projects</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="row">
+                <div class="col-md-4">
+
+                </div>
+
+                <div class="col-md-4 text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table my-table-striped table-bordered projects">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Project</th>
+                            <th>Role in the project</th>
+                            <th>Work time in the project(days)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                        <tr *ngFor="let emploee of emploees; let i = index">
+                            <td><span>{{emploee.ProjectName}}</span></td>
+                            <td><span>{{emploee.Position}}</span></td>
+                            <td><span>{{getTime(emploee)}}</span></td>
+                            <td style="text-align:right">
+                                <button class="btn btn-primary btn-go-to-user black-tooltip" (click)="showEmploeesDialog(emploee)">
+                                    <i class="fa fa-users"></i>
+                                    <span class="tooltiptext">All employees</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table-buttons [subject]="subject">
+                </table-buttons>
+            </div>
+        </div>
+    </div>
+</div>

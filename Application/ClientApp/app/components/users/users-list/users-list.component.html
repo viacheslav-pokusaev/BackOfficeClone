@@ -1,0 +1,69 @@
+﻿<div class="card x_panel">
+    <div class="x_content">
+        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+        <div class="row" *ngIf="users">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                <div class="title_left">
+                    <h3>Colleagues </h3>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-md-4 col-sm-4 col-xs-12 profile_details" *ngFor="let user of users">
+                <div class="well profile_view">
+                    <div class="col-sm-12">
+                        <div class="left col-xs-5">
+                            <h3 class="link" *permission="['Developer', 'ProjectManager', 'HumanResource']" (click)="showInfo(user)">{{user.FirstName}} {{user.LastName}}</h3>
+                            <h3 class="link" *permission="['Super_Admin', 'Admin']" (click)="viewProfile(user)">{{user.FirstName}} {{user.LastName}}</h3>
+                            <ul class="list-unstyled">
+                                <li> Birthday: {{user.DateBirthday| date:'MM/dd/yyyy'}}</li>
+                                <li> Email: {{user.Email}}</li>
+                                <li> Phone: {{user.Phone}}</li>
+                                <li> Skype: {{user.Skype}}</li>
+                                <li class="black-tooltip-wishes"> Wishes: {{getSubStr(user.Wishes)}}
+                                    <span class="tooltiptext" *ngIf="IsToltiptextVisible(user)">
+                                        {{user.Wishes}}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="right col-xs-7 text-center link">
+                            <div class="row">
+                                <div *permission="['Developer', 'ProjectManager', 'HumanResource']" (click)="showInfo(user)" class="col-md-10 col-sm-10 col-lg-10">
+                                    <img [src]="user.Avatar" alt="" class="img-circle img-responsive" style="width: 185.55px !important; height: 185.55px !important;">
+                                </div>
+                                <div *permission="['Super_Admin', 'Admin']" (click)="viewProfile(user)" class="col-md-10 col-sm-10 col-lg-10">
+                                        <img [src]="user.Avatar" alt="" class="img-circle img-responsive" style="width: 185.55px !important; height: 185.55px !important;">
+                                    </div>
+                                <div class="col-md-2 col-sm-2 col-lg-2">
+                                    <a *permission="['Super_Admin', 'Admin']" class="btn btn-primary btn-xs" routerLink="/users/{{user.UserProfileId}}/edit">
+                                        <i class="fa fa-edit"></i>Edit
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 bottom">
+                        <div class="col-xs-12 col-sm-12 emphasis">
+                            <a *permission="['Super_Admin', 'Admin']" class="btn btn-primary btn-xs" routerLink="/users/{{user.UserProfileId}}/info">
+                                <i class="fa fa-info"></i>View Profile
+                            </a>
+                            <button *permission="['Developer', 'ProjectManager', 'HumanResource']" type="button" class="btn btn-primary btn-xs" (click)="showInfo(user)">
+                                <i class="fa fa-user"> </i> View Profile
+                            </button>
+                            <button *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']" type="button" class="btn btn-primary btn-xs" (click)="addFeedback(user.UserProfileId)">
+                                <i class="fa fa-user"> </i> Add feedback
+                            </button>
+                            <button *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']" type="button" class="btn btn-primary btn-xs" (click)="showFeedbacks(user.UserProfileId)">
+                                <i class="fa fa-user"> </i> View feedbacks
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table-buttons [subject]="subject" [array]="[9, 18, 27, 36]">
+
+            </table-buttons>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<modal-wrapper [dialogRef]="dialogRef">
+        <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+    <div class="row" *ngIf="data.user && emploees">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <!-- Date of start of work: {{data.user.DateBeginWork != null ? (data.user.DateBeginWork | date:'MM/dd/yyyy') : "not exist"}}
+                <br>
+                Date of start of trial work: {{data.user.DateBeginTrialWork | date:'MM/dd/yyyy'}} -->
+                <table class="table my-table-striped table-bordered projects">
+            <thead class="text-primary">
+                <tr>
+                    <th>Project</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                <tr *ngFor="let emploee of emploees; let i = index">
+                    <td><span>{{emploee.ProjectName}}</span></td>
+                    <td><span>{{emploee.Position}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+        </div>
+</modal-wrapper>

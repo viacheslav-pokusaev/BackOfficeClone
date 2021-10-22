@@ -1,0 +1,2 @@
+1. Add the Maper for to convert everything Entity to Model. Completed
+2. One query (one dbConnect) for one visual page.

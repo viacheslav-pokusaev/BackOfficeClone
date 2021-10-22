@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20180323072216_CreateTables-Vacation-SickDay.cs" />
+    <Compile Remove="Migrations\20180327151829_111.cs" />
+    <Compile Remove="Migrations\20180328151108_Change-SizeVacation-Year-to-int-HasAlternativeKey.cs" />
+    <Compile Remove="Migrations\20181221110518_AddWorkAtHomeTable.cs" />
+    <Compile Remove="Migrations\20181221112428_AddWorkAtHomeTable.cs" />
+    <Compile Remove="Migrations\20190108080111_AddForeignKeyToUserProfile.cs" />
+    <Compile Remove="Migrations\20190117082210_AddNewColumnsToClientTable.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BBLInterfaces\Application.BBLInterfaces.csproj" />
+    <ProjectReference Include="..\Entities\Application.EntitiesModels.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,9 @@
+.update-button {
+    margin-top: 15px;
+}
+
+input:disabled {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}

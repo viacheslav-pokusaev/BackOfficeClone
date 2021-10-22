@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="/admin">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/loading.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-select.min.css" />
+    <link href="~/css/ag-grid.css" rel="stylesheet" />
+    <link href="~/css/theme-bootstrap.css" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <link href="~/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/admin-style.css" />
+    <link rel="stylesheet" href="~/dist/styles.bundle.css">
+</head>
+<body>
+    <app>
+        <svg id="loading" viewbox="0 0 100 80">
+            <defs>
+                <linearGradient id="gradient" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#4383b8" />
+                    <stop offset="100%" stop-color="#4aa06c" />
+                </linearGradient>
+
+                <clipPath id="rects">
+                    <rect class="rect" id="rect1" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                    <rect class="rect" id="rect2" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                    <rect class="rect" id="rect3" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                    <rect class="rect" id="rect4" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                    <rect class="rect" id="rect5" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                    <rect class="rect" id="rect6" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                    <rect class="rect" id="rect7" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+                </clipPath>
+            </defs>
+            <!--
+                (100 / sqrt(2 * 30^2)) == 0.707.
+                Used pythagorean principle to scale the rectangles to fit within a 100x100 viewport
+            -->
+            <rect id="container" transform="translate(50) scale(0.707, 0.707) rotate(45)" x="0" y="0" width="100" height="100" fill="url(#gradient)" clip-path="url(#rects)">
+            </rect>
+        </svg>
+        <p style="text-align:center;margin-top:25px;"> LOADING </p>
+    </app>
+
+
+    <script src="~/scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/scripts/jquery.validate.min.js"></script>
+    <script src="~/vendors/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/vendors/material.min.js" type="text/javascript"></script>
+    <script src="~/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+    <script src="~/scripts/bootstrap-select.min.js"></script>
+    <script src="~/vendors/jquery.tagsinput.js"></script>
+
+    <script src="~/dist/inline.bundle.js"></script>
+    <script src="~/dist/polyfills.bundle.js"></script>
+    <script src="~/dist/scripts.bundle.js"></script>
+    <script src="~/dist/0.chunk.js"></script>
+    <script src="~/dist/2.chunk.js"></script>
+    <script src="~/dist/main.bundle.js"></script>
+    <script src="~/dist/1.chunk.js"></script>
+    <script src="~/dist/3.chunk.js"></script>
+    <script src="~/dist/4.chunk.js"></script>
+
+    @*<script src="~/dist/inline.bundle.js"></script>
+        <script src="~/dist/polyfills.bundle.js"></script>
+        <script src="~/dist/vendor.bundle.js"></script>
+        <script src="~/dist/styles.bundle.js"></script>
+        <script src="~/dist/main.bundle.js"></script>*@
+</body>
+</html>

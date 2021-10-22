@@ -1,0 +1,181 @@
+﻿<div class="card x_panel" *ngIf="currentUserId">
+    <div class="row">
+        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>User Profile</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a (click)="settings()">Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                        <div class="profile_img">
+                            <div id="crop-avatar">
+                                <img class="img-responsive avatar-view" *ngIf="user" [src]="user.Avatar" alt="Avatar" title="Change the avatar">
+                            </div>
+                        </div>
+                        <h3>{{user.FirstName}} {{user.LastName}}</h3>
+                        <ul class="list-unstyled user_data">
+                            <li *ngIf="user.DateBirthday">
+                                <i class="fa fa-birthday-cake black-tooltip">
+                                    <span class="tooltiptext">
+                                        Birthday
+                                    </span>
+                                </i>
+                                {{user.DateBirthday | date:'MM/dd/yyyy'}}
+                            </li>
+                            <li *ngIf="user.Email">
+                                <i class="fa fa-envelope-o black-tooltip">
+                                    <span class="tooltiptext">
+                                        Email
+                                    </span>
+                                </i>{{user.Email}}
+                            </li>
+                            <li *ngIf="user.Phone">
+                                <i class="fa fa-phone black-tooltip">
+                                    <span class="tooltiptext">
+                                        Phone
+                                    </span>
+                                </i>{{user.Phone}}
+                            </li>
+                            <li *ngIf="user.Skype">
+                                <i class="fa fa-skype black-tooltip">
+                                    <span class="tooltiptext">
+                                        Skype
+                                    </span>
+                                </i>{{user.Skype}}
+                            </li>
+                            <li *ngIf="user.DateBeginWork">
+                                <i class="fa fa-calendar black-tooltip">
+                                    <span class="tooltiptext">
+                                        Start of work
+                                    </span>
+                                </i>{{user.DateBeginWork != null ? (user.DateBeginWork | date:'MM/dd/yyyy') : "not exist"}}
+                            </li>
+                            <li *ngIf="user.DateBeginTrialWork != null">
+                                    <i class="fa fa-calendar black-tooltip">
+                                        <span class="tooltiptext">
+                                            Start of trial work
+                                        </span>
+                                    </i>{{user.DateBeginTrialWork | date:'MM/dd/yyyy'}}
+                            </li>
+                            <li *ngIf="user.ResidentialAddress">
+                                <i class="fa fa-map-marker black-tooltip">
+                                    <span class="tooltiptext">
+                                        Address
+                                    </span>
+                                </i>{{user.ResidentialAddress}}
+                            </li>
+                            <li *ngIf="user.Skills">
+                                <i class="fa fa-database black-tooltip">
+                                    <span class="tooltiptext">
+                                        Skills
+                                    </span>
+                                </i>{{user.Skills}}
+                            </li>
+                            <li *ngIf="user.Hobbies">
+                                <i class="fa fa-coffee black-tooltip">
+                                    <span class="tooltiptext">
+                                        Hobbies
+                                    </span>
+                                </i>{{user.Hobbies}}
+                            </li>
+                            <li *ngIf="user.Wishes">
+                                <i class="fa fa-list-ul black-tooltip">
+                                    <span class="tooltiptext">
+                                        Wishes
+                                    </span>
+                                </i>{{user.Wishes}}
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <a class="btn btn-success" (click)="settings()"><i class="fa fa-edit m-right-xs"></i>Settings</a>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active" (click)="setCurrentTab(1)">
+                                    <a href="#tab_content1" id="Projects" role="tab" data-toggle="tab" aria-expanded="true">Projects</a>
+                                </li>
+                                <li role="presentation" class="" (click)="setCurrentTab(2)">
+                                    <a href="#tab_content2" role="tab" id="Vacations" data-toggle="tab" aria-expanded="false">Vacations</a>
+                                </li>
+                                <li role="presentation" class="" (click)="setCurrentTab(3)">
+                                    <a href="#tab_content3" role="tab" id="Sick-Days" data-toggle="tab" aria-expanded="false">Sick days</a>
+                                </li>
+                                <li role="presentation" class="" (click)="setCurrentTab(4)">
+                                    <a href="#tab_content4" role="tab" id="Work-on-weekends" data-toggle="tab" aria-expanded="false">Work on weekends</a>
+                                </li>
+                                <li role="presentation" class="" (click)="setCurrentTab(5)">
+                                    <a href="#tab_content5" role="tab" id="Work-at-home" data-toggle="tab" aria-expanded="false">Work at home</a>
+                                </li>
+                                <li role="presentation" class="" (click)="setCurrentTab(6)">
+                                    <a href="#tab_content6" role="tab" id="Studying" data-toggle="tab" aria-expanded="false">Studying</a>
+                                </li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="Projects">
+                                    <div *ngIf="indexOfCurrentTab == 1">
+                                        <projects-list-for-user [userId]="currentUserId" *isCurrentUserOrHasRole="{ id: currentUserId, roles: ['Super_Admin', 'Admin']}"></projects-list-for-user>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="Vacations">
+                                    <div *ngIf="indexOfCurrentTab == 2">
+
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                            <span style=" font-size: 14pt;">Available days :{{countVacationDayInfo}}</span> <span *ngIf="countBorrowedDayInfo != ''" style=" font-size: 14pt;">{{countBorrowedDayInfo}}</span>
+                                        </div>
+                                    </div>
+                                    <user-vacations [userId]="currentUserId" *isCurrentUserOrHasRole="{ id: currentUserId, roles: ['Super_Admin', 'Admin']}"></user-vacations>
+                                    <user-vacations-statistic [userId]="currentUserId" *isCurrentUserOrHasRole="{ id: currentUserId, roles: ['Super_Admin', 'Admin']}">                 </user-vacations-statistic>
+                                </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="Sick-Days">
+                                    <div *ngIf="indexOfCurrentTab == 3">
+                                        <user-sickdays [userId]="currentUserId" *isCurrentUserOrHasRole="{ id: currentUserId, roles: ['Super_Admin', 'Admin']}"></user-sickdays>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="Work-on-weekends">
+                                    <div *ngIf="indexOfCurrentTab == 4">
+                                        <user-overtimes [userId]="currentUserId" *isCurrentUserOrHasRole="{ id: currentUserId, roles: ['Super_Admin', 'Admin']}"></user-overtimes>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="Work-at-home">
+                                    <div *ngIf="indexOfCurrentTab == 5">
+                                        <user-work-at-home [userId]="currentUserId" *isCurrentUserOrHasRole="{ id: currentUserId, roles: ['Super_Admin', 'Admin']}"></user-work-at-home>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="Studying">
+                                    <div *ngIf="indexOfCurrentTab == 6">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

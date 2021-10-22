@@ -1,0 +1,58 @@
+<div class="card x_panel">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Audit Trail</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="row">
+                <div class="col-md-4">
+
+                </div>
+
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table my-table-striped table-bordered projects">
+                    <thead style="color: #73879C;">
+                        <tr>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Entity</th>
+                            <th>Action</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                        <tr *ngFor="let auditTrailEntity of auditTrailEntities; let i = index">
+                            <td class="link" (click)="goToUser(auditTrailEntity)"><span>{{auditTrailEntity.UserName}}</span></td>
+                            <td><span>{{auditTrailEntity.Date| date:'MM/dd/yyyy h:mm'}}</span></td>
+                            <td><span>{{auditTrailEntity.EntityName}}</span></td>
+                            <td><span>{{auditTrailEntity.Action}}</span></td>
+                            <td style="text-align:right">
+                                <a class="btn btn-primary black-tooltip" (click)="showDetails(auditTrailEntity)">
+                                    <i class="fa fa-info"></i>
+                                    <span class="tooltiptext">Details</span>
+                                </a>
+                                <!--<a *ngIf="auditTrailEntity.Parent" class="btn btn-primary black-tooltip" (click)="showParent(auditTrailEntity)">
+                                    <i class="fa fa-info"></i>
+                                    <span class="tooltiptext">Parent</span>
+                                </a>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table-buttons [subject]="subject">
+
+                </table-buttons>
+            </div>
+        </div>
+    </div>
+</div>
+

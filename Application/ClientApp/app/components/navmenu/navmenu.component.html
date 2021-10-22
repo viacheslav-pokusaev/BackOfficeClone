@@ -1,0 +1,49 @@
+<div class=" left_col scroll-view">
+    <div class="navbar nav_title" style="border: 0;">
+        <a [routerLink]="'/users/'+id+'/info'" class="site_title"><span>Custom Solutions</span></a>
+    </div>
+    <div class="clearfix"></div>
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+            <ul class="nav side-menu">
+                <li>
+                    <a [routerLink]="['/users']" id="homeli"><i class="fa fa-users"></i> Users <span id="homechevron" class="fa fa-chevron-down" (click)="anchorClicked($event)"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a [routerLink]="['/users']">List of colleagues</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="formsli" [routerLink]="['/workactivities']"><i class="fa fa-calendar"></i> Work activities <span id="formschevron" class="fa fa-chevron-down" (click)="anchorClicked($event)"></span></a>
+                    <ul class="nav child_menu">
+                        <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'Developer', 'ProjectManager']"><a [routerLink]="['/workactivities']">WorkActivity</a></li>
+                        <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']"><a [routerLink]="['/workactivities/vacations']">Vacations</a></li>
+                        <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']"><a [routerLink]="['/workactivities/sickDays']">Sick days</a></li>
+                        <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']"><a [routerLink]="['/workactivities/overtimes']">Work on weekends</a></li>
+                        <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']"><a [routerLink]="['/workactivities/workathome']">Work at home</a></li>
+                        <li *permission="['Super_Admin', 'Admin', 'Developer', 'ProjectManager', 'HumanResource']"><a [routerLink]="['/workactivities/sizeVacations']">Vacation for years</a></li>
+                    </ul>
+                </li>
+                <li *permission="['Super_Admin', 'Admin']">
+                    <a [routerLink]="['/proposals']"><i class="fa fa-check-square"></i> Confirm registrations</a>
+                </li>
+                <li *permission="['Super_Admin', 'Admin', 'ProjectManager', 'HumanResource']">
+                    <a id="uielementsli" [routerLink]="['/projects']"><i class="fa fa-file"></i> Projects <span id="uielementschevron" class="fa fa-chevron-down" (click)="anchorClicked($event)"></span></a>
+                    <ul class="nav child_menu">
+                        <li *permission="['Super_Admin', 'Admin', 'ProjectManager', 'HumanResource']"><a [routerLink]="['/projects']">List of projects</a></li>
+                    </ul>
+                </li>
+                <li *permission="['Super_Admin', 'Admin', 'ProjectManager']">
+                    <a [routerLink]="['/clients']" id="tablesli"><i class="fa fa-male"></i> Clients <span id="tableschevron" class="fa fa-chevron-down" (click)="anchorClicked($event)"></span></a>
+                    <ul class="nav child_menu">
+                        <li *permission="['Super_Admin', 'Admin', 'ProjectManager']"><a [routerLink]="['/clients']">List of clients</a></li>
+                    </ul>
+                </li>
+                <li *permission="['Super_Admin', 'Admin']">
+                    <a [routerLink]="['/database-administrate']" id="tablesli"><i class="fa fa-database"></i> Database </a>
+                </li>
+                <li *permission="['Super_Admin', 'Admin']">
+                    <a [routerLink]="['/audit-trail']" id="tablesli"><i class="fa fa-book"></i> Audit-trail </a>
+                </li>
+            </ul>
+        </div>
+    </div>

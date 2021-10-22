@@ -1,0 +1,14 @@
+Preconditions: 	installed visual studio 2017 express, 
+		installed mssql server 2016 or latest minimum: 13.00.4001,
+		installed nodejs 8.11.1 LTS or latest and set PATH
+Steps install:
+	1. In BackOffice\Application\appsettings.json change: "server=[name_your_server]" default: "server=localhost"
+	2. Create databaseUser: Security->Logins->New Login { Login Name: BackOfficeDev; SQL Server Autentication (true); Password: Adminnimda123; Server Roles -> dbcreator checked}
+	(for detail information - https://www.youtube.com/watch?v=11Rx35l8Khc)
+	3. From cmd go to BackOffice\Application Folder and run command: dotnet run migratedb
+	4. Execute sql file \BackOffice\Doc\SetData.sql - fills the database
+	5. From cmd go to BackOffice\Application\ClientApp and run command: npm install
+	6. From cmd go to BackOffice\Application\ClientApp and run command: npm install -g "@angular/cli@latest"			(Minimum: 2.4.2)
+	7. From BackOffice\Application: ng build
+	7. Commit first routes (12-26 lines), uncommit second (28-44). Path - Backoffice\Application\ClientApp\app\app-routing.module.ts
+	8. Uncommit last pathes to js files(~72-76), commit upper pathes to js files (~62-70). Path - \Backoffice\Application\Views\Account\Admin.cshtml

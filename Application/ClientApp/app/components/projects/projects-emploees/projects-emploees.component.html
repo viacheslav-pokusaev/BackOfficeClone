@@ -1,0 +1,146 @@
+<modal-wrapper [dialogRef]="dialogRef">
+
+    <div  [className]="getClassForTable()">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 style="color: #73879C;">{{name}}</h2>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" *permission="['Super_Admin', 'Admin', 'ProjectManager']">
+                    <button class="btn btn-primary btn-toggle">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li>
+                        <a (click)="menuAddNew()" class="side-menu-link">
+                            Add Employee to the project
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    Employees:
+                </h3>
+                <form [formGroup]="newEmploeeForm" (submit)="add(newEmploee)">
+                    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table my-table-striped table-bordered projects" [formGroup]="newEmploeeForm" (submit)="add(newEmploee)" *ngIf="emploees != null && emploees != undefined">
+                                    <thead style="color: #73879C;">
+                                        <tr>
+                                            <th>First & Last Name</th>
+                                            <th>Position</th>
+                                            <th>Date of start of work</th>
+                                            <th>Date of finish of work</th>
+                                            <th style="width:15%">Comment</th>
+                                            <th>Status</th>
+                                            <th *permission="['Super_Admin', 'Admin', 'ProjectManager']" style="width: 18%"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="isAddVisible">
+                                            <td>
+                                                <select class="select2_single form-control" [(ngModel)]="newEmploee.UserProfileId" formControlName="UserProfile" tabindex="-1">
+                                                    <option *ngFor="let selectedUser of users; let i = index" [value]="selectedUser.UserProfileId">
+                                                        {{ selectedUser.FirstName }} {{ selectedUser.LastName }}
+                                                    </option>
+                                                </select>
+                                                <div class="error-message" *ngIf="newEmploeeForm.get('UserProfile').errors">
+                                                    <span *ngIf="newEmploeeForm.get('UserProfile').errors.required && submitAttempt">User is required</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select class="select2_single form-control" [(ngModel)]="newEmploee.Position" formControlName="Position" tabindex="-1">
+                                                    <option *ngFor="let position of positions; let i = index" [value]="position">
+                                                        {{ position }}
+                                                    </option>
+                                                </select>
+                                                <div class="error-message" *ngIf="newEmploeeForm.get('Position').errors">
+                                                    <span *ngIf="newEmploeeForm.get('Position').errors.required && submitAttempt">Position is required</span>
+                                                </div>
+                                            </td>
+                                            <td>
+
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                    <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess7" [matDatepicker]="picker1" placeholder="Start of work" formControlName="DateStartWork" [(ngModel)]="newEmploee.DateStartWork">
+                                                    <mat-datepicker-toggle class="left" matSuffix [for]="picker1" style="color: #73879C;"></mat-datepicker-toggle>
+                                                    <span class="tooltiptext">
+                                                        Start of work
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                                                    <mat-datepicker #picker2></mat-datepicker>
+                                                    <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess7" [matDatepicker]="picker2" placeholder="End of work" formControlName="DateFinishWork" [(ngModel)]="newEmploee.DateFinishWork">
+                                                    <mat-datepicker-toggle class="left" matSuffix [for]="picker2" style="color: #73879C;"></mat-datepicker-toggle>
+                                                    <span class="tooltiptext">
+                                                        End of work
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td style="width:15%">
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                                                    <input type="text" class="form-control form-control-small has-feedback-left" id="inputSuccess2" placeholder="Comment" [(ngModel)]="newEmploee.Comment" formControlName="Comment" autocomplete="off">
+                                                    <span class="fa fa-bank form-control-feedback left" aria-hidden="true"></span>
+                                                    <span class="tooltiptext">
+                                                        Comment
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td style="text-align:right; width: 18%">
+                                                <button type="submit" class="btn btn-primary black-tooltip">
+                                                    <i class="fa fa-check"></i>
+                                                    <span class="tooltiptext">Save</span>
+                                                </button>
+                                                <button class="btn btn-default black-tooltip" (click)="isAddVisible = false">
+                                                    <i class="fa fa-close"></i>
+                                                    <span class="tooltiptext">Cancel</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                                        <tr *ngFor="let emploee of emploees; let i = index">
+                                            <td><span>{{emploee.FirstName}}{{emploee.LastName }}</span></td>
+                                            <td><span>{{emploee.Position }}</span></td>
+                                            <td><span>{{emploee.DateStartWork| date:'MM/dd/yyyy'}}</span></td>
+                                            <td><span>{{emploee.DateFinishWork| date:'MM/dd/yyyy'}}</span></td>
+                                            <td style="width:15%"><span>{{emploee.Comment}}</span></td>
+                                            <td><span>{{emploee.Status}}</span></td>
+                                            <td *permission="['Super_Admin', 'Admin', 'ProjectManager']" style="text-align:right; width: 18%">
+                                                <button class="btn btn-primary black-tooltip" (click)="goToUser(emploee)">
+                                                    <i class="fa fa-male"></i>
+                                                    <span class="tooltiptext">Go to user</span>
+                                                </button>
+                                                <button class="btn btn-primary black-tooltip" (click)="editProjectDialog(emploee)">
+                                                    <i class="fa fa-edit"></i>
+                                                    <span class="tooltiptext">Edit</span>
+                                                </button>
+                                                <button class="btn btn-default black-tooltip" (click)="delete(emploee)">
+                                                    <i class="fa fa-trash"></i>
+                                                    <span class="tooltiptext">Delete</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table-buttons [subject]="subject">
+
+                                </table-buttons>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</modal-wrapper>

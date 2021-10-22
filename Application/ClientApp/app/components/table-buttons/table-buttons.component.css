@@ -1,0 +1,18 @@
+.pageNumber:hover{
+    cursor: pointer;
+}
+
+.page-buttons {
+    right: -5px;
+    position: absolute;
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
+.count-of-entries{
+    left: 10px !important;
+}
+
+.dataTables_info {
+    padding-top: 5px;
+}

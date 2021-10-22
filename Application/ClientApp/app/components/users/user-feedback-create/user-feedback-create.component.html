@@ -1,0 +1,52 @@
+<modal-wrapper [dialogRef]="dialogRef">
+    <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+    <div class="card x_panel" *ngIf="!loading">
+        <div id="divDataBody" class="container entity">
+            <div class="row">
+                <div class="col-md-12 form-title">
+                    <h2 style="color: #73879C;">Create Project </h2>
+                </div>
+                <div class="col-md-12 col-lg-12">
+                    <form name="addfeedback" class="form-horizontal  container-fluid">
+                        <div class="form-group col-md-12 col-xs-12  black-tooltip">
+                            <select class="select2_single form-control" [(ngModel)]="feedback.ProjectName" name="selectProject" tabindex="-1">
+                                <option *ngFor="let project of projects; let i = index" [value]="project.Name">
+                                    {{ project.Name }}
+                                </option>
+                            </select>
+                            <span class="tooltiptext">
+                                Project Name
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Position" [(ngModel)]="feedback.Position" name="Position" autocomplete="off">
+                            <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                Position
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Feedback" [(ngModel)]="feedback.Feedback" name="Feedback" autocomplete="off">
+                            <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                Feedback
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="form-group col-md-6 col-xs-6 text-center">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="createFeedback()">
+                                    Create
+                                </button>
+                            </div>
+                            <div class="form-group col-md-6 col-xs-6 text-center">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="cancel()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-wrapper>

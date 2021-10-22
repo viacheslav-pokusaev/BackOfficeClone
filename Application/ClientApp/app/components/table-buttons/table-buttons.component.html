@@ -1,0 +1,56 @@
+<div class="row" *ngIf="model">
+    <div class="row">
+        <div class="col-sm-5 col-md-5 col-lg-5 count-of-entries">
+            <div class="dataTables_length" id="datatable-responsive_length" *ngIf="model.TotalCount != 0">
+                <label>
+                    <select [(ngModel)]="count" (change)="select(count)" class="form-control input-sm">
+                        <option *ngFor="let count of counts" [value]="count">
+                            {{ count }}
+                        </option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <div *ngIf="model.TotalCount > 0" class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">
+                Showing {{model.Skip + 1}} to {{getEnd()}} of {{model.TotalCount}} entries
+            </div>
+            <div *ngIf="model.TotalCount == 0" class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">
+                There are no entries in the table
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <div class="page-buttons" *ngIf="model.TotalCount != 0">
+                    <span>
+                            <button class="pageNumber btn btn-default black-tooltip" (click)="goToPage(1)">
+                                <i class="fa fa-angle-double-left"></i>
+                                <span class="tooltiptext">First</span>
+                            </button>
+                        </span>
+                <span>
+                    <button [className]="getClassForPreveous()" (click)="goToPage(pageNumber - 1)">
+                        <i class="fa fa-angle-left"></i>
+                        <span class="tooltiptext">Preveous</span>
+                    </button>
+                </span>
+                <span *ngFor="let pageNumber of pageNumbers; let i= index" (click)="goToPage(pageNumber)">
+                    <button [className]="getClass(pageNumber)" *ngIf="i >= indexStart && i <= indexFinish">
+                        {{ pageNumber }}
+                    </button>
+                </span>
+                <span>
+                    <button [className]="getClassForNext()" (click)="goToPage(pageNumber + 1)">
+                        <i class="fa fa-angle-right"></i>
+                        <span class="tooltiptext">Next</span>
+                    </button>
+                </span>
+                <span>
+                        <button class="pageNumber btn btn-default black-tooltip" (click)="goToPage(pageNumbers.length)">
+                            <i class="fa fa-angle-double-right"></i>
+                            <span class="tooltiptext">Last</span>
+                        </button>
+                    </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿<div class="card x_panel">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'Proposals' }}</h2>
+        </div>
+        <!-- <div class="col-md-6 text-right">
+            <h2></h2><a class="btn btn-primary" href="Registration">Add New</a>
+        </div> -->
+    </div>
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table my-table-striped table-bordered projects">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Birthday</th>
+                            <th>Create Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                        <tr *ngFor="let proposal of proposals; let i = index">
+                            <td><span>{{proposal.FirstName}} {{proposal.LastName}}</span></td>
+                            <td><span>{{proposal.Phone }}</span></td>
+                            <td><span>{{proposal.Email }}</span></td>
+                            <td><span>{{proposal.DateBirthday.toDateString()}}</span></td>
+                            <td><span>{{proposal.DateCreate.toDateString()}}</span></td>
+                            <td style="text-align:right">
+                                <a class="btn btn-primary  black-tooltip" (click)="addToUser(proposal, i)">
+                                    <i class="fa fa-check-square-o"></i>
+                                    <span class="tooltiptext">Add new user</span>
+                                </a>
+                                <a class="btn btn-default black-tooltip" (click)="delete(proposal.Id, i)">
+                                    <i class="fa fa-trash"></i>
+                                    <span class="tooltiptext">Delete</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'Requests to update password' }}</h2>
+        </div>
+        <!-- <div class="col-md-6 text-right">
+            <h2></h2><a class="btn btn-primary" href="Registration">Add New</a>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead class="text-primary">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                    <tr *ngFor="let request of requests; let i = index">
+                        <td><span>{{request.Name }}</span></td>
+                        <td><span>{{request.Email }}</span></td>
+                        <td style="text-align:right">
+                            <a class="btn btn-primary black-tooltip" (click)="confirm(request)">
+                                <i class="fa fa-check-square-o"></i>
+                                <span class="tooltiptext">Confirm</span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

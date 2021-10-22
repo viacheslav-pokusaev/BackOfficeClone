@@ -1,0 +1,342 @@
+body{
+    /*background:#F9F9F9;*/
+    background: #fff;
+}
+main{
+    display: flex;
+}
+
+header{
+    background-color: #022B51;
+    color:#fff;
+    display: flex;
+}
+.sideBar h3{
+    color:#da49bc;
+    text-align: center;
+}
+.sideBar{   
+    margin-top: 30px;
+    padding: 0;   
+    padding: 10px;   
+}
+.sideBar>div {
+    background-color: #fff;
+}
+.sideBar ul{
+    list-style-type: none;
+    margin-top: 10px;
+}
+.sideBar ul li{
+    list-style-type: none;
+}
+.sideBar .header_sidebar {
+    background-color: red;
+}
+.sideBar .header_sidebar span{
+    font-size: 18px;
+    color:white;
+}
+.header_sidebar{
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+.gowContainer{
+    display: flex;
+}
+.sideMenu-li{
+    position: relative;
+}
+.sideMenu-extention {
+    display: none;
+    position: absolute;
+    left: 235px;
+    min-width: 500px;
+    top: 0;
+    background: #fff;
+    border: 1px solid #ededed;
+    border-bottom: 2px solid #ccc;
+    box-shadow: 3px 3px 7px 0 rgba(200,200,200,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.category_link{
+    font-size: 16px;
+}
+.sideMenu-li:hover .sideMenu-extention{
+    display: block;
+}
+
+
+.filter-params ul {
+    list-style-type: none;
+}
+.filter-title{
+    font-size:20px;
+}
+.filter-params .checkbox_filter{
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 1px #ccc solid;
+    float: left;
+    display: block;
+    margin: 0;
+    padding: 0;
+    margin-top: 2px;
+}
+.filter-params .checkbox_filter:hover{
+    cursor: pointer;
+}
+.filter-params .checkbox_filter_title {
+    margin-left: 10px;
+    margin-bottom: 5px;
+    padding: 0;
+    font-size: 17px;
+}
+.filter-params .checkbox_filter_title:hover{
+    cursor: pointer;
+}
+.filter-params .filter_checked{
+    background-color: #0079FE;
+}
+.countOfWare {
+    font-style: normal;
+    color: #999;
+}
+.listOfWareContainer{
+    margin-top:15px;
+    padding:10px;
+}
+.wareContainer{
+    padding: 10px;    
+}
+.wareContainer:hover{
+    border: 1px #e8e7e7 solid;
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2)
+}
+.wareImageContainer img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 200px;
+    cursor: pointer;
+}
+.wareTitleContainer{
+    padding: 3px;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.wareActionButtonsContainer{
+    padding:3px;
+    margin-top:5px;  
+    display: flex;  
+}
+.wareActionButtonsContainer .likeButton{
+    text-align: cetner;
+}
+.warePriceRatingContainer{
+    font-size: 19px; 
+    display: flex;
+}
+.warePriceRatingContainer .price{
+    display: block;
+    padding: 3px;
+    margin: 5px 5px 5px 5px;
+    width: 35%;  
+    background-color: #e1ff86;
+    color: #564c4c;
+    border-radius: 2px;
+}
+
+.basketButton{
+    width:30%;
+    display: block;
+    float:left;
+}
+.basketButton img{
+    float: right;
+}
+.basketButton span{
+    display: none;
+}
+.basketButton:hover{
+    cursor: pointer;   
+    background: #7bbb41;
+    border-radius: 2px;
+    padding: 5px;
+    color: white; 
+}
+.basketButton:hover span{
+    float: left;
+    display: block;
+    margin-left: 10px;
+    font-size: 18px;
+}
+.likeButton{
+    width:30%;
+    display: block;
+    float: right;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+.likeButton img{
+    float:right;
+}
+.wareShortDescriptionContainer{
+    display: none;
+    padding: 3px;
+    margin-top:10px;
+}
+.gow-sidebar-hidden{
+    display: none;    
+}
+.gow-sidebar-show{
+    display: block;
+    z-index: 10;
+    position: absolute;
+    background-color: #fff;
+    top: 47px;
+    left: 0;
+    width: 92%;
+    margin: 9px;
+}
+.gow-sidebar-show .sideMenu-extention{
+    position: absolute;
+    left: 209px;
+    min-width: 500px;
+    top: 0;
+    background: #fff;    
+    box-shadow: 3px 3px 7px 0 rgba(200,200,200,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#waresResult{
+    margin-top:15px;
+}
+#waresResult>.gow-like-brand-container{    
+    display: flex;
+    padding: 25px;
+}
+
+#waresResult img{
+    display: block;
+    margin:0 auto;
+}
+.category-values-by-child .category-container{
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    border-right: 1px #eaeaea solid;
+}
+.category-values-by-child .category-container h4{
+    display: block;
+    width:100%;
+    font-weight: bold;
+
+}
+.category-values-by-child .category-container ul{
+    list-style-type: none;
+}
+.category-values-by-child .category-container ul li{
+    padding: 10px;
+    border-bottom: 1px #eaeaea solid;
+}
+.category-values-by-child .category-container ul li .next-icon{
+    color:#bcbbbb;
+    float: right;
+}
+.category-values-by-child .category-container ul li:hover{
+    cursor: pointer;
+    background-color: #fbfcee;
+}
+.search-container input[type="text"]{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 1.30769em;
+    width: 60%;
+    height: 2em;
+    text-indent: .5em;
+    outline: 0;
+    box-shadow: inset 2px 2px 0 1px #f2f2f3;
+    margin: 10px;
+    border-radius: 2px;
+    float:left;
+    color:#022b51;
+}
+.search-container .btn-search{
+    background-color: #fbff00;
+    border-color: #eea236;
+    margin: 10px;
+    color: #022b51;
+    width: 18%;
+    padding: 6px;
+}
+.search-result-container-below-input{
+    width: 60%;
+    margin-left: 10px;
+    position: absolute;
+    z-index: 10;
+    top: 46px;
+    left: 0;
+    /* border: 1px #000 solid; */
+    color: #022B51;
+    background: #fff;
+    border-radius: 0px;
+    display: none;
+}
+#black-background{
+    display: none;
+    height:100%;
+    width:100%;
+    z-index:10;
+    position: fixed;
+    top:0px;
+    left:0px;
+    background:#000;
+}
+.search-element-above{
+    position: absolute;
+}
+.search-btn-above{
+    position: absolute;
+    padding: 6px;
+    left: 62%;
+}
+.search-container-above{
+    position: relative;
+    height: 50px;
+    z-index: 12;
+}
+.search-result{
+ border-bottom: 1px solid #eaeaea;
+}
+.oneWareImageContainer img {
+    max-width: 100%;
+    max-height: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rate-star {
+    font-size: 19px;
+    color: #48cfad;
+}
+
+.ware-details {
+    margin: 0 10%;
+}
+
+.part-ware-details {
+    border: 1px solid grey;
+}
+

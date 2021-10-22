@@ -1,0 +1,82 @@
+﻿@model Application.EntitiesModels.Models.AccountModels.RequestToCreateUserViewModel
+@using Application.Server.Utilities
+
+<form id="registrationForm" asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
+
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <strong>@@</strong>
+            </span>
+            <input id="regEmail" class="form-control" asp-for="Email" placeholder="Email address..." pattern="[a-zA-Z0-9_.]+@@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
+        </div>
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="password" class="form-control" minLength="1" type="password" asp-for="Password" placeholder="Password..." required>
+        </div>
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-lock"></i>
+                <i class="glyphicon glyphicon-ok  glyphicon-over"></i>
+            </span>
+            <input id="password_confirm" class="form-control" type="password" asp-for="ConfirmPassword" placeholder="Confirm password..." required>
+        </div>
+        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+    </div>
+    <a href="#" id="show-more">More</a>
+
+    <div id="additional-filds">
+        <div style="margin-bottom: 25px">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input class="form-control" type="text" minLength="2" maxlength="20" asp-for="FirstName" placeholder="First name..." pattern="[a-zA-Z0-9-.,]+$">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 25px">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user glyphicon-back"></i>
+                    <i class="glyphicon glyphicon-user glyphicon-under"></i>
+                </span> 
+                <input class="form-control" type="text" minLength="2" maxlength="20" asp-for="LastName" placeholder="Last name..." pattern="[a-zA-Z0-9-.,]+$">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 25px">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user glyphicon-phone"></i>
+                </span>
+                <input Id="phone-number" type="tel" class="form-control" maxlength="15" asp-for="Phone" placeholder="+38(XXX) XXX-XX-XX">
+            </div>
+            @Html.ValidationMessageFor(m => m.Phone)
+        </div>
+    </div>
+    <div>
+        <div class="captcha">
+            <label id="regCaptcha" onclick="refreshCaptcha()" class="placeholder" for="captcha">
+                <a href="javascript:void(0);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+            </label>
+            <input id="captcha" class="answer" type="number" asp-for="Captcha" required />
+        </div>
+        @Html.ValidationMessageFor(m => m.Captcha)
+    </div>
+    <div class="form-group">
+        <div class="controls text-center">
+            <button type="submit" class="btn btn-login">Sign Up</button>
+        </div>
+    </div>
+</form>
+

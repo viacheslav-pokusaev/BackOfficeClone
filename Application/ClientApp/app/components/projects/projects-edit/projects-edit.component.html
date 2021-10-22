@@ -1,0 +1,77 @@
+<modal-wrapper [dialogRef]="dialogRef">
+
+
+    <div class="card x_panel" *ngIf="project && clients">
+        <div id="divDataBody" class="container entity">
+            <div class="row">
+                    <div class="col-md-12  form-title">
+                            <h2 style="color: #73879C;">Update info of {{ projectName}} </h2>
+                        </div>
+                <div class="col-md-12 col-lg-12">
+                    <form name="addpost" class="form-horizontal  container-fluid">
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Name" [(ngModel)]="project.Name" name="Name" autocomplete="off">
+                            <span class="fa fa-bank form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                Name
+                            </span>
+                        </div>
+                        <div *ngIf="data.clientId == null || data.clientId == undefined">
+                            <div class="form-group col-md-11 col-xs-11  black-tooltip">
+                                <select class="select2_single form-control" [(ngModel)]="project.ClientId" name="selectClient" tabindex="-1">
+                                    <option *ngFor="let selectClient of clients; let i = index" [value]="selectClient.Id">
+                                        {{ selectClient.OrganizationName }}
+                                    </option>
+                                </select>
+                                <span class="tooltiptext">
+                                    Client
+                                </span>
+                            </div>
+                            <div class="col-md-1 col-xs-1" style="right: 8px;">
+                                <button class="btn btn-primary black-tooltip" (click)="createNewClient()">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="tooltiptext">Add new</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess7" [matDatepicker]="picker1" placeholder="Begin Date" name="BeginDate" [(ngModel)]="project.DateBegin">
+                            <mat-datepicker-toggle class="left" matSuffix [for]="picker1" style="color: #73879C;"></mat-datepicker-toggle>
+                            <span class="tooltiptext">
+                                Start Date
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                            <mat-datepicker #picker2></mat-datepicker>
+                            <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess7" [matDatepicker]="picker2" placeholder="End Date" name="EndDate" [(ngModel)]="project.DateEnd">
+                            <mat-datepicker-toggle class="left" matSuffix [for]="picker2" style="color: #73879C;"></mat-datepicker-toggle>
+                            <span class="tooltiptext">
+                                End Date
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Comment" [(ngModel)]="project.Comment" name="Comment" autocomplete="off">
+                            <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                Comment
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="form-group col-md-6 col-xs-6 text-center">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="updateProject()">
+                                    Save
+                                </button>
+                            </div>
+                            <div class="form-group col-md-6 col-xs-6 text-center">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="cancel()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-wrapper>

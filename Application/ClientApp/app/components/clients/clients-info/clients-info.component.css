@@ -1,0 +1,15 @@
+.cancel:hover {
+    cursor: pointer;
+}
+
+.cancel {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.blue-title {
+    color: #73879C;
+}

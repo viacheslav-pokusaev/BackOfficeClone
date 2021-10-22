@@ -1,0 +1,45 @@
+﻿@model Application.EntitiesModels.Models.AccountModels.UpdatePasswordModel
+
+<form class="form-horizontal" role="form" asp-controller="Account" asp-action="UpdatePassword" method="post">
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon"><strong>@@</strong></span>
+            <input id="loginEmail" placeholder="Email" class="form-control" asp-for="Email" required>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" placeholder="New password" class="form-control" asp-for="Password" required>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" placeholder="Confirm new password" class="form-control" asp-for="ConfirmPassword" required>
+        </div>
+    </div>
+    <div>
+        <div class="captcha" style="margin-bottom: 10px">
+            <label id="loginCaptcha" onclick="refreshCaptcha()" class="placeholder" for="captcha">
+                <a href="javascript:void(0);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+            </label>
+            <input id="logCaptcha" class="answer" type="number" asp-for="Captcha" required />
+        </div>
+    </div>
+    @Html.ValidationMessageFor(m => m.Captcha)
+
+    @Html.ValidationSummary(true)
+
+    <div style="margin-top:10px" class="form-group">
+        <div class="controls text-center">
+            <button type="submit" class="btn btn-updatepassword">Update Passord</button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,53 @@
+   .my-table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f9f9f9 !important;
+  }
+
+  .cancel:hover {
+    cursor: pointer;
+}
+
+  .cancel {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.fa-angle-left:hover {
+  cursor: pointer;
+}
+
+.fa-angle-right:hover {
+  cursor: pointer;
+}
+
+.fa-angle-left {
+  vertical-align: super;
+}
+
+.fa-angle-right {
+  vertical-align: super;
+}
+
+.scroll-in-modal {
+  height: 500px; overflow-y: auto; overflow-x: hidden;
+}
+
+.btn-toggle {
+  position: relative;
+  right: -5px !important
+}
+
+.btn-toggle-in-modal {
+  position: relative;
+  right: -5px !important;
+}
+
+.dropdown-menu.pull-right {
+  right: 10px !important;
+}
+
+.link:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,66 @@
+﻿<div class="card x_panel" *ngIf="sickDay">
+    <div id="divDataBody" class="container entity">
+        <div class="row formTitle">
+            <div class="col-md-6">
+                <h2 class="title">Update sick day</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <form name="addpost" class="form-horizontal  container-fluid">
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <input type="text" class="form-control has-feedback-left" id="inputSuccess6" [matDatepicker]="picker1" placeholder="Start Date" name="BeginDate" [(ngModel)]="sickDay.DateBegin">
+                        <mat-datepicker-toggle class="left" matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <span class="tooltiptext">
+                            Start Date
+                        </span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <input type="text" class="form-control has-feedback-left" id="inputSuccess6" [matDatepicker]="picker2" placeholder="End Date" name="EndDate" [(ngModel)]="sickDay.DateEnd">
+                        <mat-datepicker-toggle class="left" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <span class="tooltiptext">
+                            End Date
+                        </span>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                        <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess12" placeholder="Comment" name="Comment" [(ngModel)]="sickDay.Comment">
+                        <span class="fa fa-comment form-control-feedback left" aria-hidden="true"></span>
+                        <span class="tooltiptext">
+                            Comment
+                        </span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                        <input type="text" class="form-control has-feedback-left" id="inputSuccess12" placeholder="Count days" name="CountDays" [(ngModel)]="sickDay.CountDays">
+                        <span class="fa fa-calculator form-control-feedback left" aria-hidden="true"></span>
+                        <span class="error-message" *ngIf="cntDayErMsg">
+                            {{cntDayErMsg}}
+                        </span>
+                        <span class="tooltiptext">
+                            CountDays
+                        </span>
+
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+
+                    </div>
+                    <div class="col-md-8 col-md-offset-2 col-xs-12 ">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="form-group col-md-12 col-xs-12  text-center">
+                                <button class="btn btn-primary alignCenterBtn" (click)="updateSickDay(sickDay)">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+    </div>
+</div>

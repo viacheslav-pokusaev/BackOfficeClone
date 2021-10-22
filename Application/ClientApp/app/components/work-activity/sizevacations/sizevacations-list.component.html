@@ -1,0 +1,72 @@
+﻿<div class="card">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'Size of vacation' }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="row">
+                <div class="col-md-4">
+
+                </div>
+
+                <div class="col-md-8 text-right" *permission="['Super_Admin', 'Admin']">
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-primary toggle-button">
+                            <span class="fa fa-plus"></span>
+                        </button>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <li>
+                            <a (click)="menuAddNew()" class="side-menu-link">
+                                Add New
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table my-table-striped table-bordered projects">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Count of day</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="isAddVisible">
+                            <td>
+                                <mat-form-field>
+                                    <input matInput placeholder="Year" name="Year" [(ngModel)]="newSizeVacation.Year" type="number">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput placeholder="Count days" name="CountDays" [(ngModel)]="newSizeVacation.CountDays" type="number">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-success alignCenterBtn " (click)="add(newSizeVacation)">Save</button>
+                            </td>
+                        </tr>
+                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                        <tr *ngFor="let sizev of sizevacations; let i = index">
+                            <td><span>{{sizev.Year}}</span></td>
+                            <td><span>{{sizev.CountDays}}</span></td>
+                            <td *permission="['Super_Admin', 'Admin']">
+                                <a class="btn btn-default black-tooltip" (click)="delete(sizev.Id, i)">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="tooltiptext">Delete</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

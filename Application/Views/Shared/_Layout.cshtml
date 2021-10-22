@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Office</title>
+    @RenderSection("metatags", false)
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/mint.min.css" />
+    <link rel="stylesheet" href="~/css/responsive.css" />
+    <link rel="stylesheet" href="~/css/animate.min.css" />
+    <link rel="stylesheet" href="~/css/admin-style.css" />
+   
+</head>
+<body id="page-top">
+
+    @using Microsoft.AspNetCore.Mvc.Localization
+    @using Application.Server.Extentsions
+
+    @inject IHtmlLocalizer<Program> Localizer
+    @RenderBody()
+
+    <div class="">
+        <nav class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">
+            </div>
+        </nav>
+    </div>
+
+    <script src="~/scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/scripts/jquery.validate.min.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/respond.min.js"></script>
+    <script src="~/scripts/template/jquery.easing.js"></script>
+    <script src="~/scripts/template/jquery.backstretch.min.js"></script>
+    <script src="~/scripts/template/imagesloaded.pkgd.min.js"></script>
+    <script src="~/scripts/template/masonry.pkgd.min.js"></script>
+    <script src="~/scripts/template/magnificpopup.min.js"></script>
+    <script src="~/scripts/template/script.js"></script>
+    <script src="~/scripts/menu/highlightActiveMenu.js"></script>
+    <script src="~/scripts/authentication/authFormTrigger.js"></script>
+    <script src="~/scripts/authentication/showmore.js"></script>
+    <script src="~/scripts/jquery.mask.js"></script>
+    <script src="~/scripts/authentication/inputMasks.js"></script>
+    <script src="~/scripts/authentication/refreshCaptcha.js"></script>
+
+    @RenderSection("countdown", false)
+</body>
+</html>

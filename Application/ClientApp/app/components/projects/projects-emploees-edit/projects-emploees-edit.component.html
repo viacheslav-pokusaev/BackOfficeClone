@@ -1,0 +1,87 @@
+<modal-wrapper [dialogRef]="dialogRef">
+
+    <div class="card x_panel" *ngIf="emploee">
+        <div id="divDataBody" class="container entity">
+            <div class="row">
+                    <div class="col-md-12 form-title">
+                            <h2 style="color: #73879C;">Update Employee`s info</h2>
+                        </div>
+                <div class="col-md-12 col-lg-12">
+                    <form name="addpost" class="form-horizontal  container-fluid">
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="FirstName" [(ngModel)]="emploee.FirstName" name="FirstName" readonly>
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                FirstName
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="LastName" [(ngModel)]="emploee.LastName" name="LastName" readonly>
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                LastName
+                            </span>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                            <select class="select2_single form-control" [(ngModel)]="emploee.Position" name="Position" tabindex="-1">
+                                <option *ngFor="let position of positions; let i = index" [value]="position">
+                                    {{position }}
+                                </option>
+                            </select>
+                            <span class="tooltiptext">
+                                Position
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
+                            <select class="select2_single form-control" [(ngModel)]="emploee.Status" name="Status" tabindex="-1">
+                                <option *ngFor="let status of statuses; let i = index" [value]="status">
+                                    {{status }}
+                                </option>
+                            </select>
+                            <span class="tooltiptext">
+                                Status
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess7" [matDatepicker]="picker1" placeholder="Date of start of work" [min]="minDateStart" name="DateStartWork" [(ngModel)]="emploee.DateStartWork">
+                            <mat-datepicker-toggle class="left" matSuffix [for]="picker1" style="color: #73879C;"></mat-datepicker-toggle>
+                            <span class="tooltiptext">
+                                Start Work
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip date-field">
+                            <mat-datepicker #picker2></mat-datepicker>
+                            <input type="text" class="form-control has-feedback-left form-control-small" id="inputSuccess7" [matDatepicker]="picker2" placeholder="Date of finish of work" [min]="minDateStart" name="DateFinishWork" [(ngModel)]="emploee.DateFinishWork">
+                            <mat-datepicker-toggle class="left" matSuffix [for]="picker2" style="color: #73879C;"></mat-datepicker-toggle>
+                            <span class="tooltiptext">
+                                End Work
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback  black-tooltip">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Comment" [(ngModel)]="emploee.Comment" name="Comment" autocomplete="off">
+                            <span class="fa fa-bank form-control-feedback left" aria-hidden="true"></span>
+                            <span class="tooltiptext">
+                                Comment
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="form-group col-md-6 col-xs-6 text-center">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="updateEmploee(emploee)">
+                                    Save
+                                </button>
+                            </div>
+                            <div class="form-group col-md-6 col-xs-6 text-center">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="cancel()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</modal-wrapper>

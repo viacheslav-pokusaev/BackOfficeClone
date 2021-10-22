@@ -1,0 +1,37 @@
+﻿<div class="card x_panel">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Vacations history</h2>
+        </div>
+    </div>
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table my-table-striped table-bordered projects">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Year</th>
+                            <th>Accumulated Days</th>
+                            <th>Available Days</th>
+                            <th>Spent Days</th>
+                            <th>Count vacation days in this year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                        <tr *ngFor="let year of listVacation; let i = index">
+                            <td><span>{{year.Year}}</span></td>
+                            <td><span>{{year.AccumulatedDays}}</span></td>
+                            <td><span>{{year.AvailableDays}}</span></td>
+                            <td><span>{{year.KilledDays}}</span></td>
+                            <td><span>{{year.CountDays}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table-buttons [subject]="subject">
+
+                </table-buttons>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model Application.EntitiesModels.Models.AccountModels.LoginViewModel
+
+<form class="form-horizontal" role="form" asp-controller="Account" asp-action="Login" method="post">
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon"><strong>@@</strong></span>
+            <input id="loginEmail" class="form-control" asp-for="Email" required>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" class="form-control" asp-for="Password" required>
+        </div>
+    </div>
+    <div>
+        <div class="captcha" style="margin-bottom: 10px">
+            <label id="loginCaptcha" onclick="refreshCaptcha()" class="placeholder" for="captcha">
+                <a href="javascript:void(0);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+            </label>
+            <input id="logCaptcha" class="answer" type="number" asp-for="Captcha" required />
+        </div>
+    </div>
+    @Html.ValidationMessageFor(m => m.Captcha)
+    <div class="input-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" asp-for="RememberMe"> Remember me
+            </label>
+        </div>
+    </div>
+
+        @Html.ValidationSummary(true)
+
+    <div style="margin-top:10px" class="form-group">
+        <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl" />
+        <div class="controls text-center">
+            <button type="submit" class="btn btn-login">Login</button>
+        </div>
+    </div>
+
+</form>
