@@ -36,22 +36,29 @@ namespace Application.BBL.BusinessServices
         {
             using (var context = _dbContextFactory.Create())
             {
-                var vacation = new Vacation()
+                if (model != null)
                 {
-                    Comment = model.Comment,
-                    DateBegin = model.DateBegin,
-                    DateEnd = model.DateEnd,
-                    UserProfileId = model.UserProfileId,
-                    CountDays = model.CountDays,
-                    CreatedDate = model.CreatedDate,
-                    Status = model.Status,
-                };
+                    var vacation = new Vacation()
+                    {
+                        Comment = model.Comment,
+                        DateBegin = model.DateBegin,
+                        DateEnd = model.DateEnd,
+                        UserProfileId = model.UserProfileId,
+                        CountDays = model.CountDays,
+                        CreatedDate = model.CreatedDate,
+                        Status = model.Status,
+                    };
 
-                _databaseManager.EncryptDecrypt("Vacations", _dataProtector.Encrypt, vacation);
+                    _databaseManager.EncryptDecrypt("Vacations", _dataProtector.Encrypt, vacation);
 
-                context.Vacations.Add(vacation);
-                context.SaveChanges();
-                model.Id = vacation.Id;
+                    context.Vacations.Add(vacation);
+                    context.SaveChanges();
+                    model.Id = vacation.Id;
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
             }
             return model;
         }

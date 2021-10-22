@@ -337,7 +337,7 @@ namespace Application.BBL.BusinessServices
 
                 overtimes.ForEach(x => _databaseManager.EncryptDecryptAll(_dataProtector.Decrypt));
 
-                for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year; i++)
+                for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year - 1; i++)
                 {
                     var vacation = sizeVacations.FirstOrDefault(s => s.Year == i);
                     if (vacation == null)

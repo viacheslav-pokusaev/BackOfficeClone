@@ -273,6 +273,8 @@ paket-files/
 __pycache__/
 *.pyc
 
+dist/**
+
 Application/wwwroot/dist/vendor.bundle.js.map
 Application/wwwroot/dist/vendor.bundle.js
 Application/wwwroot/dist/vendor.bundle.min.js
@@ -300,3 +302,5 @@ Application/wwwroot/dist/scripts.bundle.js.map
 /Application/package-lock.json
 
  
+Application/logs/log.txt
+Application/wwwroot/dist/clients.module.chunk.js
