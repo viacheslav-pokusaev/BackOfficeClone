@@ -21,4 +21,3 @@ Steps install:
 				500 Internal Server Error","error":"SizeVacations not found"}
 		9.1. go to BackOffice\Application.DLL\BuisnessServices\UserViewService.cs;
 		9.2. find for loop on 340 line, and change it like this: for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year - 1; i++)
-		9.3. try again
