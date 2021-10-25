@@ -28,7 +28,9 @@ namespace Application.BBL.BusinessServices
 
         private List<BirthdayNotificationInfo> allCollegues = new List<BirthdayNotificationInfo>();
         private List<BirthdayNotificationInfo> birthdayMonthCollegues = new List<BirthdayNotificationInfo>();
+        private List<BirthdayNotificationInfo> birthdayTwoWeekCollegues = new List<BirthdayNotificationInfo>();
         private List<BirthdayNotificationInfo> birthdayWeekCollegues = new List<BirthdayNotificationInfo>();
+
         private List<EmailAddress> toEmail = new List<EmailAddress>();
 
         public BirthdayNotificationService(
@@ -55,11 +57,11 @@ namespace Application.BBL.BusinessServices
             }
         }
 
-        public void CheckBirthday(bool checkingMonthListOfBirthday)
+        public void CheckBirthday(string checkingMonthListOfBirthday)
         {
             InitAllCollegues();
 
-            if (!checkingMonthListOfBirthday)
+            if (checkingMonthListOfBirthday == "week")
             {
                 short countDaysInWeek = 7;
                 birthdayWeekCollegues =
@@ -67,7 +69,15 @@ namespace Application.BBL.BusinessServices
                     .Where(u => Math.Abs(u.Birthday.DayOfYear - DateTime.Now.DayOfYear) == countDaysInWeek)
                     .Select(s => s).ToList();
             }
-            else
+            else if (checkingMonthListOfBirthday == "twoWeek")
+            {
+                short countDaysInTwoWeek = 14;
+                birthdayTwoWeekCollegues =
+                    allCollegues
+                    .Where(u => Math.Abs(u.Birthday.DayOfYear - DateTime.Now.DayOfYear) == countDaysInTwoWeek)
+                    .Select(s => s).ToList();
+            }
+            else if (checkingMonthListOfBirthday == "month")
             {
                 short DaysInMonth = 31;
                 birthdayMonthCollegues =
@@ -76,22 +86,32 @@ namespace Application.BBL.BusinessServices
                     .Select(s => s).ToList();
             }
 
-            if (birthdayMonthCollegues.Count > 0 || birthdayWeekCollegues.Count > 0)
+            if (birthdayMonthCollegues.Count > 0 || birthdayWeekCollegues.Count > 0 || birthdayTwoWeekCollegues.Count > 0)
             {
                 GenereteRecipients(checkingMonthListOfBirthday);
-                if (checkingMonthListOfBirthday)
-                    GenerateEmail(emailSubject: "List of " + DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture) + " coming birthdays!", sendMonthListOfBirthday: true);
+                if (checkingMonthListOfBirthday == "month" && birthdayMonthCollegues.Count > 0)
+                    GenerateEmail(emailSubject: "List of " + DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture) + " coming birthdays!", sendMonthListOfBirthday: true, sendTwoWeekListOfBirthday: false);
+
                 else
-                if (birthdayWeekCollegues.Count > 0)
+                if (checkingMonthListOfBirthday == "twoWeek" && birthdayTwoWeekCollegues.Count > 0)
                 {
-                    GenerateEmail(emailSubject: "Soon Birthday! List of week birthdays!", sendMonthListOfBirthday: false);
+                    GenerateEmail(emailSubject: "Soon Birthday! List of two week birthdays!", sendMonthListOfBirthday: false, sendTwoWeekListOfBirthday: true);
                 }
+
+                else
+                if (checkingMonthListOfBirthday == "week" && birthdayWeekCollegues.Count > 0)
+                {
+                    GenerateEmail(emailSubject: "Soon Birthday! List of week birthdays!", sendMonthListOfBirthday: false, sendTwoWeekListOfBirthday: false);
+                }
+
+
+
             }
         }
 
-        private void GenereteRecipients(bool checkingMonthListOfBirthday)
+        private void GenereteRecipients(string checkingMonthListOfBirthday)
         {
-            if (checkingMonthListOfBirthday)
+            if (checkingMonthListOfBirthday == "month")
             {
                 var allColleguesExceptBirthdayCollegue = allCollegues.Except(birthdayMonthCollegues);
                 foreach (var recipient in allColleguesExceptBirthdayCollegue)
@@ -99,7 +119,7 @@ namespace Application.BBL.BusinessServices
                     toEmail.Add(new EmailAddress(recipient.RecipientEmail));
                 }
             }
-            else
+            else if (checkingMonthListOfBirthday == "week")
             {
                 var allColleguesExceptBirthdayCollegue = allCollegues.Except(birthdayWeekCollegues);
                 foreach (var recipient in allColleguesExceptBirthdayCollegue)
@@ -107,14 +127,22 @@ namespace Application.BBL.BusinessServices
                     toEmail.Add(new EmailAddress(recipient.RecipientEmail));
                 }
             }
+            else if (checkingMonthListOfBirthday == "twoWeek")
+            {
+                var allColleguesExceptBirthdayCollegue = allCollegues.Except(birthdayTwoWeekCollegues);
+                foreach (var recipient in allColleguesExceptBirthdayCollegue)
+                {
+                    toEmail.Add(new EmailAddress(recipient.RecipientEmail));
+                }
+            }
         }
 
-        private void GenerateEmail(string emailSubject, bool sendMonthListOfBirthday)
+        private void GenerateEmail(string emailSubject, bool sendMonthListOfBirthday, bool sendTwoWeekListOfBirthday)
         {
             var plainTextContent = "Notification about birthday!";
             var htmlContent = "<p>" + "We will have a birthday boys soon!</p>";
             string infotmationAboutBitrthday = "";
-            if (sendMonthListOfBirthday)
+            if (sendMonthListOfBirthday && !sendTwoWeekListOfBirthday)
                 foreach (var collegue in birthdayMonthCollegues)
                 {
                     infotmationAboutBitrthday +=
@@ -123,18 +151,32 @@ namespace Application.BBL.BusinessServices
                         collegue.Birthday.ToShortDateString() +
                         "</p>";
                 }
-            else
-                foreach (var collegue in birthdayWeekCollegues)
+            else if (sendTwoWeekListOfBirthday)
+            {
+                infotmationAboutBitrthday +=
+                        "<p>After 14 days</p>";
+                foreach (var collegue in birthdayTwoWeekCollegues)
                 {
                     infotmationAboutBitrthday +=
-                        "<p>" +
-                        "After 7 days" +
-                        "</p>" +
                         "<p>" +
                         collegue.FullName + " - " +
                         collegue.Birthday.ToShortDateString() +
                         "</p>";
                 }
+            }
+            else if (!sendTwoWeekListOfBirthday)
+            {
+                infotmationAboutBitrthday +=
+                        "<p>After 7 days</p>";
+                foreach (var collegue in birthdayWeekCollegues)
+                {
+                    infotmationAboutBitrthday +=
+                        "<p>" +
+                        collegue.FullName + " - " +
+                        collegue.Birthday.ToShortDateString() +
+                        "</p>";
+                }
+            }
 
             htmlContent += infotmationAboutBitrthday;
             _sendEmailService.SendEmail(toEmail, emailSubject, plainTextContent, htmlContent);

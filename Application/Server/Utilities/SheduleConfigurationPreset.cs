@@ -20,14 +20,21 @@ namespace Application
             sheduleConfigurations.Add(
                 new SheduleConfiguration
                 {
-                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday(true)),
+                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday("month")),
                     ConfigurePeriod = new Action<FluentScheduler.Schedule>(
                         (s) => s.ToRunNow().AndEvery((int)FrequencyScaling.One).Months().On((int)DaysInMonth.First).At(Night.Hour, Night.Minute))
                 });
             sheduleConfigurations.Add(
                 new SheduleConfiguration
                 {
-                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday(false)),
+                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday("week")),
+                    ConfigurePeriod = new Action<FluentScheduler.Schedule>(
+                        (s) => s.ToRunNow().AndEvery((int)FrequencyScaling.One).Days().At(Night.Hour, Night.Minute))
+                });
+            sheduleConfigurations.Add(
+                new SheduleConfiguration
+                {
+                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday("twoWeek")),
                     ConfigurePeriod = new Action<FluentScheduler.Schedule>(
                         (s) => s.ToRunNow().AndEvery((int)FrequencyScaling.One).Days().At(Night.Hour, Night.Minute))
                 });
