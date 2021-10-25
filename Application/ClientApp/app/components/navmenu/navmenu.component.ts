@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserStorageService } from '../../services/user-storage.service';
+import {ID_ARR} from '../../constants/constants'
 
 @Component({
     selector: 'nav-menu',
@@ -12,7 +13,9 @@ export class NavMenuComponent {
     id: number;
     isWorkActivityGroup: boolean;  
     firstName: string;
-    lastName: string; 
+    lastName: string;
+    targetId: string;
+    spanClass: string = 'span-close';
 
     private $BODY;
     private $MENU_TOGGLE;
@@ -53,12 +56,23 @@ export class NavMenuComponent {
 
       var $li = $('#' + target.replace("chevron","li")).parent(); 
 
+      //this.targetId = target;
+      var span = document.getElementById(target);
+
       if ($li.is('.active')) {
+            //move span to start rotate
+            span.classList.remove('span-open');
+                span.classList.add('span-close');
+            
+
           $li.removeClass('active active-sm');
               $('ul:first', $li).slideUp(function() {
                   //this.setContentHeight();
               });
           } else {
+              //move span to open rotate(270deg)
+              span.classList.remove('span-close');
+              span.classList.add('span-open');
               // prevent closing menu if we are on child menu
               if (!$li.parent().is('.child_menu')) {
                   $('#sidebar-menu').find('li').removeClass('active active-sm');
