@@ -22,7 +22,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </a>
             </label>
-            <input id="logCaptcha" class="answer" type="number" asp-for="Captcha" required />
+            <input id="logCaptcha" class="answer" type="number" asp-for="Captcha" value="" required />
         </div>
     </div>
     @Html.ValidationMessageFor(m => m.Captcha)
