@@ -1,26 +1,86 @@
 <modal-wrapper [dialogRef]="dialogRef">
-        <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-    <div class="row" *ngIf="data.user && emploees">
-        <div class="col-md-12 col-lg-12 col-sm-12">
-            <!-- Date of start of work: {{data.user.DateBeginWork != null ? (data.user.DateBeginWork | date:'MM/dd/yyyy') : "not exist"}}
-                <br>
-                Date of start of trial work: {{data.user.DateBeginTrialWork | date:'MM/dd/yyyy'}} -->
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row" *ngIf="data.user && emploees">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+
+                <div class="col-lg-3">
+                <img src="{{data.user.Avatar}}" class="img-thumbnail" style="width: 185.55px !important; height: 185.55px !important;" />
+                </div>
+                <div class="col-lg-9">
+                    <table class="table my-table-striped table-bordered">
+                        <tbody>
+                            <tr>
+                                <th scope="row">First Name</th>
+                                <td>{{data.user.FirstName}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Last Name:</th>
+                                <td>{{data.user.LastName}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Phone:</th>
+                                <td>{{data.user.Phone}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email:</th>
+                                <td>{{data.user.Email}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Skype:</th>
+                                <td>{{data.user.Skype}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Date Birthday:</th>
+                                <td>{{data.user.DateBirthday| date:'MM/dd/yyyy'}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Date Begin Trial Work:</th>
+                                <td>{{data.user.DateBeginTrialWork| date:'MM/dd/yyyy'}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Date Begin Work:</th>
+                                <td>{{data.user.DateBeginWork| date:'MM/dd/yyyy'}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Address:</th>
+                                <td>{{data.user.ResidentialAddress}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Skills:</th>
+                                <td>{{data.user.Skills}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Hobbies:</th>
+                                <td>{{data.user.Hobbies}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Wishes:</th>
+                                <td>{{data.user.Wishes}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Comment:</th>
+                                <td>{{data.user.Comment}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>          
+
                 <table class="table my-table-striped table-bordered projects">
-            <thead class="text-primary">
-                <tr>
-                    <th>Project</th>
-                    <th>Position</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
-                <tr *ngFor="let emploee of emploees; let i = index">
-                    <td><span>{{emploee.ProjectName}}</span></td>
-                    <td><span>{{emploee.Position}}</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Project</th>
+                            <th>Position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                        <tr *ngFor="let emploee of emploees; let i = index">
+                            <td><span>{{emploee.ProjectName}}</span></td>
+                            <td><span>{{emploee.Position}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </div>
 </modal-wrapper>
