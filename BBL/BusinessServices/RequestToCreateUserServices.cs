@@ -21,6 +21,8 @@ namespace Application.BBL.BusinessServices
 
         private readonly DatabaseManager _databaseManager;
 
+        private const int TRIAL_PERIOD = 3;
+
         public RequestToCreateUserServices(IDbContextFactory dbContextFactory, UserManager<ApplicationUser> userManage, DataProtector dataProtector, DatabaseManager databaseManager)
         {
             _dbContextFactory = dbContextFactory;
@@ -175,7 +177,7 @@ namespace Application.BBL.BusinessServices
                 var profile = new UserProfile()
                 {
                     DateBirthday = preUserModel.DateBirthday,
-                    DateBeginWork = preUserModel.DateCreate,
+                    DateBeginWork = preUserModel.DateCreate.AddMonths(TRIAL_PERIOD),
                     DateBeginTrialWork = preUserModel.DateCreate,
                     ApplicationUserId = aspUser.Id
 
