@@ -17,7 +17,7 @@ using Application.EntitiesModels.Models;
 using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Application.EntitiesModels.Entities;
-using static Application.EntitiesModels.Models.BirthdayNotificationInfo;
+using static Application.EntitiesModels.Enums.UpcomingBirthdays;
 
 namespace Application.BBL.BusinessServices
 {
@@ -58,29 +58,29 @@ namespace Application.BBL.BusinessServices
             }
         }
 
-        public void CheckBirthday(Enum checkingUpcomingBirthdays)
+        public void CheckBirthday(Enum checkPeriod)
         {
             InitAllCollegues();
 
-            if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Week))
+            if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Week))
             {
-                short countDaysInWeek = (short) UpcomingBirthdays.Week;
+                short countDaysInWeek = (short) UpcomingBirthdaysPeriod.Week;
                 birthdayWeekCollegues =
                     allCollegues
                     .Where(u => Math.Abs(u.Birthday.DayOfYear - DateTime.Now.DayOfYear) == countDaysInWeek)
                     .Select(s => s).ToList();
             }
-            else if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.TwoWeek))
+            else if (checkPeriod.Equals(UpcomingBirthdaysPeriod.TwoWeek))
             {
-                short countDaysInTwoWeek = (short) UpcomingBirthdays.TwoWeek;
+                short countDaysInTwoWeek = (short) UpcomingBirthdaysPeriod.TwoWeek;
                 birthdayTwoWeekCollegues =
                     allCollegues
                     .Where(u => Math.Abs(u.Birthday.DayOfYear - DateTime.Now.DayOfYear) == countDaysInTwoWeek)
                     .Select(s => s).ToList();
             }
-            else if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Month))
+            else if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Month))
             {
-                short DaysInMonth = (short) UpcomingBirthdays.Month;
+                short DaysInMonth = (short) UpcomingBirthdaysPeriod.Month;
                 birthdayMonthCollegues =
                     allCollegues
                     .Where(u => Math.Abs(u.Birthday.DayOfYear - DateTime.Now.DayOfYear) <= DaysInMonth + 1)
@@ -89,20 +89,20 @@ namespace Application.BBL.BusinessServices
 
             if (birthdayMonthCollegues.Count > 0 || birthdayWeekCollegues.Count > 0 || birthdayTwoWeekCollegues.Count > 0)
             {
-                GenereteRecipients(checkingUpcomingBirthdays);
-                if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Month) && birthdayMonthCollegues.Count > 0)
-                    GenerateEmail(emailSubject: "List of " + DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture) + " upcoming birthdays!", checkingUpcomingBirthdays);
+                GenereteRecipients(checkPeriod);
+                if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Month) && birthdayMonthCollegues.Count > 0)
+                    GenerateEmail(emailSubject: "List of " + DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture) + " upcoming birthdays!", checkPeriod);
 
                 else
-                if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.TwoWeek) && birthdayTwoWeekCollegues.Count > 0)
+                if (checkPeriod.Equals(UpcomingBirthdaysPeriod.TwoWeek) && birthdayTwoWeekCollegues.Count > 0)
                 {
-                    GenerateEmail(emailSubject: "Soon Birthday! List of two week birthdays!", checkingUpcomingBirthdays);
+                    GenerateEmail(emailSubject: "Soon Birthday! List of two week birthdays!", checkPeriod);
                 }
 
                 else
-                if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Week) && birthdayWeekCollegues.Count > 0)
+                if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Week) && birthdayWeekCollegues.Count > 0)
                 {
-                    GenerateEmail(emailSubject: "Soon Birthday! List of week birthdays!", checkingUpcomingBirthdays);
+                    GenerateEmail(emailSubject: "Soon Birthday! List of week birthdays!", checkPeriod);
                 }
 
 
@@ -110,9 +110,9 @@ namespace Application.BBL.BusinessServices
             }
         }
 
-        private void GenereteRecipients(Enum checkingUpcomingBirthdays)
+        private void GenereteRecipients(Enum checkPeriod)
         {
-            if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Month))
+            if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Month))
             {
                 var allColleguesExceptBirthdayCollegue = allCollegues.Except(birthdayMonthCollegues);
                 foreach (var recipient in allColleguesExceptBirthdayCollegue)
@@ -120,7 +120,7 @@ namespace Application.BBL.BusinessServices
                     toEmail.Add(new EmailAddress(recipient.RecipientEmail));
                 }
             }
-            else if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Week))
+            else if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Week))
             {
                 var allColleguesExceptBirthdayCollegue = allCollegues.Except(birthdayWeekCollegues);
                 foreach (var recipient in allColleguesExceptBirthdayCollegue)
@@ -128,7 +128,7 @@ namespace Application.BBL.BusinessServices
                     toEmail.Add(new EmailAddress(recipient.RecipientEmail));
                 }
             }
-            else if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.TwoWeek))
+            else if (checkPeriod.Equals(UpcomingBirthdaysPeriod.TwoWeek))
             {
                 var allColleguesExceptBirthdayCollegue = allCollegues.Except(birthdayTwoWeekCollegues);
                 foreach (var recipient in allColleguesExceptBirthdayCollegue)
@@ -138,12 +138,12 @@ namespace Application.BBL.BusinessServices
             }
         }
 
-        private void GenerateEmail(string emailSubject, Enum checkingUpcomingBirthdays)
+        private void GenerateEmail(string emailSubject, Enum checkPeriod)
         {
             var plainTextContent = "Notification about birthday!";
             var htmlContent = "<p>" + "We will have a birthday boys soon!</p>";
             string infotmationAboutBitrthday = "";
-            if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Month))
+            if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Month))
                 foreach (var collegue in birthdayMonthCollegues)
                 {
                     infotmationAboutBitrthday +=
@@ -152,7 +152,7 @@ namespace Application.BBL.BusinessServices
                         collegue.Birthday.ToShortDateString() +
                         "</p>";
                 }
-            else if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.TwoWeek))
+            else if (checkPeriod.Equals(UpcomingBirthdaysPeriod.TwoWeek))
             {
                 infotmationAboutBitrthday +=
                         "<p>After 14 days</p>";
@@ -165,7 +165,7 @@ namespace Application.BBL.BusinessServices
                         "</p>";
                 }
             }
-            else if (checkingUpcomingBirthdays.Equals(UpcomingBirthdays.Week))
+            else if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Week))
             {
                 infotmationAboutBitrthday +=
                         "<p>After 7 days</p>";

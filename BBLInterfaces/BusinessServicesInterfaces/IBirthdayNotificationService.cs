@@ -6,6 +6,6 @@ namespace Application.BBLInterfaces.BusinessServicesInterfaces
 {
     public interface IBirthdayNotificationService
     {
-        void CheckBirthday(Enum checkingUpcomingBirthdays);
+        void CheckBirthday(Enum checkPeriod);
     }
 }
