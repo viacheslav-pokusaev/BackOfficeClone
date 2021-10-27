@@ -2,7 +2,7 @@ export class BaseQueryModel<T>{
     
     public Skip:number;
 
-    public Take:number;
+    public Take?:number;
 
     public SortBy:string;
 
