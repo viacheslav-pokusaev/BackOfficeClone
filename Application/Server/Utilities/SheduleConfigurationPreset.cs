@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Application.EntitiesModels.Models.BirthdayNotificationInfo;
 using static Application.Server.Utilities.ConfigurationValues;
 
 namespace Application
@@ -18,23 +19,23 @@ namespace Application
             var backUpNotificationService = serviceProvider.GetService<BBLInterfaces.BusinessServicesInterfaces.IBackUpNotificationService>();
 
             sheduleConfigurations.Add(
-                new SheduleConfiguration
-                {
-                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday("month")),
+                new SheduleConfiguration                
+                {                    
+                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday(UpcomingBirthdays.Month)),
                     ConfigurePeriod = new Action<FluentScheduler.Schedule>(
                         (s) => s.ToRunNow().AndEvery((int)FrequencyScaling.One).Months().On((int)DaysInMonth.First).At(Night.Hour, Night.Minute))
                 });
             sheduleConfigurations.Add(
                 new SheduleConfiguration
                 {
-                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday("week")),
+                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday(UpcomingBirthdays.Week)),
                     ConfigurePeriod = new Action<FluentScheduler.Schedule>(
                         (s) => s.ToRunNow().AndEvery((int)FrequencyScaling.One).Days().At(Night.Hour, Night.Minute))
                 });
             sheduleConfigurations.Add(
                 new SheduleConfiguration
                 {
-                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday("twoWeek")),
+                    ServiceFunction = new Action(() => birthdayNotificationService.CheckBirthday(UpcomingBirthdays.TwoWeek)),
                     ConfigurePeriod = new Action<FluentScheduler.Schedule>(
                         (s) => s.ToRunNow().AndEvery((int)FrequencyScaling.One).Days().At(Night.Hour, Night.Minute))
                 });

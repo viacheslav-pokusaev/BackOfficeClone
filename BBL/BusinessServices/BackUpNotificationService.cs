@@ -57,7 +57,7 @@ namespace Application.BBL.BusinessServices
         private void SendEmail()
         {
             var plainTextContent = "Notification about birthday!";
-            var htmlContent = "<p>" + "List of people, who responsibility on BackUp</p>";
+            var htmlContent = "<p>" + "List of people, that are responsible for BackUp</p>";
             foreach (var itUser in itUsers)
             {
                 htmlContent +=
