@@ -51,10 +51,10 @@
                             <button *permission="['Developer', 'ProjectManager', 'HumanResource']" type="button" class="btn btn-primary btn-xs" (click)="showInfo(user)">
                                 <i class="fa fa-user"> </i> View Profile
                             </button>
-                            <button *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']" type="button" class="btn btn-primary btn-xs" (click)="addFeedback(user.UserProfileId)">
+                            <button *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']" type="button" class="btn btn-primary btn-xs" (click)="addFeedback(user.ApplicationUserId)">
                                 <i class="fa fa-user"> </i> Add feedback
                             </button>
-                            <button *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']" type="button" class="btn btn-primary btn-xs" (click)="showFeedbacks(user.UserProfileId)">
+                            <button *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']" type="button" class="btn btn-primary btn-xs" (click)="showFeedbacks(user.ApplicationUserId)">
                                 <i class="fa fa-user"> </i> View feedbacks
                             </button>
                         </div>

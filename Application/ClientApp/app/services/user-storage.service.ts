@@ -52,7 +52,7 @@ export class UserStorageService  {
     }
 
     getId() {
-        return this.user.UserProfileId;
+        return this.user.ApplicationUserId;
     }
 
     getUser() {
