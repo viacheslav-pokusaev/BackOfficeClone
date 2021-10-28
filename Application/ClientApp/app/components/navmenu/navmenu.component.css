@@ -1,0 +1,6 @@
+.span-open{
+    transform: rotate(0deg);
+}
+.span-close{
+    transform: rotate(270deg);
+}

@@ -1029,9 +1029,11 @@ var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.j
 var users_change_password_component_1 = __webpack_require__("./ClientApp/app/components/users/users-change-password/users-change-password.component.ts");
 var users_projects_by_user_component_1 = __webpack_require__("./ClientApp/app/components/users/users-projects-by-user/users-projects-by-user.component.ts");
 var users_info_component_1 = __webpack_require__("./ClientApp/app/components/users/users-info/users-info.component.ts");
+var users_table_component_1 = __webpack_require__("./ClientApp/app/components/users/users-table/users-table.component.ts");
 var routes = [
     { path: ':id/info', component: users_info_component_1.UsersInfoComponent, canActivate: [permission_guard_1.PermissionGuard], data: { roles: ['Super_Admin', 'Admin'], forCurrentUser: true } },
     { path: '', component: users_list_component_1.UsersListComponent, canActivate: [permission_guard_1.PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } },
+    { path: 'table', component: users_table_component_1.UsersTableComponent, canActivate: [permission_guard_1.PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } },
     { path: ':id/edit', component: users_edit_component_1.UsersEditComponent, canActivate: [permission_guard_1.PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'Developer'], forCurrentUser: true } },
     { path: 'changePassword', component: users_change_password_component_1.UsersChangePasswordComponent, canActivate: [permission_guard_1.PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } },
     { path: ':id/projects', component: users_projects_by_user_component_1.UsersProjectsByUserComponent, canActivate: [permission_guard_1.PermissionGuard], data: { roles: ['Super_Admin', 'Admin'], forCurrentUser: true } }
@@ -1127,6 +1129,75 @@ var UsersShortInfoComponent = /** @class */ (function () {
     return UsersShortInfoComponent;
 }());
 exports.UsersShortInfoComponent = UsersShortInfoComponent;
+
+
+/***/ }),
+
+/***/ "./ClientApp/app/components/users/users-table/users-table.component.css":
+/***/ (function(module, exports) {
+
+module.exports = "\r\n"
+
+/***/ }),
+
+/***/ "./ClientApp/app/components/users/users-table/users-table.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "    <div class=\"card x_panel\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n            <h2>Users</h2>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\">\r\n            <table class=\"table table-hover\">\r\n                <thead class=\"text-primary\">\r\n                    <tr>\r\n                        <th>First Name</th>\r\n                        <th>Last Name</th>\r\n                        <th>Phone</th>\r\n                        <th>Email</th>\r\n                        <th>Skype</th>\r\n                        <th>Date Birthday</th>\r\n                        <th>Date Begin Work</th>\r\n                        <th>Comment</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <ngx-spinner [visible]=\"loading\" [config]=\"spinnerConfig\"></ngx-spinner>\r\n                    <tr *ngFor=\"let user of users; let i = index\">\r\n                        <td><span>{{user.FirstName}}</span></td>\r\n                        <td><span>{{user.LastName}}</span></td>\r\n                        <td><span>{{user.Phone}}</span></td>\r\n                        <td><span>{{user.Email}}</span></td>\r\n                        <td><span>{{user.Skype}}</span></td>\r\n                        <td><span>{{user.DateBirthday| date:'MM/dd/yyyy'}}</span></td>\r\n                        <td><span>{{user.DateBeginWork| date:'MM/dd/yyyy'}}</span></td>\r\n                        <td><span>{{user.Comment}}</span></td>\r\n                        <td *permission=\"['Super_Admin', 'Admin']\">\r\n                            <a class=\"btn btn-primary black-tooltip\" routerLink=\"/users/{{user.UserProfileId}}/edit\">\r\n                                <i class=\"fa fa-edit\"></i>\r\n                                <span class=\"tooltiptext\">Edit</span>\r\n                            </a>\r\n                            <a class=\"btn btn-info black-tooltip\" routerLink=\"/users/{{user.UserProfileId}}/info\">\r\n                                <i class=\"fa fa-info\"></i>\r\n                                <span class=\"tooltiptext\">Info</span>\r\n                            </a>\r\n                        </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "./ClientApp/app/components/users/users-table/users-table.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var users_service_1 = __webpack_require__("./ClientApp/app/services/users.service.ts");
+var user_query_model_1 = __webpack_require__("./ClientApp/app/models/query-models/user-query.model.ts");
+var ngx_spinner_1 = __webpack_require__("./node_modules/@hardpool/ngx-spinner/fesm5/hardpool-ngx-spinner.js");
+var constants_1 = __webpack_require__("./ClientApp/app/constants/constants.ts");
+var UsersTableComponent = /** @class */ (function () {
+    function UsersTableComponent(usersService) {
+        this.usersService = usersService;
+        this.users = new Array();
+        this.spinnerConfig = {
+            placement: ngx_spinner_1.SPINNER_PLACEMENT.block_ui,
+            animation: ngx_spinner_1.SPINNER_ANIMATIONS.spin_3,
+            size: constants_1.SPINNER_COFIG_CONST_OBJ.SIZE,
+            color: constants_1.SPINNER_COFIG_CONST_OBJ.COLOR
+        };
+    }
+    UsersTableComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.queryModel = new user_query_model_1.UserQueryModel();
+        this.queryModel.Take = constants_1.QUERY_MODEL_CONST_OBJ.TAKE;
+        this.loading = true;
+        this.usersService.get(this.queryModel).subscribe(function (response) {
+            _this.users = response.Result;
+            _this.loading = !_this.loading;
+        });
+    };
+    UsersTableComponent = __decorate([
+        core_1.Component({
+            template: __webpack_require__("./ClientApp/app/components/users/users-table/users-table.component.html"),
+            styles: [__webpack_require__("./ClientApp/app/components/users/users-table/users-table.component.css")]
+        }),
+        __metadata("design:paramtypes", [users_service_1.UsersService])
+    ], UsersTableComponent);
+    return UsersTableComponent;
+}());
+exports.UsersTableComponent = UsersTableComponent;
 
 
 /***/ }),
@@ -1265,6 +1336,7 @@ var users_short_info_component_1 = __webpack_require__("./ClientApp/app/componen
 var user_feedbacks_component_1 = __webpack_require__("./ClientApp/app/components/users/user-feedbacks/user-feedbacks.component.ts");
 var user_feedback_create_component_1 = __webpack_require__("./ClientApp/app/components/users/user-feedback-create/user-feedback-create.component.ts");
 var users_feedback_edit_component_1 = __webpack_require__("./ClientApp/app/components/users/users-feedback-edit/users-feedback-edit.component.ts");
+var users_table_component_1 = __webpack_require__("./ClientApp/app/components/users/users-table/users-table.component.ts");
 var UsersModule = /** @class */ (function () {
     function UsersModule() {
     }
@@ -1281,7 +1353,8 @@ var UsersModule = /** @class */ (function () {
                 users_short_info_component_1.UsersShortInfoComponent,
                 user_feedbacks_component_1.UserFeedbacksComponent,
                 user_feedback_create_component_1.UserFeedbackCreateComponent,
-                users_feedback_edit_component_1.UsersFeedbackEditComponent
+                users_feedback_edit_component_1.UsersFeedbackEditComponent,
+                users_table_component_1.UsersTableComponent
             ],
             imports: [
                 users_routing_module_1.UsersRoutingModule,
@@ -1299,6 +1372,24 @@ var UsersModule = /** @class */ (function () {
     return UsersModule;
 }());
 exports.UsersModule = UsersModule;
+
+
+/***/ }),
+
+/***/ "./ClientApp/app/constants/constants.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SPINNER_COFIG_CONST_OBJ = {
+    SIZE: "3rem",
+    COLOR: "#1574b3"
+};
+exports.QUERY_MODEL_CONST_OBJ = {
+    TAKE: null
+};
+exports.FROM_COMPONENT = "component";
 
 
 /***/ }),
@@ -1352,20 +1443,58 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
- * Cropper.js v1.5.7
+ * Cropper.js v1.5.12
  * https://fengyuanchen.github.io/cropperjs
  *
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2020-05-23T05:23:00.081Z
+ * Date: 2021-06-12T08:00:17.411Z
  */
 
 (function (global, factory) {
    true ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.Cropper = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Cropper = factory());
 }(this, (function () { 'use strict';
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+
+      if (enumerableOnly) {
+        symbols = symbols.filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      }
+
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -1420,40 +1549,6 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
     return obj;
   }
 
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
-  }
-
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -1463,7 +1558,7 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
   }
 
   function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
   }
 
   function _unsupportedIterableToArray(o, minLen) {
@@ -1543,6 +1638,10 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
   var REGEXP_DATA_URL = /^data:/;
   var REGEXP_DATA_URL_JPEG = /^data:image\/jpeg;base64,/;
   var REGEXP_TAG_NAME = /^img|canvas$/i; // Misc
+  // Inspired by the default width and height of a canvas element.
+
+  var MIN_CONTAINER_WIDTH = 200;
+  var MIN_CONTAINER_HEIGHT = 100;
 
   var DEFAULTS = {
     // Define the view mode of the cropper
@@ -1606,8 +1705,8 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
     minCanvasHeight: 0,
     minCropBoxWidth: 0,
     minCropBoxHeight: 0,
-    minContainerWidth: 200,
-    minContainerHeight: 100,
+    minContainerWidth: MIN_CONTAINER_WIDTH,
+    minContainerHeight: MIN_CONTAINER_HEIGHT,
     // Shortcuts of events
     ready: null,
     cropstart: null,
@@ -2155,7 +2254,7 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
   function getMaxZoomRatio(pointers) {
     var pointers2 = _objectSpread2({}, pointers);
 
-    var ratios = [];
+    var maxRatio = 0;
     forEach(pointers, function (pointer, pointerId) {
       delete pointers2[pointerId];
       forEach(pointers2, function (pointer2) {
@@ -2166,13 +2265,13 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
         var z1 = Math.sqrt(x1 * x1 + y1 * y1);
         var z2 = Math.sqrt(x2 * x2 + y2 * y2);
         var ratio = (z2 - z1) / z1;
-        ratios.push(ratio);
+
+        if (Math.abs(ratio) > Math.abs(maxRatio)) {
+          maxRatio = ratio;
+        }
       });
     });
-    ratios.sort(function (a, b) {
-      return Math.abs(a) < Math.abs(b);
-    });
-    return ratios[0];
+    return maxRatio;
   }
   /**
    * Get a pointer from an event object.
@@ -2576,11 +2675,13 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
           options = this.options,
           container = this.container,
           cropper = this.cropper;
+      var minWidth = Number(options.minContainerWidth);
+      var minHeight = Number(options.minContainerHeight);
       addClass(cropper, CLASS_HIDDEN);
       removeClass(element, CLASS_HIDDEN);
       var containerData = {
-        width: Math.max(container.offsetWidth, Number(options.minContainerWidth) || 200),
-        height: Math.max(container.offsetHeight, Number(options.minContainerHeight) || 100)
+        width: Math.max(container.offsetWidth, minWidth >= 0 ? minWidth : MIN_CONTAINER_WIDTH),
+        height: Math.max(container.offsetHeight, minHeight >= 0 ? minHeight : MIN_CONTAINER_HEIGHT)
       };
       this.containerData = containerData;
       setStyle(cropper, {
@@ -2621,14 +2722,15 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
         width: canvasWidth,
         height: canvasHeight
       };
-      canvasData.left = (containerData.width - canvasWidth) / 2;
-      canvasData.top = (containerData.height - canvasHeight) / 2;
-      canvasData.oldLeft = canvasData.left;
-      canvasData.oldTop = canvasData.top;
       this.canvasData = canvasData;
       this.limited = viewMode === 1 || viewMode === 2;
       this.limitCanvas(true, true);
-      this.initialImageData = assign({}, imageData);
+      canvasData.width = Math.min(Math.max(canvasData.width, canvasData.minWidth), canvasData.maxWidth);
+      canvasData.height = Math.min(Math.max(canvasData.height, canvasData.minHeight), canvasData.maxHeight);
+      canvasData.left = (containerData.width - canvasData.width) / 2;
+      canvasData.top = (containerData.height - canvasData.height) / 2;
+      canvasData.oldLeft = canvasData.left;
+      canvasData.oldTop = canvasData.top;
       this.initialCanvasData = assign({}, canvasData);
     },
     limitCanvas: function limitCanvas(sizeLimited, positionLimited) {
@@ -3162,9 +3264,11 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
       var options = this.options,
           container = this.container,
           containerData = this.containerData;
-      var ratio = container.offsetWidth / containerData.width; // Resize when width changed or height changed
+      var ratioX = container.offsetWidth / containerData.width;
+      var ratioY = container.offsetHeight / containerData.height;
+      var ratio = Math.abs(ratioX - 1) > Math.abs(ratioY - 1) ? ratioX : ratioY; // Resize when width changed or height changed
 
-      if (ratio !== 1 || container.offsetHeight !== containerData.height) {
+      if (ratio !== 1) {
         var canvasData;
         var cropBoxData;
 
@@ -4684,9 +4788,10 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
 
         if (options.checkCrossOrigin && isCrossOriginURL(url) && element.crossOrigin) {
           url = addTimestamp(url);
-        }
+        } // The third parameter is required for avoiding side-effect (#682)
 
-        xhr.open('GET', url);
+
+        xhr.open('GET', url, true);
         xhr.responseType = 'arraybuffer';
         xhr.withCredentials = element.crossOrigin === 'use-credentials';
         xhr.send();
@@ -4777,6 +4882,7 @@ exports.ListVacationQueryModel = ListVacationQueryModel;
             naturalHeight: naturalHeight,
             aspectRatio: naturalWidth / naturalHeight
           });
+          _this2.initialImageData = assign({}, _this2.imageData);
           _this2.sizing = false;
           _this2.sized = true;
 
