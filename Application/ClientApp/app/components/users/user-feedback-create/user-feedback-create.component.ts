@@ -42,10 +42,7 @@ export class UserFeedbackCreateComponent {
     public createFeedback(): void {
         this.feedbackService.addFeedback(this.feedback).subscribe(response => {
             this.cancel();
-        },
-            error => {
-                console.log(error);
-            });
+        });
     }
 
     public cancel(): void {
