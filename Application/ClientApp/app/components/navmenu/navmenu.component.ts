@@ -54,8 +54,9 @@ export class NavMenuComponent {
       var $li = $('#' + target.replace("chevron","li")).parent(); 
 
       //this.targetId = target;
-      var span = document.getElementById(target);
-
+        var link = document.getElementById(target);
+        var span = link.getElementsByTagName('span')[0];
+        //var span = linkChildrens
       if ($li.is('.active')) {
             //move span to start rotate
             span.classList.remove('span-open');

@@ -7,13 +7,13 @@
         <div class="menu_section">
             <ul class="nav side-menu">
                 <li>
-                    <a [routerLink]="['/users']" id="homeli" (click)="anchorClicked($event)"><i class="fa fa-users"></i> Users <span id="homechevron" class="fa fa-chevron-down"></span></a>
+                    <a [routerLink]="['/users']" id="homeli" (click)="anchorClicked($event)"><i class="fa fa-users"></i> Users <span id="homechevron" class="fa fa-chevron-down span-close"></span></a>
                     <ul class="nav child_menu">
                         <li><a [routerLink]="['/users/table']">List of colleagues</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a id="formsli" [routerLink]="['/workactivities']" (click)="anchorClicked($event)"><i class="fa fa-calendar"></i> Work activities <span id="formschevron" class="fa fa-chevron-down" ></span></a>
+                    <a id="formsli" [routerLink]="['/workactivities']" (click)="anchorClicked($event)"><i class="fa fa-calendar"></i> Work activities <span id="formschevron" class="fa fa-chevron-down span-close" ></span></a>
                     <ul class="nav child_menu">
                         <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'Developer', 'ProjectManager']"><a [routerLink]="['/workactivities']">WorkActivity</a></li>
                         <li *permission="['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager']"><a [routerLink]="['/workactivities/vacations']">Vacations</a></li>
@@ -27,13 +27,13 @@
                     <a [routerLink]="['/proposals']"><i class="fa fa-check-square"></i> Confirm registrations</a>
                 </li>
                 <li *permission="['Super_Admin', 'Admin', 'ProjectManager', 'HumanResource']">
-                    <a id="uielementsli" [routerLink]="['/projects']" (click)="anchorClicked($event)"><i class="fa fa-file"></i> Projects <span id="uielementschevron" class="fa fa-chevron-down"></span></a>
+                    <a id="uielementsli" [routerLink]="['/projects']" (click)="anchorClicked($event)"><i class="fa fa-file"></i> Projects <span id="uielementschevron" class="fa fa-chevron-down span-close"></span></a>
                     <ul class="nav child_menu">
                         <li *permission="['Super_Admin', 'Admin', 'ProjectManager', 'HumanResource']"><a [routerLink]="['/projects']">List of projects</a></li>
                     </ul>
                 </li>
                 <li *permission="['Super_Admin', 'Admin', 'ProjectManager']">
-                    <a [routerLink]="['/clients']" id="tablesli" (click)="anchorClicked($event)"><i class="fa fa-male"></i> Clients <span id="tableschevron" class="fa fa-chevron-down"></span></a>
+                    <a [routerLink]="['/clients']" id="tablesli" (click)="anchorClicked($event)"><i class="fa fa-male"></i> Clients <span id="tableschevron" class="fa fa-chevron-down span-close"></span></a>
                     <ul class="nav child_menu">
                         <li *permission="['Super_Admin', 'Admin', 'ProjectManager']"><a [routerLink]="['/clients']">List of clients</a></li>
                     </ul>
