@@ -4,8 +4,7 @@
 }
 
 export const QUERY_MODEL_CONST_OBJ = {
-    TAKE: null,
-    LOADING: true
+    TAKE: null
 
 }
 
