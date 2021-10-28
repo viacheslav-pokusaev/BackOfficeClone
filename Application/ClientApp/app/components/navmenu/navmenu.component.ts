@@ -14,6 +14,8 @@ export class NavMenuComponent {
     firstName: string;
     lastName: string; 
 
+    public imgPath: string = ""
+
     private $BODY;
     private $MENU_TOGGLE;
     private $SIDEBAR_MENU;
@@ -24,9 +26,8 @@ export class NavMenuComponent {
     private $FOOTER;
 
     constructor(
-        private userStorageService: UserStorageService, 
-        private route: ActivatedRoute,
-        private router: Router
+        private userStorageService: UserStorageService,
+        private router: Router,
     ) {
     } 
     ngOnInit() {
@@ -34,6 +35,7 @@ export class NavMenuComponent {
         this.id = this.userStorageService.getId();
         this.firstName = this.userStorageService.getUser().FirstName;
         this.lastName = this.userStorageService.getUser().LastName;
+        this.imgPath = window.location.origin + "/img/navbar-logo.png";
     }      
 
     public isLinkWorkActivitiesActive() {
