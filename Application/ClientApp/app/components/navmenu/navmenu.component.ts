@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserStorageService } from '../../services/user-storage.service';
-import {ID_ARR} from '../../constants/constants'
 
 @Component({
     selector: 'nav-menu',
@@ -14,8 +13,6 @@ export class NavMenuComponent {
     isWorkActivityGroup: boolean;  
     firstName: string;
     lastName: string;
-    targetId: string;
-    spanClass: string = 'span-close';
 
     private $BODY;
     private $MENU_TOGGLE;

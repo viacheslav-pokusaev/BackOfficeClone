@@ -9,11 +9,3 @@ export const QUERY_MODEL_CONST_OBJ = {
 
 }
 export const FROM_COMPONENT = "component";
-
-//for navmenu component
-export const ID_ARR = [
-    "homechevron",
-    "formschevron",
-    "uielementschevron",
-    "tableschevron"
-];
