@@ -16,6 +16,7 @@ import { UsersShortInfoComponent } from './users-short-info/users-short-info.com
 import { UserFeedbacksComponent } from './user-feedbacks/user-feedbacks.component';
 import { UserFeedbackCreateComponent } from './user-feedback-create/user-feedback-create.component';
 import { UsersFeedbackEditComponent } from './users-feedback-edit/users-feedback-edit.component';
+import { UsersTableComponent } from './users-table/users-table.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { UsersFeedbackEditComponent } from './users-feedback-edit/users-feedback
         UsersShortInfoComponent,
         UserFeedbacksComponent,
         UserFeedbackCreateComponent,
-        UsersFeedbackEditComponent
+        UsersFeedbackEditComponent,
+        UsersTableComponent
     ],
     imports: [
         UsersRoutingModule, 
