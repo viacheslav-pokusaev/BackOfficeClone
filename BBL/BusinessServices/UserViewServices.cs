@@ -337,11 +337,13 @@ namespace Application.BBL.BusinessServices
 
                 overtimes.ForEach(x => _databaseManager.EncryptDecryptAll(_dataProtector.Decrypt));
 
-                for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year; i++)
+                var lastVacationCount = vacations.Count;
+                //for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year; i++)
+                for (int i = dateBeginWork.Value.Year; i <= lastVacationCount; i++)
                 {
                     var vacation = sizeVacations.FirstOrDefault(s => s.Year == i);
-                    if (vacation == null)
-                        throw new Exception("SizeVacations not found");
+                    //if (vacation == null)
+                    //    throw new Exception("SizeVacations not found");
 
                     int workedDays = GetWorkedDaysInYear(i, userId, dateBeginWork, vacation, context);
 
