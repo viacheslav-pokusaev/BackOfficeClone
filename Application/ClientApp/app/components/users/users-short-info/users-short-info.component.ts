@@ -35,7 +35,8 @@ export class UsersShortInfoComponent implements OnInit {
         console.log(this.data.user);
         this.loading = true;
         let userProfileQueryModel = new UserProfileProjectQueryModel();
-        userProfileQueryModel.UserProfileId = this.data.user.UserProfileId;
+        userProfileQueryModel.UserProfileId = this.data.user.UserProfileId;        
+        userProfileQueryModel.Take = 1;
               this.userProfileProjectService.get(userProfileQueryModel).subscribe(response => {
                   this.emploees = response.Result;
                   this.loading = false;
