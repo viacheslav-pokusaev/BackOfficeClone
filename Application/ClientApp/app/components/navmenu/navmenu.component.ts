@@ -51,18 +51,13 @@ export class NavMenuComponent {
         return (segments.length < 3 || userId != this.id);
     }
 
-    //public anchorClicked(event: MouseEvent)
     public anchorClicked(target: string)
     {
-        //var target = this.getTarget(event).id;
-
-        //var buff = '#' + target.replace("chevron","li");
         var $li = $('#' + target.replace("chevron","li")).parent(); 
 
         //get arrow to span
         var span = document.getElementById(target);
         
-
       if ($li.is('.active')) {
             //move span to start rotate
                 this.flipArrow(span, true);
