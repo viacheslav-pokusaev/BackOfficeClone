@@ -51,12 +51,15 @@ export class NavMenuComponent {
         return (segments.length < 3 || userId != this.id);
     }
 
-    public anchorClicked(target: string)
+    public anchorClicked(targetId: string)
     {
-        var $li = $('#' + target.replace("chevron","li")).parent(); 
+        var target = document.getElementById(targetId);
+        
+        //get li to open
+        var $li = $('#' + targetId).parent();
 
-        //get arrow to span
-        var span = document.getElementById(target);
+        //get arrow to rotate
+        var span = target.getElementsByTagName('span')[0];
         
       if ($li.is('.active')) {
             //move span to start rotate
