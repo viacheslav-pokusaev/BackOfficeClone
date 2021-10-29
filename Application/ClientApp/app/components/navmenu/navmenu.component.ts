@@ -25,6 +25,8 @@ export class NavMenuComponent {
     private $NAV_MENU;
     private $FOOTER;
 
+    private previewSpan: HTMLSpanElement;
+
     constructor(
         private userStorageService: UserStorageService,
         private router: Router,
@@ -35,7 +37,7 @@ export class NavMenuComponent {
         this.id = this.userStorageService.getId();
         this.firstName = this.userStorageService.getUser().FirstName;
         this.lastName = this.userStorageService.getUser().LastName;
-        this.imgPath = window.location.origin + "/img/navbar-logo.png";
+        this.imgPath = "/img/navbar-logo.png";
     }      
 
     public isLinkWorkActivitiesActive() {
@@ -49,21 +51,21 @@ export class NavMenuComponent {
         return (segments.length < 3 || userId != this.id);
     }
 
-    public anchorClicked(event: MouseEvent)
-  {
-        var target = this.getTarget(event).id;
+    //public anchorClicked(event: MouseEvent)
+    public anchorClicked(target: string)
+    {
+        //var target = this.getTarget(event).id;
 
-      var $li = $('#' + target.replace("chevron","li")).parent(); 
+        //var buff = '#' + target.replace("chevron","li");
+        var $li = $('#' + target.replace("chevron","li")).parent(); 
 
         //get arrow to span
-        var link = document.getElementById(target);
-        var span = link.getElementsByTagName('span')[0];
+        var span = document.getElementById(target);
+        
 
       if ($li.is('.active')) {
             //move span to start rotate
-            span.classList.remove('span-open');
-                span.classList.add('span-close');
-            
+                this.flipArrow(span, true);
 
           $li.removeClass('active active-sm');
               $('ul:first', $li).slideUp(function() {
@@ -71,8 +73,7 @@ export class NavMenuComponent {
               });
           } else {
               //move span to open rotate(270deg)
-              span.classList.remove('span-close');
-              span.classList.add('span-open');
+                this.flipArrow(span, false);
               // prevent closing menu if we are on child menu
               if (!$li.parent().is('.child_menu')) {
                   $('#sidebar-menu').find('li').removeClass('active active-sm');
@@ -85,6 +86,24 @@ export class NavMenuComponent {
                   //this.setContentHeight();
               });
           }
+    }
+
+    private flipArrow(span: HTMLSpanElement,isOpen: boolean){
+        if(span != null && span != undefined){
+            if(isOpen){
+                span.classList.remove('span-open');
+                span.classList.add('span-close');
+            }
+            else{
+                span.classList.remove('span-close');
+                span.classList.add('span-open');
+                if(this.previewSpan != null && this.previewSpan != undefined && this.previewSpan != span){
+                    this.previewSpan.classList.remove('span-open');
+                    this.previewSpan.classList.add('span-close');
+                }
+            }
+            this.previewSpan = span;
+        }
     }
 
     public getTarget(e: MouseEvent) {
