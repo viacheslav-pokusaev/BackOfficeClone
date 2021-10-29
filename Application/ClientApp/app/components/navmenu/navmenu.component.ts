@@ -54,7 +54,7 @@ export class NavMenuComponent {
     public anchorClicked(targetId: string)
     {
         var target = document.getElementById(targetId);
-        
+
         //get li to open
         var $li = $('#' + targetId).parent();
 
@@ -70,7 +70,7 @@ export class NavMenuComponent {
                   //this.setContentHeight();
               });
           } else {
-              //move span to open rotate(270deg)
+              //move span to close rotate(270deg)
                 this.flipArrow(span, false);
               // prevent closing menu if we are on child menu
               if (!$li.parent().is('.child_menu')) {
