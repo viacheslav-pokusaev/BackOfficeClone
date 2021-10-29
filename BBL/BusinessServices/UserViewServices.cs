@@ -337,13 +337,12 @@ namespace Application.BBL.BusinessServices
 
                 overtimes.ForEach(x => _databaseManager.EncryptDecryptAll(_dataProtector.Decrypt));
 
-                var lastVacationCount = vacations.Count;
-                //for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year; i++)
-                for (int i = dateBeginWork.Value.Year; i <= lastVacationCount; i++)
+                
+                for (int i = DateTime.Now.Year; i <= dateBeginWork.Value.Year; i++)
                 {
                     var vacation = sizeVacations.FirstOrDefault(s => s.Year == i);
-                    //if (vacation == null)
-                    //    throw new Exception("SizeVacations not found");
+                    if (vacation == null)
+                        vacation = SetVacationSize(context, i);
 
                     int workedDays = GetWorkedDaysInYear(i, userId, dateBeginWork, vacation, context);
 
@@ -526,6 +525,21 @@ namespace Application.BBL.BusinessServices
         public Task Logout()
         {
             return _signManager.SignOutAsync();
+        }
+
+        private SizeVacation SetVacationSize(IApplicationDbContext context, int year, int countDay = 20)
+        {
+            var sizeVacation = new SizeVacation() { CountDay = countDay, Year = year};
+            try
+            {
+                context.SizeVacations.Add(sizeVacation);
+                context.SaveChanges();
+                return sizeVacation;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
