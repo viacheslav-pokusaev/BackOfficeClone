@@ -53,9 +53,10 @@ namespace Application.BBL.BusinessServices
             {
                 foreach(var sheetValue in sheetRow)
                 {
-                    readSheetResponce.Add(new VacationsTableModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.ToString() });
+                    readSheetResponce.Add(new VacationsTableModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue });
                     columnIndex++;
                 }
+                columnIndex = 0;
                 rowIndex++;
             }
             return readSheetResponce;

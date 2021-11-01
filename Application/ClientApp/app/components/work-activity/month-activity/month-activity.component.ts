@@ -26,8 +26,8 @@ export class MonthActivityComponent implements OnInit {
    
 
     ngOnInit(): void {
-              
-        this.http.get('api/vacations-table/all');
+
+        this.http.get('/api/vacations-table/all').subscribe();
        
     }
 

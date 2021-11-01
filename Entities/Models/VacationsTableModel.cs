@@ -8,6 +8,6 @@ namespace Application.EntitiesModels.Models
     {
         public int RowIndex { get; set; }
         public int ColumnIndex { get; set; }
-        public string Data { get; set; }
+        public object Data { get; set; }
     }
 }
