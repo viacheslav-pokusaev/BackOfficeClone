@@ -115,6 +115,7 @@ namespace Application.Server.Extentsions
 
             services.AddSingleton<ISheduleService, SheduleService>();
 
+            services.AddScoped<IVacationsTableService, VacationsTableService>();
 
             return services;
         }
