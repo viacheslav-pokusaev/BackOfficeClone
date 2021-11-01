@@ -155,6 +155,12 @@
     </Content>
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="inlaid-crowbar-330810-0492784c4579.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
