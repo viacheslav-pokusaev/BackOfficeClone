@@ -16,6 +16,7 @@ import { VacationsUserListComponent } from './vacations/vacations-user-list/vaca
 import { RouterModule } from '@angular/router';
 import { WorkAtHomeListComponent } from './work-at-home/work-at-home-list/work-at-home-list.component';
 import { WorkAtHomeUserListComponent } from './work-at-home/work-at-home-user-list/work-at-home-user-list.component';
+import { MonthActivityComponent } from './month-activity/month-activity.component';
 
 @NgModule({
     declarations: [WorkActivitiesListComponent,
@@ -30,7 +31,8 @@ import { WorkAtHomeUserListComponent } from './work-at-home/work-at-home-user-li
         SickDaysUserListComponent,
         VacationsUserListComponent,
         WorkAtHomeListComponent,
-        WorkAtHomeUserListComponent
+        WorkAtHomeUserListComponent,
+        MonthActivityComponent
         ],
     imports: [ SharedModule,
         AgGridModule.withComponents([WorkActivitiesListComponent]),
@@ -39,7 +41,8 @@ import { WorkAtHomeUserListComponent } from './work-at-home/work-at-home-user-li
         OvertimeUserListComponent,
         SickDaysUserListComponent,
         VacationsUserListComponent,
-        WorkAtHomeUserListComponent],
+        WorkAtHomeUserListComponent,
+        MonthActivityComponent    ],
     providers: [],
 })
 export class WorkActivityModule {}
