@@ -8,6 +8,6 @@ namespace Application.BBLInterfaces.BusinessServicesInterfaces
     public interface IVacationsTableService
     {
         List<VacationsTableModel> GetAllVacationsFromSheet();
-        void UpdateVacationOnSheet(VacationsTableModel vacations);
+        bool UpdateVacationOnSheet(VacationsTableModel vacations);
     }
 }
