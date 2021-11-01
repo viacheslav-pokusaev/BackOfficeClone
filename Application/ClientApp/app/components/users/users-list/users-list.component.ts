@@ -116,11 +116,11 @@ export class UsersListComponent implements OnInit {
         return user.Wishes != null ? user.Wishes.length >= 40 : false;
     }
 
-    public addFeedback(userId: number) {
+    public addFeedback(user: User) {
         let currentUserId: number = this.userStorageService.getId();
         let dialogRes = this.dialog.open(UserFeedbackCreateComponent, {
             width: '1050px',
-            data: { authorId: currentUserId, userId: userId }
+            data: { authorId: currentUserId, userId: user.ApplicationUserId, projectsCount: user.ProjectsCount }
         });
     }
 

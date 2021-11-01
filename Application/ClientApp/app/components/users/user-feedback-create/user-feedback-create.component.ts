@@ -30,9 +30,8 @@ export class UserFeedbackCreateComponent {
         let projectQueryModel = new ProjectQueryModel();
 
         this.feedback.UserId = data.userId;
-        this.feedback.AuthorId = data.authorId;
-        projectQueryModel.Take = 1;
-
+        this.feedback.AuthorId = data.authorId;               
+        projectQueryModel.Take = data.projectsCount;
         this.projectService.get(projectQueryModel).subscribe(response => {
             this.projects = response.Result;
             this.loading = false;

@@ -56,7 +56,8 @@ namespace Application.BBL.Mapper
                 Hobbies = profile.Hobbies,
                 Wishes = profile.Wishes,
                 Skills = profile.Skills,
-                ResidentialAddress = profile.ResidentialAddress
+                ResidentialAddress = profile.ResidentialAddress,
+                ProjectsCount = profile.Projects?.Count()
             };
         }
 

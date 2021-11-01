@@ -32,6 +32,6 @@ namespace Application.EntitiesModels.Models
         public string Role { get; set; }
 
         public int CountAvailableVacationDay { get; set; }
-        public int ProjectsCount { get; set; }
+        public int? ProjectsCount { get; set; }
     }
 }

@@ -54,31 +54,31 @@ namespace Application.BBL.BusinessServices
         {
             using (var context = _dbContextFactory.Create())
             {
-                var profiles = context.UsersProfiles.Include(x => x.Projects).FirstOrDefault(u => u.Id == id);
+                var profile = context.UsersProfiles.Include(x => x.Projects).FirstOrDefault(u => u.Id == id);
 
-                _databaseManager.EncryptDecrypt("UsersProfiles", _dataProtector.Decrypt, profiles);
+                _databaseManager.EncryptDecrypt("UsersProfiles", _dataProtector.Decrypt, profile);
 
-                if (profiles == null)
+                if (profile == null)
                     throw new Exception("UserProfile not found");
 
-                profiles.ApplicationUser = context.ApplicationUsers.FirstOrDefault(a => a.Id == profiles.ApplicationUserId);
+                profile.ApplicationUser = context.ApplicationUsers.FirstOrDefault(a => a.Id == profile.ApplicationUserId);
 
-                _databaseManager.EncryptDecrypt("ApplicationUsers", _dataProtector.Decrypt, profiles.ApplicationUser);
+                _databaseManager.EncryptDecrypt("ApplicationUsers", _dataProtector.Decrypt, profile.ApplicationUser);
 
-                if (profiles.ApplicationUser == null)
+                if (profile.ApplicationUser == null)
                     throw new Exception("AspNetUser not found");
 
-                var userViewModel = _roleDBEntityMapper.MapDBEntity(profiles);
+                var userViewModel = _roleDBEntityMapper.MapDBEntity(profile);
 
                 userViewModel.CountAvailableVacationDay = GetCountAvailableVacationDays(id);
 
-                userViewModel.ProjectsCount = profiles.Projects.Count();
+                userViewModel.ProjectsCount = profile.Projects.Count();
 
-                userViewModel.Role = _userManage.GetRolesAsync(profiles.ApplicationUser).Result[0];
+                userViewModel.Role = _userManage.GetRolesAsync(profile.ApplicationUser).Result[0];
 
-                if (profiles.Avatar != "" && profiles.Avatar != null)
+                if (profile.Avatar != "" && profile.Avatar != null)
                 {
-                    userViewModel.Avatar = _pictureAttacherService.GetBase64String(profiles.Avatar);
+                    userViewModel.Avatar = _pictureAttacherService.GetBase64String(profile.Avatar);
                 }
                 else
                 {
