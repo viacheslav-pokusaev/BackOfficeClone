@@ -16,7 +16,7 @@ namespace Application.Api.Controllers
             _vacationsTableService = vacationsTableService;
         }
         //[Authorize(Roles = "Admin, Super_Admin")]
-        [HttpPost]
+        [HttpGet]
         [Route("api/vacations-table/all")]
         public IActionResult Get()
         {
