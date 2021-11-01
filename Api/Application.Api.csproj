@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.51.0.2338" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
     <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="140.17283.0" />
     <PackageReference Include="NETStandard.Library" Version="2.0.1" />
