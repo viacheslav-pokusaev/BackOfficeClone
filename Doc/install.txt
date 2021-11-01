@@ -12,12 +12,3 @@ Steps install:
 	7. From BackOffice\Application: ng build
 	7. Commit first routes (12-26 lines), uncommit second (28-44). Path - Backoffice\Application\ClientApp\app\app-routing.module.ts
 	8. Uncommit last pathes to js files(~72-76), commit upper pathes to js files (~62-70). Path - \Backoffice\Application\Views\Account\Admin.cshtml
-	9. If you see error like this: 
-		ERROR Error: Uncaught (in promise):
-			HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null},"status":500,
-				"statusText":"Internal Server Error","url":"http://localhost:65193/api/Users/GetCurentUser",
-				"ok":false,"name":"HttpErrorResponse",
-				"message":"Http failure response for http://localhost:65193/api/Users/GetCurentUser:
-				500 Internal Server Error","error":"SizeVacations not found"}
-		9.1. go to BackOffice\Application.DLL\BuisnessServices\UserViewService.cs;
-		9.2. find for loop on 340 line, and change it like this: for (int i = dateBeginWork.Value.Year; i <= DateTime.Now.Year - 1; i++)
