@@ -8,10 +8,10 @@ using System.Text;
 
 namespace Application.Api.Controllers
 {
-    public class VacationsTableController : ApplicationApiController
+    public class MonthActivityController : ApplicationApiController
     {
-        private readonly IVacationsTableService _vacationsTableService;
-        public VacationsTableController(IVacationsTableService vacationsTableService)
+        private readonly IMonthActivityService _vacationsTableService;
+        public MonthActivityController(IMonthActivityService vacationsTableService)
         {
             _vacationsTableService = vacationsTableService;
         }
@@ -24,7 +24,7 @@ namespace Application.Api.Controllers
         }
         [HttpPut]
         [Route("api/vacations-table/edit")]
-        public IActionResult Edit([FromBody]VacationsTableModel vacation)
+        public IActionResult Edit([FromBody]MonthActivityModel vacation)
         {
             return InvokeMethodWithParam(_vacationsTableService.UpdateVacationOnSheet, vacation);
         }

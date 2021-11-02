@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TableData } from '../../../models/table-data.model';
+import { MonthActivityModel } from '../../../models/month-activity-model';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -10,13 +10,13 @@ import { TableData } from '../../../models/table-data.model';
 export class MonthActivityComponent implements OnInit {
     
 
-   public tableData = Array<Array<TableData>>();
+   public tableData = Array<Array<MonthActivityModel>>();
     constructor(private http: HttpClient) { };
 
    
 
     ngOnInit(): void {
-        this.http.get('/api/vacations-table/all').subscribe((res: Array<Array<TableData>>) => 
+        this.http.get('/api/vacations-table/all').subscribe((res: Array<Array<MonthActivityModel>>) => 
         {   
             console.log('requestRes: '+ res);
             this.tableData = res;

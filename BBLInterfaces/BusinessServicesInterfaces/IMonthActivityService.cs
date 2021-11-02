@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Application.BBLInterfaces.BusinessServicesInterfaces
 {
-    public interface IVacationsTableService
+    public interface IMonthActivityService
     {
-        List<List<VacationsTableModel>> GetAllVacationsFromSheet();
-        bool UpdateVacationOnSheet(VacationsTableModel vacations);
+        List<List<MonthActivityModel>> GetAllVacationsFromSheet();
+        bool UpdateVacationOnSheet(MonthActivityModel vacations);
     }
 }

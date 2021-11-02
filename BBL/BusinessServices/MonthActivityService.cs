@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Application.BBL.BusinessServices
 {
-    public class VacationsTableService : IVacationsTableService
+    public class MonthActivityService : IMonthActivityService
     {
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         static readonly string ApplicationName = "Dot Tutorials";
@@ -19,7 +19,7 @@ namespace Application.BBL.BusinessServices
         static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
 
         static SheetsService service;
-        public List<List<VacationsTableModel>> GetAllVacationsFromSheet()
+        public List<List<MonthActivityModel>> GetAllVacationsFromSheet()
         {
             GoogleCredential credential;
             //Reading Credentials File...
@@ -42,17 +42,17 @@ namespace Application.BBL.BusinessServices
             var response = request.Execute();
             // Getting all records from Column A to AJ...
             var sheetValues = response.Values;
-            var readSheetResponce = new List<List<VacationsTableModel>>();
+            var readSheetResponce = new List<List<MonthActivityModel>>();
 
             int rowIndex = 0;
             int columnIndex = 0;
 
             foreach(var sheetRow in sheetValues)
             {
-                var responceBuff = new List<VacationsTableModel>();
+                var responceBuff = new List<MonthActivityModel>();
                 foreach(var sheetValue in sheetRow)
                 {
-                    responceBuff.Add(new VacationsTableModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.ToString() });
+                    responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.ToString() });
                     columnIndex++;
                 }
                 readSheetResponce.Add(responceBuff);
@@ -62,7 +62,7 @@ namespace Application.BBL.BusinessServices
             return readSheetResponce;
         }
 
-        public bool UpdateVacationOnSheet(VacationsTableModel vacation)
+        public bool UpdateVacationOnSheet(MonthActivityModel vacation)
         {
             throw new NotImplementedException();
         }
