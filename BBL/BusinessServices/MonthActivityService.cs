@@ -6,6 +6,7 @@ using Google.Apis.Sheets.v4;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using static Google.Apis.Sheets.v4.SpreadsheetsResource;
@@ -81,17 +82,44 @@ namespace Application.BBL.BusinessServices
             int rowIndex = 0;
             int columnIndex = 0;
 
-            foreach (var sheetRow in sheetValues1)
+            try
             {
-                var responceBuff = new List<MonthActivityModel>();
-                foreach (var sheetValue in sheetRow.Values)
+                foreach (var sheetRow in sheetValues1)
                 {
-                    responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString() });
-                    columnIndex++;
+                    var responceBuff = new List<MonthActivityModel>();
+                    foreach (var sheetValue in sheetRow.Values)
+                    {
+                        float? prebuff = null;
+                        try
+                        {
+                            prebuff = sheetValue?.EffectiveFormat?.BackgroundColor.Red;
+                            var buff = prebuff * 100;
+                            var red = Convert.ToInt32(buff);
+                            var green = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Green * 100);
+                            var blue = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Blue * 100);
+
+                            Color myColor = Color.FromArgb(red, green, blue);
+                            string hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+
+                            responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
+                            columnIndex++;
+                        }
+                        catch(Exception ex)
+                        {
+                            var pb = prebuff;
+                        }
+                       
+                    }
+                    readSheetResponce.Add(responceBuff);
+                    columnIndex = 0;
+                    rowIndex++;
                 }
-                readSheetResponce.Add(responceBuff);
-                columnIndex = 0;
-                rowIndex++;
+            }
+            catch (Exception ex)
+            {
+                var ri = rowIndex;
+                var ci = columnIndex;
+                var err = ex.ToString();
             }
             return readSheetResponce;
         }
