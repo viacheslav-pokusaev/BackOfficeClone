@@ -3,6 +3,7 @@ using Application.EntitiesModels.Models;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace Application.BBL.BusinessServices
         static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
 
         static SheetsService service;
-        public List<VacationsTableModel> GetAllVacationsFromSheet()
+        public List<List<VacationsTableModel>> GetAllVacationsFromSheet()
         {
             GoogleCredential credential;
             //Reading Credentials File...
@@ -36,26 +37,25 @@ namespace Application.BBL.BusinessServices
 
             // Specifying Column Range for reading...
             var range = $"{sheet}!A:AJ";
-            SpreadsheetsResource.ValuesResource.GetRequest request =
-                    service.Spreadsheets.Values.Get(SpreadsheetId, range);
-
+            var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
             // Ecexuting Read Operation...
             var response = request.Execute();
-            // Getting all records from Column A to E...
-            IList<IList<object>> sheetValues = response.Values;
-
-            var readSheetResponce = new List<VacationsTableModel>();
+            // Getting all records from Column A to AJ...
+            var sheetValues = response.Values;
+            var readSheetResponce = new List<List<VacationsTableModel>>();
 
             int rowIndex = 0;
             int columnIndex = 0;
 
             foreach(var sheetRow in sheetValues)
             {
+                var responceBuff = new List<VacationsTableModel>();
                 foreach(var sheetValue in sheetRow)
                 {
-                    readSheetResponce.Add(new VacationsTableModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue });
+                    responceBuff.Add(new VacationsTableModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.ToString() });
                     columnIndex++;
                 }
+                readSheetResponce.Add(responceBuff);
                 columnIndex = 0;
                 rowIndex++;
             }

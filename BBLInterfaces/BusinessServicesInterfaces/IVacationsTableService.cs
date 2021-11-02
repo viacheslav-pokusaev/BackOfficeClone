@@ -7,7 +7,7 @@ namespace Application.BBLInterfaces.BusinessServicesInterfaces
 {
     public interface IVacationsTableService
     {
-        List<VacationsTableModel> GetAllVacationsFromSheet();
+        List<List<VacationsTableModel>> GetAllVacationsFromSheet();
         bool UpdateVacationOnSheet(VacationsTableModel vacations);
     }
 }

@@ -1,8 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { WorkActivityService } from '../../../services/work-activity.service';
 import { HttpClient } from '@angular/common/http';
+import { TableData } from '../../../models/table-data.model';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -12,22 +10,18 @@ import { HttpClient } from '@angular/common/http';
 export class MonthActivityComponent implements OnInit {
     
 
-   
-
-    constructor(
-        private workActivityService: WorkActivityService,
-        private location: Location,
-        private router: Router,
-        private http: HttpClient
-    ) {
-        
-    };
+   public tableData = Array<Array<TableData>>();
+    constructor(private http: HttpClient) { };
 
    
 
     ngOnInit(): void {
-
-        this.http.get('/api/vacations-table/all').subscribe();
+        this.http.get('/api/vacations-table/all').subscribe((res: Array<Array<TableData>>) => 
+        {   
+            console.log('requestRes: '+ res);
+            this.tableData = res;
+            console.log('tableData: '+ this.tableData);
+        });
        
     }
 
