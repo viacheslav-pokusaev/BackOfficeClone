@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using static Google.Apis.Sheets.v4.SpreadsheetsResource;
 
 namespace Application.BBL.BusinessServices
 {
@@ -37,22 +38,55 @@ namespace Application.BBL.BusinessServices
 
             // Specifying Column Range for reading...
             var range = $"{sheet}!A:AJ";
-            var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
+            //var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);            
+
+
+
+            var getRequest = new GetRequest(service, SpreadsheetId);
+            getRequest.IncludeGridData = true;
+            getRequest.Ranges = range;
+
+            //var spreadSheet = getRequest.Execute();
+            //var color = spreadSheet.Sheets[0].Data[0].RowData[3].Values[11].EffectiveFormat.BackgroundColor;
+            
+
+
+
+
+
+
+
+
+
             // Ecexuting Read Operation...
-            var response = request.Execute();
+
+
+            //var response = request.Execute();
+            var response1 = getRequest.Execute();
+
             // Getting all records from Column A to AJ...
-            var sheetValues = response.Values;
+            //var color = response1.Sheets[0].Data[0].RowData[3].Values[11].EffectiveFormat.BackgroundColor;
+
+            
+            
+            //var sheetValues = response.Values;
+
+            
+
+            var sheetValues1 = response1.Sheets[0].Data[0].RowData;
+            
+
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
             int rowIndex = 0;
             int columnIndex = 0;
 
-            foreach(var sheetRow in sheetValues)
+            foreach (var sheetRow in sheetValues1)
             {
                 var responceBuff = new List<MonthActivityModel>();
-                foreach(var sheetValue in sheetRow)
+                foreach (var sheetValue in sheetRow.Values)
                 {
-                    responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.ToString() });
+                    responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString() });
                     columnIndex++;
                 }
                 readSheetResponce.Add(responceBuff);

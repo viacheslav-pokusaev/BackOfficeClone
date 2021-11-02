@@ -9,5 +9,6 @@ namespace Application.EntitiesModels.Models
         public int RowIndex { get; set; }
         public int ColumnIndex { get; set; }
         public object Data { get; set; }
+        public string Color { get; set; }
     }
 }

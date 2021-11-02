@@ -50,7 +50,7 @@ const routes: Routes = [
 
     {
         path: 'monthactivity', children: [
-            { path: '', component: MonthActivityComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager'], forCurrentUser: false } }
+            { path: '', component: MonthActivityComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } }
         ]
     }
 ];
