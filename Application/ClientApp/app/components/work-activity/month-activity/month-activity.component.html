@@ -2,40 +2,26 @@
     <div class="row">
         <div class="col-md-6">
             <h2>Month Activity</h2>
-        </div>
-        <div class="col-md-6 text-right">
-            <div class="row">
-                <div class="col-md-4">
-
-                </div>
-
-                <div class="col-md-4">
-
-                </div>
-            </div>
-        </div>
+        </div>               
     </div>
-    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">        
         <div class="row">
-            <div class="col-md-12">
+            <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+            <div class="col-md-12" style="overflow-x:auto;">
                 <table class="table my-table-striped table-bordered projects">
                     <thead style="color: #73879C;">
                         <tr>
                             <th *ngFor="let cell of tableData[0]">{{cell.Data}}</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                    <tbody>                        
                         <tr *ngFor="let row of tableData | slice:1">
                             <td *ngFor="let cell of row" [style.background-color]="cell.Color">
                                 {{cell.Data}}
                             </td>
                         </tr>
                     </tbody>
-                </table>
-                <table-buttons [subject]="subject">
-
-                </table-buttons>
+                </table>                
             </div>
         </div>
     </div>

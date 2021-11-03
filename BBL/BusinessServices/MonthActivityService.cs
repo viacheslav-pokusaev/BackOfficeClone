@@ -66,13 +66,14 @@ namespace Application.BBL.BusinessServices
             var response1 = getRequest.Execute();
 
             // Getting all records from Column A to AJ...
-            //var color = response1.Sheets[0].Data[0].RowData[3].Values[11].EffectiveFormat.BackgroundColor;
+            //var color = response1.Sheets[0].Data[0].RowData[22].Values[2].EffectiveFormat?.BackgroundColor;
+            //Color myColor1 = Color.FromArgb(Convert.ToInt32(color?.Red)*255, Convert.ToInt32(color?.Green)*255, Convert.ToInt32(color?.Blue)*255);
+            //string hex1 = "#" + myColor1.R.ToString("X2") + myColor1.G.ToString("X2") + myColor1.B.ToString("X2");
 
-            
-            
+
             //var sheetValues = response.Values;
 
-            
+
 
             var sheetValues1 = response1.Sheets[0].Data[0].RowData;
             
@@ -87,11 +88,19 @@ namespace Application.BBL.BusinessServices
                     var responceBuff = new List<MonthActivityModel>();
                     foreach (var sheetValue in sheetRow.Values)
                     {
-                        var red = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Red * 255);
-                        var green = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Green * 255);
-                        var blue = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Blue * 255);
-                        Color myColor = Color.FromArgb(red, green, blue);
-                        string hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                    string hex;
+                        if(sheetValue.EffectiveFormat != null)
+                        {
+                            var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * 255);
+                            var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * 255);
+                            var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * 255);
+                            Color myColor = Color.FromArgb(red, green, blue);
+                            hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                        }
+                        else
+                        {
+                            hex = "#FFFFFF";
+                        }                        
 
                         responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
                         columnIndex++;                       
