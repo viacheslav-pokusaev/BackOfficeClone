@@ -81,46 +81,26 @@ namespace Application.BBL.BusinessServices
 
             int rowIndex = 0;
             int columnIndex = 0;
-
-            try
-            {
-                foreach (var sheetRow in sheetValues1)
+            
+            foreach (var sheetRow in sheetValues1)
                 {
                     var responceBuff = new List<MonthActivityModel>();
                     foreach (var sheetValue in sheetRow.Values)
                     {
-                        float? prebuff = null;
-                        try
-                        {
-                            prebuff = sheetValue?.EffectiveFormat?.BackgroundColor.Red;
-                            var buff = prebuff * 100;
-                            var red = Convert.ToInt32(buff);
-                            var green = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Green * 100);
-                            var blue = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Blue * 100);
+                        var red = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Red * 255);
+                        var green = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Green * 255);
+                        var blue = Convert.ToInt32(sheetValue?.EffectiveFormat?.BackgroundColor.Blue * 255);
+                        Color myColor = Color.FromArgb(red, green, blue);
+                        string hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
 
-                            Color myColor = Color.FromArgb(red, green, blue);
-                            string hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-
-                            responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
-                            columnIndex++;
-                        }
-                        catch(Exception ex)
-                        {
-                            var pb = prebuff;
-                        }
-                       
+                        responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
+                        columnIndex++;                       
                     }
                     readSheetResponce.Add(responceBuff);
                     columnIndex = 0;
                     rowIndex++;
-                }
-            }
-            catch (Exception ex)
-            {
-                var ri = rowIndex;
-                var ci = columnIndex;
-                var err = ex.ToString();
-            }
+                }            
+           
             return readSheetResponce;
         }
 
