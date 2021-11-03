@@ -23,26 +23,12 @@ namespace Application.BBL.BusinessServices
         static SheetsService service;
         public List<List<MonthActivityModel>> GetAllVacationsFromSheet()
         {
-            GoogleCredential credential;
-            //Reading Credentials File...
-            using (var stream = new FileStream("inlaid-crowbar-330810-0492784c4579.json", FileMode.Open, FileAccess.Read))
-            {
-                credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
-            }
-
-            // Creating Google Sheets API service...
-            service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
+            service = ConfigureSheetService();
 
             // Specifying Column Range for reading...
             var range = $"{sheet}!A:AJ";
             //var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);            
-
-
-
+            
             var getRequest = new GetRequest(service, SpreadsheetId);
             getRequest.IncludeGridData = true;
             getRequest.Ranges = range;
@@ -50,15 +36,6 @@ namespace Application.BBL.BusinessServices
             //var spreadSheet = getRequest.Execute();
             //var color = spreadSheet.Sheets[0].Data[0].RowData[3].Values[11].EffectiveFormat.BackgroundColor;
             
-
-
-
-
-
-
-
-
-
             // Ecexuting Read Operation...
 
 
@@ -70,13 +47,9 @@ namespace Application.BBL.BusinessServices
             //Color myColor1 = Color.FromArgb(Convert.ToInt32(color?.Red)*255, Convert.ToInt32(color?.Green)*255, Convert.ToInt32(color?.Blue)*255);
             //string hex1 = "#" + myColor1.R.ToString("X2") + myColor1.G.ToString("X2") + myColor1.B.ToString("X2");
 
-
             //var sheetValues = response.Values;
 
-
-
             var sheetValues1 = response1.Sheets[0].Data[0].RowData;
-            
 
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
@@ -116,6 +89,25 @@ namespace Application.BBL.BusinessServices
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)
         {
             throw new NotImplementedException();
+        }
+
+        private SheetsService ConfigureSheetService()
+        {
+            GoogleCredential credential;
+            //Reading Credentials File...
+            using (var stream = new FileStream("inlaid-crowbar-330810-0492784c4579.json", FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
+            }
+
+            // Creating Google Sheets API service...
+            service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+
+            return service;
         }
     }
 }
