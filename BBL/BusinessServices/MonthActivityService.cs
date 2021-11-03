@@ -24,8 +24,9 @@ namespace Application.BBL.BusinessServices
         static SheetsService service;
         public List<List<MonthActivityModel>> GetAllVacationsFromSheet()
         {
-            //get list of Sheets
             service = ConfigureSheetService();
+
+            //get list of Sheets
             var listOfsheets = SheetListNames();
 
             // Specifying Column Range for reading...
