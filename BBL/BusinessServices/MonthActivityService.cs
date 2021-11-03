@@ -14,7 +14,7 @@ using static Google.Apis.Sheets.v4.SpreadsheetsResource;
 
 namespace Application.BBL.BusinessServices
 {
-    public class MonthActivityService
+    public class MonthActivityService : IMonthActivityService
     {
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         static readonly string ApplicationName = "Dot Tutorials";
