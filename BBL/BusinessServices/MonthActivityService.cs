@@ -26,7 +26,7 @@ namespace Application.BBL.BusinessServices
             service = ConfigureSheetService();
 
             // Specifying Column Range for reading...
-            var range = $"{sheet}!A:AJ";
+            var range = $"{sheet}!A1:AJ25";
             //var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);            
             
             var getRequest = new GetRequest(service, SpreadsheetId);
