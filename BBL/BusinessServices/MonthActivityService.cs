@@ -24,7 +24,9 @@ namespace Application.BBL.BusinessServices
         static SheetsService service;
         public List<List<MonthActivityModel>> GetAllVacationsFromSheet()
         {
+            //get list of Sheets
             service = ConfigureSheetService();
+            var listOfsheets = SheetListNames();
 
             // Specifying Column Range for reading...
             var range = $"{sheet}!A1:AJ25";
@@ -134,6 +136,19 @@ namespace Application.BBL.BusinessServices
             }
             res = res + rowIndexStr;
             return res;
+        }
+        public List<string> SheetListNames()
+        {
+            var ssRequest = service.Spreadsheets.Get(SpreadsheetId);
+            Spreadsheet ss = ssRequest.Execute();
+            List<string> sheetList = new List<string>();
+
+            foreach (Sheet sheet in ss.Sheets)
+            {
+                sheetList.Add(sheet.Properties.Title);
+            }
+
+            return sheetList;
         }
     }
 }

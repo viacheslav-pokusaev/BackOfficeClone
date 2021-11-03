@@ -32,7 +32,7 @@ export class MonthActivityComponent implements OnInit {
             this.loading = false;
         });
 
-        this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();
+        //this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();
        
     }
 
