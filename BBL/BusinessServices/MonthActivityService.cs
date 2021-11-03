@@ -3,6 +3,7 @@ using Application.EntitiesModels.Models;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using static Google.Apis.Sheets.v4.SpreadsheetsResource;
 
 namespace Application.BBL.BusinessServices
 {
-    public class MonthActivityService : IMonthActivityService
+    public class MonthActivityService
     {
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         static readonly string ApplicationName = "Dot Tutorials";
@@ -67,7 +68,7 @@ namespace Application.BBL.BusinessServices
                             var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * 255);
                             var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * 255);
                             var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * 255);
-                            Color myColor = Color.FromArgb(red, green, blue);
+                            System.Drawing.Color myColor = System.Drawing.Color.FromArgb(red, green, blue);
                             hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
                         }
                         else
@@ -88,9 +89,14 @@ namespace Application.BBL.BusinessServices
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)
         {
-            throw new NotImplementedException();
+            var valuesResource = ConfigureSheetService().Spreadsheets.Values;
+            var WriteRange = ColumnNumberToLetter(3, 1);
+            var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { "ConvertTest2" } } };
+            var update = valuesResource.Update(valueRange, "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4", WriteRange);
+            update.ValueInputOption = ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
+            var response = update.Execute();
+            return true;
         }
-
         private SheetsService ConfigureSheetService()
         {
             GoogleCredential credential;
@@ -108,6 +114,26 @@ namespace Application.BBL.BusinessServices
             });
 
             return service;
+        }
+        private string ColumnNumberToLetter(int columnIndex, int rowIndex)
+        {
+            if(columnIndex < 26)
+            columnIndex++;
+            rowIndex++;
+            string rowIndexStr = rowIndex.ToString();
+            string res = "";
+            int Base = 26;
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            int TempNumber = columnIndex;
+            while (TempNumber > 0)
+            {
+                int position = TempNumber % Base;
+                res = (position == 0 ? 'Z' : chars[position > 0 ? position - 1 : 0]) + res;
+                TempNumber = (TempNumber - 1) / Base;
+            }
+            res = res + rowIndexStr;
+            return res;
         }
     }
 }

@@ -31,6 +31,8 @@ export class MonthActivityComponent implements OnInit {
             this.tableData = res;            
             this.loading = false;
         });
+
+        this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();
        
     }
 
