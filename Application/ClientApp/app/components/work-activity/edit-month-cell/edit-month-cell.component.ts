@@ -17,6 +17,14 @@ export class EditMonthCellComponent {
     
     message = '';
 
+    arrayColors: Color[] = [
+        { ColorName: 'white', HexColor: '#FFFFFF' },
+        { ColorName: 'blue', HexColor: '#0000FF' },
+        { ColorName: 'red', HexColor: '#FF0000' },
+        { ColorName: 'green', HexColor: '#00FF00' },
+        { ColorName: 'yellow', HexColor: '#FFFF00' }
+    ];
+
     public spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
         animation: SPINNER_ANIMATIONS.spin_3,
@@ -36,9 +44,9 @@ export class EditMonthCellComponent {
     }
 
     public updateMonthCell(monthActivity: MonthActivityModel) {
-        this.http.put('/api/vacations-table/edit', monthActivity.Data).subscribe(
+        this.http.put('/api/vacations-table/edit', monthActivity).subscribe(
             result => {
-                console.log(monthActivity.Data);
+                this.monthActivity.Data = result;
             }
         );
     }
@@ -47,4 +55,10 @@ export class EditMonthCellComponent {
     public cancel(): void {
         if (this.dialogRef != null && this.dialogRef != undefined) this.dialogRef.close();
     }
+}
+
+
+export class Color {
+    ColorName: string;
+    HexColor: string;
 }

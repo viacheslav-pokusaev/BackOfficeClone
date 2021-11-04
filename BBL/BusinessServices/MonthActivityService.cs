@@ -21,8 +21,10 @@ namespace Application.BBL.BusinessServices
         //static readonly string ApplicationName = "Dot Tutorials";
         //static readonly string sheet = "October'21";
         //static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        //private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
         private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
+        private const int RGB_FACTOR = 255;
 
         static SheetsService service;
         public MonthActivityVewModel GetAllVacationsFromSheet(string sheetName)
@@ -69,7 +71,7 @@ namespace Application.BBL.BusinessServices
             //{
             //    var sheetValues = response.Sheets[].Data[item].RowData;
             //}
-            var sheetIndex = 3;
+            var sheetIndex = 0;
 
             if (!string.IsNullOrEmpty(sheetName) && sheetName != "default")
             {
@@ -95,9 +97,9 @@ namespace Application.BBL.BusinessServices
                     string hex;
                         if(sheetValue.EffectiveFormat != null)
                         {
-                            var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * 255);
-                            var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * 255);
-                            var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * 255);
+                            var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * RGB_FACTOR);
+                            var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * RGB_FACTOR);
+                            var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * RGB_FACTOR);
                             System.Drawing.Color myColor = System.Drawing.Color.FromArgb(red, green, blue);
                             hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
                         }
@@ -122,7 +124,7 @@ namespace Application.BBL.BusinessServices
             var valuesResource = ConfigureSheetService().Spreadsheets.Values;
             var WriteRange = ColumnNumberToLetter(3, 1);
             var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { "ConvertTest2" } } };
-            var update = valuesResource.Update(valueRange, "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4", WriteRange);
+            var update = valuesResource.Update(valueRange, SPREADSHEET_ID, WriteRange);
             update.ValueInputOption = ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
             var response = update.Execute();
             return true;

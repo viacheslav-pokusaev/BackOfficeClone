@@ -52,12 +52,12 @@ export class MonthActivityComponent implements OnInit {
 
     
 
-    public editMonthCell(RowIndex: number, ColumnIndex: number, Data: object) {
-        console.log(RowIndex + " " + ColumnIndex);
+    public editMonthCell(cellData: MonthActivityModel) {
+        console.log(cellData.RowIndex + " " + cellData.ColumnIndex);
 
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: '1050px',
-            data: { rowIndex: RowIndex, columnIndex: ColumnIndex, data: Data }
+            data: { rowIndex: cellData.RowIndex, columnIndex: cellData.ColumnIndex, data: cellData.Data, color: cellData.Color }
         });
     }
    
