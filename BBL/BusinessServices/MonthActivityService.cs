@@ -25,20 +25,18 @@ namespace Application.BBL.BusinessServices
         private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
 
         static SheetsService service;
-        public List<List<MonthActivityModel>> GetAllVacationsFromSheet()
+        public MonthActivityVewModel GetAllVacationsFromSheet(string sheetName)
         {
             service = ConfigureSheetService();
 
             //get list of Sheets
             var listOfSheets = SheetListNames();
-
             List<string> listOfRanges = new List<string>();
 
             foreach (var range in listOfSheets)
             {
                 listOfRanges.Add($"{range}!A1:AJ25");
             }
-
 
             // Specifying Column Range for reading...
             //var range = $"{listOfsheets[3]}!A1:AJ25";
@@ -71,10 +69,14 @@ namespace Application.BBL.BusinessServices
             //{
             //    var sheetValues = response.Sheets[].Data[item].RowData;
             //}
+            var sheetIndex = 3;
 
+            if (!string.IsNullOrEmpty(sheetName))
+            {
+                sheetIndex = listOfSheets.FindIndex(x => x == sheetName);
+            }
 
-
-            var sheetValues = response.Sheets[3].Data[0].RowData;
+            var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
             //var sheetTitle = response.Sheets[0].Properties.Title;
 
             var sheetValues1 = response.Sheets;
@@ -112,7 +114,7 @@ namespace Application.BBL.BusinessServices
                     rowIndex++;
                 }            
            
-            return readSheetResponce;
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets };
         }
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)
@@ -173,7 +175,6 @@ namespace Application.BBL.BusinessServices
             {
                 sheetList.Add(sheet.Properties.Title);
             }
-
             return sheetList;
         }
     }

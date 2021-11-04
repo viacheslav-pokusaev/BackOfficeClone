@@ -6,7 +6,7 @@ namespace Application.BBLInterfaces.BusinessServicesInterfaces
 {
     public interface IMonthActivityService
     {
-        List<List<MonthActivityModel>> GetAllVacationsFromSheet();
+        MonthActivityVewModel GetAllVacationsFromSheet(string sheetName);
         bool UpdateVacationOnSheet(MonthActivityModel vacations);
     }
 }

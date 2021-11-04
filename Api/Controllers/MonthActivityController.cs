@@ -16,11 +16,11 @@ namespace Application.Api.Controllers
             _vacationsTableService = vacationsTableService;
         }
         //[Authorize(Roles = "Admin, Super_Admin")]
-        [HttpGet]
+        [HttpPost]
         [Route("api/vacations-table/all")]
-        public IActionResult Get()
+        public IActionResult Get([FromBody]string sheetName)
         {
-            return InvokeMethodWithoutParam(_vacationsTableService.GetAllVacationsFromSheet);
+            return InvokeMethodWithParam(_vacationsTableService.GetAllVacationsFromSheet, sheetName);
         }
         [HttpPut]
         [Route("api/vacations-table/edit")]
