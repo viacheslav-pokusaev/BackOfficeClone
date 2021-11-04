@@ -53,37 +53,46 @@ export class NavMenuComponent {
 
     public anchorClicked(targetId: string)
     {
+        var $li: JQuery<HTMLElement>;
+        var span: HTMLSpanElement;
+
         var target = document.getElementById(targetId);
 
-        //get li to open
-        var $li = $('#' + targetId).parent();
+        if(target != null && target != undefined){
+            //get li to open
+            $li = $('#' + targetId).parent();
 
-        //get arrow to rotate
-        var span = target.getElementsByTagName('span')[0];
-        
-      if ($li.is('.active')) {
-            //move span to start rotate
-                this.flipArrow(span, true);
+            //get arrow to rotate
+            span = target.getElementsByTagName('span')[0];
 
-          $li.removeClass('active active-sm');
-              $('ul:first', $li).slideUp(function() {
-                  //this.setContentHeight();
-              });
-          } else {
-              //move span to close rotate(270deg)
-                this.flipArrow(span, false);
-              // prevent closing menu if we are on child menu
-              if (!$li.parent().is('.child_menu')) {
-                  $('#sidebar-menu').find('li').removeClass('active active-sm');
-                  $('#sidebar-menu').find('li ul').slideUp();
+            if ($li.is('.active')) {
+                //move span to start rotate
+                    this.flipArrow(span, true);
+    
+              $li.removeClass('active active-sm');
+                  $('ul:first', $li).slideUp(function() {
+                      //this.setContentHeight();
+                  });
+              } else {
+                  //move span to close rotate(270deg)
+                    this.flipArrow(span, false);
+                  // prevent closing menu if we are on child menu
+                  if (!$li.parent().is('.child_menu')) {
+                      $('#sidebar-menu').find('li').removeClass('active active-sm');
+                      $('#sidebar-menu').find('li ul').slideUp();
+                  }
+                  
+                  $li.addClass('active');
+    
+                  $('ul:first', $li).slideDown(function() {
+                      //this.setContentHeight();
+                  });
               }
-              
-              $li.addClass('active');
-
-              $('ul:first', $li).slideDown(function() {
-                  //this.setContentHeight();
-              });
-          }
+        }
+        else{
+            console.error("element with Id: " + targetId + " does not exist in current context!");
+        }
+      
     }
 
     private flipArrow(span: HTMLSpanElement,isOpen: boolean){
