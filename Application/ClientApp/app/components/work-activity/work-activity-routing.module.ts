@@ -11,6 +11,7 @@ import { SizeVacationsListComponent } from './sizevacations/sizevacations-list.c
 import { PermissionGuard } from '../../guards/permission.guard';
 import { WorkAtHomeListComponent } from './work-at-home/work-at-home-list/work-at-home-list.component';
 import { MonthActivityComponent } from './month-activity/month-activity.component';
+import { EditMonthCellComponent } from './edit-month-cell/edit-month-cell.component';
 
 const routes: Routes = [
     { path: '', component: WorkActivitiesListComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } },
@@ -52,7 +53,15 @@ const routes: Routes = [
         path: 'monthactivity', children: [
             { path: '', component: MonthActivityComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } }
         ]
+    },
+
+    {
+        path: 'editmonthcell', children: [
+            { path: '', component: EditMonthCellComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } }
+        ]
     }
+
+
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-view.model';
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { MatDialog } from '@angular/material';
+import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class MonthActivityComponent implements OnInit {
     public sheetName: string = "";
     loading: boolean;
 
-    constructor(private http: HttpClient) { };
+    constructor(private http: HttpClient, private dialog: MatDialog) { };
 
     spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
@@ -47,4 +49,16 @@ export class MonthActivityComponent implements OnInit {
             sheetName = sheetName
         });
     }
+
+    
+
+    public editMonthCell(RowIndex: number, ColumnIndex: number, Data: object) {
+        console.log(RowIndex + " " + ColumnIndex);
+
+        let dialogRes = this.dialog.open(EditMonthCellComponent, {
+            width: '1050px',
+            data: { rowIndex: RowIndex, columnIndex: ColumnIndex, data: Data }
+        });
+    }
+   
 }
