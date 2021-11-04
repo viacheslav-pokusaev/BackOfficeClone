@@ -16,7 +16,7 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
-    public sheetName: string = "";
+    public sheetName: string = "default";
     loading: boolean;
 
     constructor(private http: HttpClient, private dialog: MatDialog) { };
@@ -36,17 +36,17 @@ export class MonthActivityComponent implements OnInit {
     }
     GetSheetName(value: string){
         if(this.sheetName != value){
-            this.GetData(value);
+            this.sheetName = value;
+            this.GetData();
         }
     }
    
-    GetData(sheetName: string = "October'21"){
-        this.http.post('/api/vacations-table/all', sheetName).subscribe((res: MonthActivityViewModel) => 
+    GetData(){
+        this.http.get('/api/vacations-table/all' + this.sheetName).subscribe((res: MonthActivityViewModel) => 
         {            
             this.tableData = res.MonthActivityModels;
             this.sheetList = res.Sheets;            
             this.loading = false;
-            sheetName = sheetName
         });
     }
 

@@ -16,9 +16,9 @@ namespace Application.Api.Controllers
             _vacationsTableService = vacationsTableService;
         }
         //[Authorize(Roles = "Admin, Super_Admin")]
-        [HttpPost]
-        [Route("api/vacations-table/all")]
-        public IActionResult Get([FromBody]string sheetName)
+        [HttpGet]
+        [Route("api/vacations-table/all{sheetName}")]
+        public IActionResult Get(string sheetName)
         {
             return InvokeMethodWithParam(_vacationsTableService.GetAllVacationsFromSheet, sheetName);
         }

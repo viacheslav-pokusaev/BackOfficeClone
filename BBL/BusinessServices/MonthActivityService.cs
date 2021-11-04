@@ -71,7 +71,7 @@ namespace Application.BBL.BusinessServices
             //}
             var sheetIndex = 3;
 
-            if (!string.IsNullOrEmpty(sheetName))
+            if (!string.IsNullOrEmpty(sheetName) && sheetName != "default")
             {
                 sheetIndex = listOfSheets.FindIndex(x => x == sheetName);
             }
