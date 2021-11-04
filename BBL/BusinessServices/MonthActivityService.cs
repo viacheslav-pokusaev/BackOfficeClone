@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using static Google.Apis.Sheets.v4.SpreadsheetsResource;
 
@@ -17,9 +18,11 @@ namespace Application.BBL.BusinessServices
     public class MonthActivityService : IMonthActivityService
     {
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        static readonly string ApplicationName = "Dot Tutorials";
-        static readonly string sheet = "October'21";
-        static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        //static readonly string ApplicationName = "Dot Tutorials";
+        //static readonly string sheet = "October'21";
+        //static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
 
         static SheetsService service;
         public List<List<MonthActivityModel>> GetAllVacationsFromSheet()
@@ -27,15 +30,26 @@ namespace Application.BBL.BusinessServices
             service = ConfigureSheetService();
 
             //get list of Sheets
-            var listOfsheets = SheetListNames();
+            var listOfSheets = SheetListNames();
+
+            List<string> listOfRanges = new List<string>();
+
+            foreach (var range in listOfSheets)
+            {
+                listOfRanges.Add($"{range}!A1:AJ25");
+            }
+
 
             // Specifying Column Range for reading...
-            var range = $"{sheet}!A1:AJ25";
-            //var request = service.Spreadsheets.Values.Get(SpreadsheetId, range);            
+            //var range = $"{listOfsheets[3]}!A1:AJ25";
+
+            //var request = service.Spreadsheets.Values.Get(SPREADSHEET_ID, range);
+
             
-            var getRequest = new GetRequest(service, SpreadsheetId);
+
+            var getRequest = new GetRequest(service, SPREADSHEET_ID);
             getRequest.IncludeGridData = true;
-            getRequest.Ranges = range;
+            getRequest.Ranges = listOfRanges;
 
             //var spreadSheet = getRequest.Execute();
             //var color = spreadSheet.Sheets[0].Data[0].RowData[3].Values[11].EffectiveFormat.BackgroundColor;
@@ -44,7 +58,7 @@ namespace Application.BBL.BusinessServices
 
 
             //var response = request.Execute();
-            var response1 = getRequest.Execute();
+            var response = getRequest.Execute();
 
             // Getting all records from Column A to AJ...
             //var color = response1.Sheets[0].Data[0].RowData[22].Values[2].EffectiveFormat?.BackgroundColor;
@@ -53,14 +67,25 @@ namespace Application.BBL.BusinessServices
 
             //var sheetValues = response.Values;
 
-            var sheetValues1 = response1.Sheets[0].Data[0].RowData;
+            //foreach (var item in listOfsheets)
+            //{
+            //    var sheetValues = response.Sheets[].Data[item].RowData;
+            //}
+
+
+
+            var sheetValues = response.Sheets[3].Data[0].RowData;
+            //var sheetTitle = response.Sheets[0].Properties.Title;
+
+            var sheetValues1 = response.Sheets;
+
 
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
             int rowIndex = 0;
             int columnIndex = 0;
             
-            foreach (var sheetRow in sheetValues1)
+            foreach (var sheetRow in sheetValues)
                 {
                     var responceBuff = new List<MonthActivityModel>();
                     foreach (var sheetValue in sheetRow.Values)
@@ -76,7 +101,7 @@ namespace Application.BBL.BusinessServices
                         }
                         else
                         {
-                            hex = "#FFFFFF";
+                            hex = INITIAL_BACKGROUND_COLOR;
                         }                        
 
                         responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
@@ -113,7 +138,7 @@ namespace Application.BBL.BusinessServices
             service = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
+                //ApplicationName = ApplicationName,
             });
 
             return service;
@@ -140,7 +165,7 @@ namespace Application.BBL.BusinessServices
         }
         public List<string> SheetListNames()
         {
-            var ssRequest = service.Spreadsheets.Get(SpreadsheetId);
+            var ssRequest = service.Spreadsheets.Get(SPREADSHEET_ID);
             Spreadsheet ss = ssRequest.Execute();
             List<string> sheetList = new List<string>();
 
