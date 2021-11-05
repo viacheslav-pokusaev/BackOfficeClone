@@ -1,7 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MonthActivityModel } from '../../../models/month-activity-model';
-import { MonthActivityViewModel } from '../../../models/month-activity-view.model';
+import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
+import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
+import { AddSheetViewModel } from '../../../models/month-activity-models/add-sheet-view.model';
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
@@ -33,6 +34,7 @@ export class MonthActivityComponent implements OnInit {
         this.loading = true
         this.GetData();
         //this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();   
+        //this.AddNewList();
     }
     GetSheetName(value: string){
         if(this.sheetName != value){
@@ -44,13 +46,19 @@ export class MonthActivityComponent implements OnInit {
     GetData(){
         this.http.get('/api/vacations-table/all' + this.sheetName).subscribe((res: MonthActivityViewModel) => 
         {            
-            this.tableData = res.MonthActivityModels;
-            this.sheetList = res.Sheets;            
-            this.loading = false;
+            if(res.MonthActivityModels != undefined){
+                this.tableData = res.MonthActivityModels;
+                this.sheetList = res.Sheets;            
+                this.loading = false;
+            }
         });
     }
-
     
+    AddNewList(){
+        this.http.post('/api/vacations-table/add', new AddSheetViewModel()).subscribe(res => {
+            console.log(res);
+        })
+    }
 
     public editMonthCell(cellData: MonthActivityModel) {
         console.log(cellData.RowIndex + " " + cellData.ColumnIndex);

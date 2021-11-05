@@ -17,7 +17,7 @@
             <div class="col-md-12" style="overflow-x:auto;">
                 <table class="table my-table-striped table-bordered projects">
                     <thead style="color: #73879C;">
-                        <tr>
+                        <tr *ngIf="tableData[0].length > 0">
                             <th *ngFor="let cell of tableData[0]">{{cell.Data}}</th>
                         </tr>
                     </thead>

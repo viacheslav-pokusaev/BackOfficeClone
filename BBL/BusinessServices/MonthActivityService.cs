@@ -198,9 +198,9 @@ namespace Application.BBL.BusinessServices
                     AddSheet = addSheetRequest
                 });
                 var batchUpdateRequest = service.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, SPREADSHEET_ID);
+                var responce = batchUpdateRequest.Execute();
                 return true;
 
-                batchUpdateRequest.Execute();
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MonthActivityModel } from '../../../models/month-activity-model';
+import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
