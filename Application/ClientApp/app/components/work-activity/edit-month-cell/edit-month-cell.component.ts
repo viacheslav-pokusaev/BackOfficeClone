@@ -4,6 +4,7 @@ import { MonthActivityModel } from '../../../models/month-activity-models/month-
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VacationColor } from '../../../models/month-activity-models/vacation-color.model';
+import { MonthActivityService } from '../../../services/month-activity.service';
 
 @Component({
     selector: 'edit-month-cell',
@@ -13,7 +14,8 @@ import { VacationColor } from '../../../models/month-activity-models/vacation-co
 export class EditMonthCellComponent {
 
     public loading: boolean = false;
-    public monthActivity: MonthActivityModel = new MonthActivityModel();     
+    public monthActivity: MonthActivityModel = new MonthActivityModel();
+    
 
     arrayColors: VacationColor[] = [
         { Vacation: '', HexColor: '#FFFFFF' },
@@ -32,17 +34,26 @@ export class EditMonthCellComponent {
         color: "#1574b3"
     };
 
-    constructor(private http: HttpClient, public dialogRef: MatDialogRef<EditMonthCellComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    constructor(private http: HttpClient,
+        public dialogRef: MatDialogRef<EditMonthCellComponent>,
+        private monthActivityService: MonthActivityService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
         this.monthActivity = data;
     }
 
     public updateMonthCell(monthActivity: MonthActivityModel) {
         this.monthActivity.Color = this.selectedColor;
-        this.http.put('/api/vacations-table/edit', monthActivity).subscribe(
-            result => {                
+        this.monthActivityService.update(monthActivity).subscribe(
+            result => {
                 this.dialogRef.close()
             }
         );
+
+        //this.http.put('/api/vacations-table/edit', monthActivity).subscribe(
+        //    result => {                
+        //        this.dialogRef.close()
+        //    }
+        //);
     }
 
     public cancel(): void {

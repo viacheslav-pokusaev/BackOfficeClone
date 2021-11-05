@@ -95,6 +95,7 @@
     <None Remove="ClientApp\app\models\vacation.model.ts" />
     <None Remove="ClientApp\app\models\workActivity.model.ts" />
     <None Remove="ClientApp\app\services\feedback.service.ts" />
+    <None Remove="ClientApp\app\services\month-activity.service.ts" />
     <None Remove="ClientApp\app\services\overtime.service.ts" />
     <None Remove="ClientApp\app\services\proposal.service.ts" />
     <None Remove="ClientApp\app\services\role.services.ts" />	
@@ -144,6 +145,7 @@
     <TypeScriptCompile Include="ClientApp\app\models\user.model.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\models\vacation.model.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\services\feedback.service.ts" />
+	 <TypeScriptCompile Include="ClientApp\app\services\month-activity.service.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\services\overtime.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\proposal.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\users.service.ts" />
