@@ -8,16 +8,12 @@
                 </div>
                 <div class="col-md-12 col-lg-12">
                     <form name="editCell" class="form-horizontal  container-fluid">
-
                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
                             <input type="text" class="form-control " id="inputSuccess2" [(ngModel)]="monthActivity.data" name="EditCell" autocomplete="off">
-
                             <span class="tooltiptext">
                                 Month cell data
                             </span>
                         </div>
-
-
                         <div class="form-group col-md-12 col-xs-12  black-tooltip">
                             <select class="select2_single form-control" tabindex="-1" (change)="onChange($event.target.value)">
                                 <option *ngFor="let color of arrayColors; let i = index" [value]="color.HexColor">
