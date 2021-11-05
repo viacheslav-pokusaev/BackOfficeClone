@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.EntitiesModels.Models
+namespace Application.EntitiesModels.Models.MonthActivityModels
 {
     public class MonthActivityVewModel
     {

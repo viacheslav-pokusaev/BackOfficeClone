@@ -1,5 +1,5 @@
 ﻿using Application.BBLInterfaces.BusinessServicesInterfaces;
-using Application.EntitiesModels.Models;
+using Application.EntitiesModels.Models.MonthActivityModels;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -152,15 +152,15 @@ namespace Application.BBL.BusinessServices
             if(columnIndex < 26)
             columnIndex++;
             rowIndex++;
-            string rowIndexStr = rowIndex.ToString();
-            string res = "";
-            int Base = 26;
-            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var rowIndexStr = rowIndex.ToString();
+            var res = "";
+            var Base = 26;
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            int TempNumber = columnIndex;
+            var TempNumber = columnIndex;
             while (TempNumber > 0)
             {
-                int position = TempNumber % Base;
+                var position = TempNumber % Base;
                 res = (position == 0 ? 'Z' : chars[position > 0 ? position - 1 : 0]) + res;
                 TempNumber = (TempNumber - 1) / Base;
             }
@@ -178,6 +178,34 @@ namespace Application.BBL.BusinessServices
                 sheetList.Add(sheet.Properties.Title);
             }
             return sheetList;
+        }
+
+        public bool AddNewSheet(AddSheetViewModel addSheetModel)
+        {
+            try
+            {
+                service = ConfigureSheetService();
+                var addSheetRequest = new AddSheetRequest();
+                addSheetRequest.Properties = new SheetProperties();
+                //addSheetRequest.Properties.Title = addSheetModel.SheetName;
+                addSheetRequest.Properties.Title = "Test";
+
+                BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+                batchUpdateSpreadsheetRequest.Requests = new List<Request>();
+
+                batchUpdateSpreadsheetRequest.Requests.Add(new Request
+                {
+                    AddSheet = addSheetRequest
+                });
+                var batchUpdateRequest = service.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, SPREADSHEET_ID);
+                return true;
+
+                batchUpdateRequest.Execute();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

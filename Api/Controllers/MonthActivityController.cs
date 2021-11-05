@@ -1,5 +1,5 @@
 ﻿using Application.BBLInterfaces.BusinessServicesInterfaces;
-using Application.EntitiesModels.Models;
+using Application.EntitiesModels.Models.MonthActivityModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,6 +27,12 @@ namespace Application.Api.Controllers
         public IActionResult Edit([FromBody]MonthActivityModel vacation)
         {
             return InvokeMethodWithParam(_vacationsTableService.UpdateVacationOnSheet, vacation);
+        }
+        [HttpPost]
+        [Route("api/vacations-table/add")]
+        public IActionResult Add([FromBody]AddSheetViewModel addSheetModel)
+        {
+            return InvokeMethodWithParam(_vacationsTableService.AddNewSheet, addSheetModel);
         }
     }
 }
