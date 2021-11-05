@@ -82,10 +82,12 @@
     <None Remove="ClientApp\app\components\users\user-edit-clicable.component.ts" />
     <None Remove="ClientApp\app\components\users\user-info-clicable.component.ts" />
     <None Remove="ClientApp\app\components\users\users-table\users-table.component.ts" />
+    <None Remove="ClientApp\app\components\work-activity\edit-month-cell\edit-month-cell.component.ts" />
     <None Remove="ClientApp\app\constants\constants.ts" />
     <None Remove="ClientApp\app\models\ChangePassword.model.ts" />
     <None Remove="ClientApp\app\models\feedback.model.ts" />
     <None Remove="ClientApp\app\models\listVacation.model.ts" />
+    <None Remove="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
     <None Remove="ClientApp\app\models\overtime.model.ts" />
     <None Remove="ClientApp\app\models\proposal.model.ts" />
 	<None Remove="ClientApp\app\models\sickDay.model.ts" />
@@ -133,8 +135,10 @@
     <TypeScriptCompile Include="ClientApp\app\components\modals\notification-no-vacation\notification-no-vacation.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\proposals\proposals-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\users\users-table\users-table.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\work-activity\edit-month-cell\edit-month-cell.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\constants\constants.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\feedback.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
 	<TypeScriptCompile Include="ClientApp\app\models\overtime.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\proposal.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\user.model.ts" />
