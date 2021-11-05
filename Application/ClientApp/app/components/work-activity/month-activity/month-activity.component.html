@@ -2,19 +2,21 @@
     <div class="row">
         <div class="col-md-6">
             <h2>Month Activity</h2>
-        </div>               
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-2" style="margin-left: -0.4%;">
+        <div class="col-md-2">
             <select class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="GetSheetName($event.target.value)">
                 <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
             </select>
+            <br />
         </div>
         <div class="col-md-1" style="margin-left: 2%;">
-            <input class="btn btn-primary" (click)="AddNewList()" type="button" value="Add new list"/>
+            <input class="btn btn-primary" (click)="AddNewList()" type="button" value="Add new list" />
         </div>
-        <br/>
     </div>
+    
+    <br />
     <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">        
         <div class="row">
             <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>

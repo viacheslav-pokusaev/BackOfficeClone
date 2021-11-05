@@ -122,13 +122,12 @@ namespace Application.BBL.BusinessServices
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)
         {
             var valuesResource = ConfigureSheetService().Spreadsheets.Values;
-            var WriteRange = ColumnNumberToLetter(3, 1);
-            var WriteRange1 = ColumnNumberToLetter(vacation.ColumnIndex, vacation.RowIndex);
-            var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { "ConvertTest3" } } };
-            var valueRange1 = new ValueRange { Values = new List<IList<object>> { new List<object> { vacation.Data } } };
+            //var WriteRange = ColumnNumberToLetter(3, 1);
+            var WriteRange = ColumnNumberToLetter(vacation.ColumnIndex, vacation.RowIndex);
+            //var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { "ConvertTest3" } } };
+            var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { vacation.Data } } };         
 
-
-            var update = valuesResource.Update(valueRange1, SPREADSHEET_ID, WriteRange1);
+            var update = valuesResource.Update(valueRange, SPREADSHEET_ID, WriteRange);
             update.ValueInputOption = ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
             var response = update.Execute();
             return true;

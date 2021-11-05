@@ -7,11 +7,10 @@
                     <h2 style="color: #73879C;">Edit month cell </h2>
                 </div>
                 <div class="col-md-12 col-lg-12">
-                    <form name="addfeedback" class="form-horizontal  container-fluid">
-
+                    <form name="editCell" class="form-horizontal  container-fluid">
 
                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
-                            <input type="text" class="form-control " id="inputSuccess2" [(ngModel)]="monthActivity.Data" name="EditCell" autocomplete="off">
+                            <input type="text" class="form-control " id="inputSuccess2" [(ngModel)]="monthActivity.data" name="EditCell" autocomplete="off">
 
                             <span class="tooltiptext">
                                 Month cell data
@@ -20,18 +19,15 @@
 
 
                         <div class="form-group col-md-12 col-xs-12  black-tooltip">
-                            <select class="select2_single form-control" tabindex="-1">
-                                <option *ngFor="let color of arrayColors; let i = index" value="monthActivity.color">
-                                    {{color.ColorName}}
+                            <select class="select2_single form-control" tabindex="-1" (change)="onChange($event.target.value)">
+                                <option *ngFor="let color of arrayColors; let i = index" [value]="color.HexColor">
+                                    {{color.Vacation}}
                                 </option>
                             </select>
                             <span class="tooltiptext">
                                 Cell color
                             </span>
                         </div>
-
-
-
 
                         <div class="col-md-12 col-xs-12">
                             <div class="form-group col-md-6 col-xs-6 text-center">
