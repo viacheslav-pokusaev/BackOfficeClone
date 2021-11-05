@@ -20,18 +20,15 @@
 
 
                         <div class="form-group col-md-12 col-xs-12  black-tooltip">
-                            <select class="select2_single form-control" tabindex="-1">
-                                <option *ngFor="let color of arrayColors; let i = index" value="monthActivity.color">
-                                    {{color.ColorName}}
+                            <select class="select2_single form-control" tabindex="-1" (change)="onChange($event.target.value)">
+                                <option *ngFor="let color of arrayColors; let i = index" [value]="color.HexColor">
+                                    {{color.Vacation}}
                                 </option>
                             </select>
                             <span class="tooltiptext">
                                 Cell color
                             </span>
                         </div>
-
-
-
 
                         <div class="col-md-12 col-xs-12">
                             <div class="form-group col-md-6 col-xs-6 text-center">

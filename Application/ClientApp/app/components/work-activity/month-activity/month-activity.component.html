@@ -5,10 +5,11 @@
         </div>               
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <select (change)="GetSheetName($event.target.value)">
+        <div class="col-md-2">
+            <select class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="GetSheetName($event.target.value)">
                 <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
             </select>
+            <br />
         </div>               
     </div>
     <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">        

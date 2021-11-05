@@ -7,7 +7,6 @@ import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 
-
 @Component({
     templateUrl: './month-activity.component.html',
     styleUrls: ['./month-activity.component.css']
@@ -27,8 +26,7 @@ export class MonthActivityComponent implements OnInit {
         animation: SPINNER_ANIMATIONS.spin_3,
         size: "3rem",
         color: "#1574b3"
-    };
-   
+    };   
 
     ngOnInit(): void {
         this.loading = true
@@ -36,6 +34,7 @@ export class MonthActivityComponent implements OnInit {
         //this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();   
         //this.AddNewList();
     }
+
     GetSheetName(value: string){
         if(this.sheetName != value){
             this.sheetName = value;
@@ -61,12 +60,9 @@ export class MonthActivityComponent implements OnInit {
     }
 
     public editMonthCell(cellData: MonthActivityModel) {
-        console.log(cellData.RowIndex + " " + cellData.ColumnIndex);
-
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: '1050px',
             data: { rowIndex: cellData.RowIndex, columnIndex: cellData.ColumnIndex, data: cellData.Data, color: cellData.Color }
         });
-    }
-   
+    }   
 }
