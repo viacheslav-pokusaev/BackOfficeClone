@@ -5,13 +5,16 @@
         </div>               
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <select (change)="GetSheetName($event.target.value)">
+        <div class="col-md-2" style="margin-left: -0.4%;">
+            <select class="form-control" (change)="GetSheetName($event.target.value)">
                 <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
             </select>
-        </div>               
+        </div>
+        <div class="col-md-1" style="margin-left: -2%;">
+            <input class="btn btn-primary" (click)="AddNewList()" type="button" value="Add new list"/>
+        </div>       
     </div>
-    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">        
+    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer" style="margin-top: 1%;">        
         <div class="row">
             <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
             <div class="col-md-12" style="overflow-x:auto;">

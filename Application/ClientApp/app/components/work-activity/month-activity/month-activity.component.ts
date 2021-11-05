@@ -55,7 +55,10 @@ export class MonthActivityComponent implements OnInit {
     }
     
     AddNewList(){
-        this.http.post('/api/vacations-table/add', new AddSheetViewModel()).subscribe(res => {
+        var sheetModel = new AddSheetViewModel();
+        sheetModel.SheetName = "TestWithData";
+        sheetModel.ParrentSheetName = "Лист1";
+        this.http.post('/api/vacations-table/add', sheetModel).subscribe(res => {
             console.log(res);
         })
     }
