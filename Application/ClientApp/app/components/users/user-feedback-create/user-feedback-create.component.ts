@@ -27,9 +27,12 @@ export class UserFeedbackCreateComponent {
     constructor(public dialogRef: MatDialogRef<UserFeedbackCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
         private feedbackService: FeedbackService, private projectService: ProjectsService, ) {
         this.loading = true;
+        let projectQueryModel = new ProjectQueryModel();
+
         this.feedback.UserId = data.userId;
-        this.feedback.AuthorId = data.authorId;
-        this.projectService.get(new ProjectQueryModel()).subscribe(response => {
+        this.feedback.AuthorId = data.authorId;               
+        projectQueryModel.Take = data.projectsCount;
+        this.projectService.get(projectQueryModel).subscribe(response => {
             this.projects = response.Result;
             this.loading = false;
         });
