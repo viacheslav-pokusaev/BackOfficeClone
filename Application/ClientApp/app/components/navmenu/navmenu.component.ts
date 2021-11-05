@@ -53,50 +53,74 @@ export class NavMenuComponent {
 
     public anchorClicked(targetId: string)
     {
-        var $li: JQuery<HTMLElement>;
-        var span: HTMLSpanElement;
-
         var target = document.getElementById(targetId);
-
-        if(target != null && target != undefined){
-            //get li to open
-            $li = $('#' + targetId).parent();
-
+        //get li to open
+        var $li = $('#' + targetId).parent();
+        if(target && $li){
             //get arrow to rotate
-            span = target.getElementsByTagName('span')[0];
-
-            if ($li.is('.active')) {
-                //move span to start rotate
+            var span = target.getElementsByTagName('span')[0];
+            if(!span){
+             console.error("Error: element span with parrent, where" +
+             "Id = '" + targetId + "' does not exist in current context!");
+            }
+            else{
+                if ($li.is('.active')) {
+                    //move span to start rotate
                     this.flipArrow(span, true);
-    
-              $li.removeClass('active active-sm');
-                  $('ul:first', $li).slideUp(function() {
-                      //this.setContentHeight();
-                  });
-              } else {
-                  //move span to close rotate(270deg)
+                    
+                    $li.removeClass('active active-sm');
+                    
+                    var ulFirst = $('ul:first', $li);
+
+                    if(ulFirst){
+                        ulFirst.slideUp(function() {
+                            //this.setContentHeight();
+                        });
+                    }
+                    else{
+                        console.error("Error: 'ul:first' does not exist in current context!");
+                    }
+                } 
+                else {
+                    //move span to close rotate(270deg)
                     this.flipArrow(span, false);
-                  // prevent closing menu if we are on child menu
-                  if (!$li.parent().is('.child_menu')) {
-                      $('#sidebar-menu').find('li').removeClass('active active-sm');
-                      $('#sidebar-menu').find('li ul').slideUp();
-                  }
+                    // prevent closing menu if we are on child menu
+                    var sidebarMenuLi = $('#sidebar-menu').find('li');
+                    var sidebarMenuLiUl = $('#sidebar-menu').find('li ul');
+
+                    if (!$li.parent().is('.child_menu') && sidebarMenuLi && sidebarMenuLiUl) {
+                        sidebarMenuLi.removeClass('active active-sm');
+                        sidebarMenuLiUl.slideUp();
+                    }
+                    else{
+                        console.error("Error: element, where" +
+                        "Id = 'sidebar-menu' does not exist in current context, or did not have li or ul inside!");
+                    }
                   
-                  $li.addClass('active');
-    
-                  $('ul:first', $li).slideDown(function() {
-                      //this.setContentHeight();
-                  });
-              }
+                    $li.addClass('active');
+
+                    var ulFirst2 = $('ul:first', $li);
+
+                    if(ulFirst2){
+                        ulFirst2.slideDown(function() {
+                            //this.setContentHeight();
+                        });
+                    }
+                    else{
+                        console.error("Error: element, where" +
+                        "Id = 'sidebar-menu' does not exist in current context, or did not have li or ul inside!");
+                    }
+                }
+            }
         }
         else{
-            console.error("element with Id: " + targetId + " does not exist in current context!");
+            console.error("Error: element with Id = '" + targetId + "' does not exist in current context!");
         }
       
     }
 
     private flipArrow(span: HTMLSpanElement,isOpen: boolean){
-        if(span != null && span != undefined){
+        if(span){
             if(isOpen){
                 span.classList.remove('span-open');
                 span.classList.add('span-close');
@@ -104,7 +128,7 @@ export class NavMenuComponent {
             else{
                 span.classList.remove('span-close');
                 span.classList.add('span-open');
-                if(this.previewSpan != null && this.previewSpan != undefined && this.previewSpan != span){
+                if(this.previewSpan && this.previewSpan != span){
                     this.previewSpan.classList.remove('span-open');
                     this.previewSpan.classList.add('span-close');
                 }
