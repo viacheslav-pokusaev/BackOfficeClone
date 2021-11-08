@@ -37,7 +37,6 @@ namespace Application.BBL.BusinessServices
 
             foreach (var range in listOfSheets)
             {
-                //listOfRanges.Add($"{range}!A1:AJ25");
                 listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
             }
 

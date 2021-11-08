@@ -64,4 +64,9 @@ export class MonthActivityComponent implements OnInit {
             data: { rowIndex: cellData.RowIndex, columnIndex: cellData.ColumnIndex, data: cellData.Data, color: cellData.Color }
         });
     }   
+
+    public getNewRange(){
+        this.getModel.EndIndex += 10;
+        this.GetData();
+    }
 }
