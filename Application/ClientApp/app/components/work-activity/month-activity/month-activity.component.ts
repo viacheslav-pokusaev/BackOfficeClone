@@ -5,6 +5,7 @@ import { MonthActivityViewModel } from '../../../models/month-activity-models/mo
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
+import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -15,7 +16,13 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
-    public sheetName: string = "default";
+
+    public getModel: MonthActivityGetModel = {
+        SheetName: "default",
+        StartIndex: 1,
+        EndIndex: 10
+    };
+
     loading: boolean;
 
     constructor(private http: HttpClient, private dialog: MatDialog) { };
@@ -28,19 +35,20 @@ export class MonthActivityComponent implements OnInit {
     };   
 
     ngOnInit(): void {
-        this.loading = true
+        this.loading = true;
         this.GetData();
     }
 
     GetSheetName(value: string){
-        if(this.sheetName != value){
-            this.sheetName = value;
+        if(this.getModel.SheetName != value){
+            this.getModel.SheetName = value;
             this.GetData();
         }
     }
    
     GetData(){
-        this.http.get('/api/vacations-table/all' + this.sheetName).subscribe((res: MonthActivityViewModel) => 
+
+        this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res.MonthActivityModels != undefined){
                 this.tableData = res.MonthActivityModels;

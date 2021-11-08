@@ -27,7 +27,7 @@ namespace Application.BBL.BusinessServices
         private const int RGB_FACTOR = 255;
 
         static SheetsService service;
-        public MonthActivityVewModel GetAllVacationsFromSheet(string sheetName)
+        public MonthActivityVewModel GetAllVacationsFromSheet(MonthActivityGetModel getModel)
         {
             service = ConfigureSheetService();
 
@@ -37,7 +37,8 @@ namespace Application.BBL.BusinessServices
 
             foreach (var range in listOfSheets)
             {
-                listOfRanges.Add($"{range}!A1:AJ25");
+                //listOfRanges.Add($"{range}!A1:AJ25");
+                listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
             }
 
             // Specifying Column Range for reading...
@@ -73,9 +74,9 @@ namespace Application.BBL.BusinessServices
             //}
             var sheetIndex = 0;
 
-            if (!string.IsNullOrEmpty(sheetName) && sheetName != "default")
+            if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
             {
-                sheetIndex = listOfSheets.FindIndex(x => x == sheetName);
+                sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
             }
 
             var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
