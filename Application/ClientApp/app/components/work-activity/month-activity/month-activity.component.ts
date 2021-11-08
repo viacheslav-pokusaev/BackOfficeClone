@@ -2,7 +2,6 @@
 import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
-import { AddSheetViewModel } from '../../../models/month-activity-models/add-sheet-view.model';
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
@@ -31,8 +30,6 @@ export class MonthActivityComponent implements OnInit {
     ngOnInit(): void {
         this.loading = true
         this.GetData();
-        //this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();   
-        //this.AddNewList();
     }
 
     GetSheetName(value: string){
@@ -51,15 +48,6 @@ export class MonthActivityComponent implements OnInit {
                 this.loading = false;
             }
         });
-    }
-    
-    AddNewList(){
-        var sheetModel = new AddSheetViewModel();
-        sheetModel.SheetName = "TestWithData";
-        sheetModel.ParrentSheetName = "Лист1";
-        this.http.post('/api/vacations-table/add', sheetModel).subscribe(res => {
-            console.log(res);
-        })
     }
 
     public editMonthCell(cellData: MonthActivityModel) {

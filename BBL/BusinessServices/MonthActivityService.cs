@@ -182,47 +182,5 @@ namespace Application.BBL.BusinessServices
             }
             return sheetList;
         }
-
-        public bool AddNewSheet(AddSheetViewModel addSheetModel)
-        {
-            try
-            {
-                service = ConfigureSheetService();
-                var addSheetRequest = new AddSheetRequest();
-                addSheetRequest.Properties = new SheetProperties();
-                //addSheetRequest.Properties.Title = addSheetModel.SheetName;
-                addSheetRequest.Properties.Title = addSheetModel.SheetName;
-
-                BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
-                batchUpdateSpreadsheetRequest.Requests = new List<Request>();
-
-                batchUpdateSpreadsheetRequest.Requests.Add(new Request
-                {
-                    AddSheet = addSheetRequest
-                });
-                var batchUpdateRequest = service.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, SPREADSHEET_ID);
-                var responce = batchUpdateRequest.Execute();
-
-                //get data from parrent
-                //var getRequest = new GetRequest(service, SPREADSHEET_ID);
-                //var getParrentResponse = getRequest.Execute();
-
-                //var sheetIndex = 0;
-                //var listOfSheets = SheetListNames();
-
-                //if (!string.IsNullOrEmpty(addSheetModel.ParrentSheetName))
-                //{
-                //    sheetIndex = listOfSheets.FindIndex(x => x == addSheetModel.ParrentSheetName);
-                //}
-                //var sheetValues = getParrentResponse.Sheets[sheetIndex].Data[0].RowData;
-
-                return true;
-
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
     }
 }

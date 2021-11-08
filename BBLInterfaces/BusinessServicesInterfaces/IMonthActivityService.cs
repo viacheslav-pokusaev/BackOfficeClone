@@ -8,6 +8,5 @@ namespace Application.BBLInterfaces.BusinessServicesInterfaces
     {
         MonthActivityVewModel GetAllVacationsFromSheet(string sheetName);
         bool UpdateVacationOnSheet(MonthActivityModel vacations);
-        bool AddNewSheet(AddSheetViewModel addSheetModel);
     }
 }

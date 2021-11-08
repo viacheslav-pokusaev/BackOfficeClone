@@ -28,11 +28,5 @@ namespace Application.Api.Controllers
         {
             return InvokeMethodWithParam(_vacationsTableService.UpdateVacationOnSheet, vacation);
         }
-        [HttpPost]
-        [Route("api/vacations-table/add")]
-        public IActionResult Add([FromBody]AddSheetViewModel addSheetModel)
-        {
-            return InvokeMethodWithParam(_vacationsTableService.AddNewSheet, addSheetModel);
-        }
     }
 }
