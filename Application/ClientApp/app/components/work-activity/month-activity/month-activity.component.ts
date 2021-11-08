@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
@@ -50,10 +50,13 @@ export class MonthActivityComponent implements OnInit {
 
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
-            if(res.MonthActivityModels != undefined){
+            if(res){
                 this.tableData = res.MonthActivityModels;
                 this.sheetList = res.Sheets;            
                 this.loading = false;
+            }
+            else{
+                alert("The table is empty!");
             }
         });
     }
@@ -68,5 +71,22 @@ export class MonthActivityComponent implements OnInit {
     public getNewRange(){
         this.getModel.EndIndex += 10;
         this.GetData();
+        // var resString = "";
+        // var target = document.getElementById("TableBodyId");
+        // this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
+        // {
+        //     res.MonthActivityModels.forEach(coll => {
+        //         resString += "<tr>";
+        //         coll.forEach(cell => {
+        //             resString += "<td style='background-color:" + cell.Color + "'>";
+        //             if(cell.Data){
+        //                 resString += cell.Data;
+        //             }
+        //             "</td>";
+        //         });
+        //         resString += "</tr>";
+        //     });
+        //     target.innerHTML += resString;
+        //});
     }
 }

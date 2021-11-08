@@ -80,8 +80,8 @@ namespace Application.BBL.BusinessServices
 
             var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
             //var sheetTitle = response.Sheets[0].Properties.Title;
-
-            var sheetValues1 = response.Sheets;
+            if (sheetValues == null) return null;
+            //var sheetValues1 = response.Sheets;
 
 
             var readSheetResponce = new List<List<MonthActivityModel>>();
