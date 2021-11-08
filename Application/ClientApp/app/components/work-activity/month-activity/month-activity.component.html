@@ -3,39 +3,41 @@
         <div class="col-md-6">
             <h2>Month Activity</h2>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            <select class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="GetSheetName($event.target.value)">
-                <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
-            </select>
-            <br />
-        </div>
-        <div class="col-md-1" style="margin-left: 2%;">
-            <input class="btn btn-primary" (click)="AddNewList()" type="button" value="Add new list" />
-        </div>
-    </div>
-    
-    <br />
-    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">        
+    </div>    
         <div class="row">
-            <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
-            <div class="col-md-12" style="overflow-x:auto;">
-                <table class="table my-table-striped table-bordered projects">
-                    <thead style="color: #73879C;">
-                        <tr *ngIf="tableData[0].length > 0">
-                            <th *ngFor="let cell of tableData[0]">{{cell.Data}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>                        
-                        <tr *ngFor="let row of tableData | slice:1">
-                            <td *ngFor="let cell of row" [style.background-color]="cell.Color" (click)="editMonthCell(cell)">
-                                {{cell.Data}}                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                
+            <div class="col-md-2">
+                <select class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="GetSheetName($event.target.value)">
+                    <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
+                </select>
+                <br />
+            </div>
+            <div class="col-md-1" style="margin-left: 2%;">
+                <input class="btn btn-primary" (click)="AddNewList()" type="button" value="Add new list" />
             </div>
         </div>
-    </div>
+
+        <br />
+        <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
+                <ng-container *ngIf="!loading">
+                    <div class="col-md-12" style="overflow-x:auto;">
+                        <table class="table my-table-striped table-bordered projects">
+                            <thead style="color: #73879C;">
+                                <tr *ngIf="tableData[0].length > 0">
+                                    <th *ngFor="let cell of tableData[0]">{{cell.Data}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of tableData | slice:1">
+                                    <td *ngFor="let cell of row" [style.background-color]="cell.Color" (click)="editMonthCell(cell)">
+                                        {{cell.Data}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+            </div>
+        </div>  
 </div>

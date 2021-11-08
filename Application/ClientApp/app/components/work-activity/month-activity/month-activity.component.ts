@@ -19,7 +19,10 @@ export class MonthActivityComponent implements OnInit {
     public sheetName: string = "default";
     loading: boolean;
 
-    constructor(private http: HttpClient, private dialog: MatDialog) { };
+    constructor(private http: HttpClient, private dialog: MatDialog) {
+
+        this.loading = true;
+    };
 
     spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
@@ -28,16 +31,14 @@ export class MonthActivityComponent implements OnInit {
         color: "#1574b3"
     };   
 
-    ngOnInit(): void {
-        this.loading = true
-        this.GetData();
-        //this.http.put('/api/vacations-table/edit', new MonthActivityModel()).subscribe();   
-        //this.AddNewList();
+    ngOnInit(): void {      
+        this.GetData();        
     }
 
     GetSheetName(value: string){
         if(this.sheetName != value){
             this.sheetName = value;
+            this.loading = true;
             this.GetData();
         }
     }
