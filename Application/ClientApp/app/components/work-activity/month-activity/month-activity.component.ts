@@ -6,6 +6,7 @@ import { AddSheetViewModel } from '../../../models/month-activity-models/add-she
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
+import { MonthActivityService } from '../../../services/month-activity.service';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -19,9 +20,8 @@ export class MonthActivityComponent implements OnInit {
     public sheetName: string = "default";
     loading: boolean;
 
-    constructor(private http: HttpClient, private dialog: MatDialog) {
-
-        this.loading = true;
+    constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
+        this.loading = true;        
     };
 
     spinnerConfig: ISpinnerConfig = {
@@ -66,7 +66,16 @@ export class MonthActivityComponent implements OnInit {
     public editMonthCell(cellData: MonthActivityModel) {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: '1050px',
-            data: { rowIndex: cellData.RowIndex, columnIndex: cellData.ColumnIndex, data: cellData.Data, color: cellData.Color }
-        });
-    }   
+            data: { RowIndex: cellData.RowIndex, ColumnIndex: cellData.ColumnIndex, Data: cellData.Data, Color: cellData.Color }
+        });        
+
+        dialogRes.afterClosed().subscribe(result => {                   
+            cellData.Data = this.monthActivityService.monthActivity.Data;
+            cellData.Color = this.monthActivityService.monthActivity.Color;
+        });      
+    }           
+
+    get mydata(): MonthActivityModel{
+        return this.monthActivityService.monthActivity;        
+    };
 }

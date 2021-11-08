@@ -8,8 +8,9 @@ import { MonthActivityModel } from '../models/month-activity-models/month-activi
 @Injectable()
 
 export class MonthActivityService  {
-    constructor(private http: HttpClient) {
-        
+    public monthActivity: MonthActivityModel = new MonthActivityModel();
+
+    constructor(private http: HttpClient) {   
     }
 
     update(monthActivity: MonthActivityModel) {
