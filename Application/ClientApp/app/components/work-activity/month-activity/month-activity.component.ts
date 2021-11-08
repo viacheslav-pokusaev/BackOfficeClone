@@ -16,12 +16,14 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
-
+    public previusSheetName:string = "default";
     public getModel: MonthActivityGetModel = {
         SheetName: "default",
         StartIndex: 1,
         EndIndex: 10
     };
+
+    public isAll;
 
     loading: boolean;
 
@@ -36,12 +38,15 @@ export class MonthActivityComponent implements OnInit {
 
     ngOnInit(): void {
         this.loading = true;
+        this.isAll = false;
         this.GetData();
     }
 
     GetSheetName(value: string){
         if(this.getModel.SheetName != value){
+            this.previusSheetName = this.getModel.SheetName;
             this.getModel.SheetName = value;
+            this.isAll = false;
             this.GetData();
         }
     }
@@ -50,14 +55,14 @@ export class MonthActivityComponent implements OnInit {
 
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
-            if(res){
-                this.tableData = res.MonthActivityModels;
-                this.sheetList = res.Sheets;            
-                this.loading = false;
-            }
-            else{
-                alert("The table is empty!");
-            }
+                if(res.MonthActivityModels){
+                    this.tableData = res.MonthActivityModels;
+                    this.sheetList = res.Sheets;            
+                    this.loading = false;
+                }
+                else{
+                    alert("The table is empty!");
+                }
         });
     }
 
@@ -69,24 +74,9 @@ export class MonthActivityComponent implements OnInit {
     }   
 
     public getNewRange(){
-        this.getModel.EndIndex += 10;
-        this.GetData();
-        // var resString = "";
-        // var target = document.getElementById("TableBodyId");
-        // this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
-        // {
-        //     res.MonthActivityModels.forEach(coll => {
-        //         resString += "<tr>";
-        //         coll.forEach(cell => {
-        //             resString += "<td style='background-color:" + cell.Color + "'>";
-        //             if(cell.Data){
-        //                 resString += cell.Data;
-        //             }
-        //             "</td>";
-        //         });
-        //         resString += "</tr>";
-        //     });
-        //     target.innerHTML += resString;
-        //});
+        if(this.isAll){
+            this.getModel.EndIndex += 10;
+            this.GetData();
+        }
     }
 }

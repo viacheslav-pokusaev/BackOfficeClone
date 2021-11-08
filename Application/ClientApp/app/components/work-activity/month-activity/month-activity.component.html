@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <select class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="GetSheetName($event.target.value)">
+            <select id="SheetSelectId" class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="GetSheetName($event.target.value)">
                 <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
             </select>
             <br />
