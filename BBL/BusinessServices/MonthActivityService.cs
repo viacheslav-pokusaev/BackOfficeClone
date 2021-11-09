@@ -59,6 +59,8 @@ namespace Application.BBL.BusinessServices
 
             var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
 
+            if (sheetValues == null) return null;
+
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
             int rowIndex = 0;
@@ -69,7 +71,7 @@ namespace Application.BBL.BusinessServices
                 var responceBuff = new List<MonthActivityModel>();
                 foreach (var sheetValue in sheetRow.Values)
                 {
-                string hex;
+                    string hex;
                     if(sheetValue.EffectiveFormat != null)
                     {
                         var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * RGB_FACTOR);

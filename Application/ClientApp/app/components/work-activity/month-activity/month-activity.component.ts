@@ -55,7 +55,7 @@ export class MonthActivityComponent implements OnInit {
 
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
-                if(res.MonthActivityModels){
+                if(res){
                     this.tableData = res.MonthActivityModels;
                     this.sheetList = res.Sheets;            
                     this.loading = false;
@@ -74,9 +74,7 @@ export class MonthActivityComponent implements OnInit {
     }   
 
     public getNewRange(){
-        if(this.isAll){
             this.getModel.EndIndex += 10;
             this.GetData();
-        }
     }
 }
