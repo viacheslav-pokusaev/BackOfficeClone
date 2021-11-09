@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Application.EntitiesModels.Models.MonthActivityModels
 {
-    public class AddSheetViewModel
+    public class MonthActivityGetModel
     {
         public string SheetName { get; set; }
-        public string ParrentSheetName { get; set; }
+        public int StartIndex { get; set; }
+        public int EndIndex { get; set; }
     }
 }

@@ -16,23 +16,17 @@ namespace Application.Api.Controllers
             _vacationsTableService = vacationsTableService;
         }
         //[Authorize(Roles = "Admin, Super_Admin")]
-        [HttpGet]
-        [Route("api/vacations-table/all{sheetName}")]
-        public IActionResult Get(string sheetName)
+        [HttpPost]
+        [Route("api/vacations-table/all")]
+        public IActionResult Get([FromBody]MonthActivityGetModel getModel)
         {
-            return InvokeMethodWithParam(_vacationsTableService.GetAllVacationsFromSheet, sheetName);
+            return InvokeMethodWithParam(_vacationsTableService.GetAllVacationsFromSheet, getModel);
         }
         [HttpPut]
         [Route("api/vacations-table/edit")]
         public IActionResult Edit([FromBody]MonthActivityModel vacation)
         {
             return InvokeMethodWithParam(_vacationsTableService.UpdateVacationOnSheet, vacation);
-        }
-        [HttpPost]
-        [Route("api/vacations-table/add")]
-        public IActionResult Add([FromBody]AddSheetViewModel addSheetModel)
-        {
-            return InvokeMethodWithParam(_vacationsTableService.AddNewSheet, addSheetModel);
         }
     }
 }

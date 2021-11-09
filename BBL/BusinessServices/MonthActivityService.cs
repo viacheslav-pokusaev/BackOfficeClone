@@ -29,7 +29,7 @@ namespace Application.BBL.BusinessServices
         private const int RGB_FACTOR = 255;
 
         static SheetsService service;
-        public MonthActivityVewModel GetAllVacationsFromSheet(string sheetName)
+        public MonthActivityVewModel GetAllVacationsFromSheet(MonthActivityGetModel getModel)
         {
             service = ConfigureSheetService();
 
@@ -37,54 +37,31 @@ namespace Application.BBL.BusinessServices
             var listOfSheets = SheetListNames();
             List<string> listOfRanges = new List<string>();
 
+            if(getModel.SheetName == "default") 
+                getModel.SheetName = listOfSheets.FirstOrDefault();
+
             foreach (var range in listOfSheets)
             {
-                listOfRanges.Add($"{range}!A1:AJ25");
+                listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
             }
-
-            // Specifying Column Range for reading...
-            //var range = $"{listOfsheets[3]}!A1:AJ25";
-
-            //var request = service.Spreadsheets.Values.Get(SPREADSHEET_ID, range);
-
-            
 
             var getRequest = new GetRequest(service, SPREADSHEET_ID);
             getRequest.IncludeGridData = true;
             getRequest.Ranges = listOfRanges;
 
-            //var spreadSheet = getRequest.Execute();
-            //var color = spreadSheet.Sheets[0].Data[0].RowData[3].Values[11].EffectiveFormat.BackgroundColor;
-            
             // Ecexuting Read Operation...
-
-
-            //var response = request.Execute();
             var response = getRequest.Execute();
 
-            // Getting all records from Column A to AJ...
-            //var color = response1.Sheets[0].Data[0].RowData[22].Values[2].EffectiveFormat?.BackgroundColor;
-            //Color myColor1 = Color.FromArgb(Convert.ToInt32(color?.Red)*255, Convert.ToInt32(color?.Green)*255, Convert.ToInt32(color?.Blue)*255);
-            //string hex1 = "#" + myColor1.R.ToString("X2") + myColor1.G.ToString("X2") + myColor1.B.ToString("X2");
-
-            //var sheetValues = response.Values;
-
-            //foreach (var item in listOfsheets)
-            //{
-            //    var sheetValues = response.Sheets[].Data[item].RowData;
-            //}
             var sheetIndex = 0;
 
-            if (!string.IsNullOrEmpty(sheetName) && sheetName != "default")
+            if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
             {
-                sheetIndex = listOfSheets.FindIndex(x => x == sheetName);
+                sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
             }
 
             var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
-            //var sheetTitle = response.Sheets[0].Properties.Title;
 
-            var sheetValues1 = response.Sheets;
-
+            if (sheetValues == null) return null;
 
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
@@ -92,10 +69,10 @@ namespace Application.BBL.BusinessServices
             int columnIndex = 0;
             
             foreach (var sheetRow in sheetValues)
+            {
+                var responceBuff = new List<MonthActivityModel>();
+                foreach (var sheetValue in sheetRow.Values)
                 {
-                    var responceBuff = new List<MonthActivityModel>();
-                    foreach (var sheetValue in sheetRow.Values)
-                    {
                     string hex;
                     System.Drawing.Color myColor;
                         if (sheetValue.EffectiveFormat != null)
@@ -119,7 +96,7 @@ namespace Application.BBL.BusinessServices
                     rowIndex++;
                 }            
            
-            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets };
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets};
         }
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)
@@ -227,7 +204,26 @@ namespace Application.BBL.BusinessServices
 
             return service;
         }
-        
+        private string ColumnNumberToLetter(int columnIndex, int rowIndex)
+        {
+            if(columnIndex < 26)
+            columnIndex++;
+            rowIndex++;
+            var rowIndexStr = rowIndex.ToString();
+            var res = "";
+            var Base = 26;
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            var TempNumber = columnIndex;
+            while (TempNumber > 0)
+            {
+                var position = TempNumber % Base;
+                res = (position == 0 ? 'Z' : chars[position > 0 ? position - 1 : 0]) + res;
+                TempNumber = (TempNumber - 1) / Base;
+            }
+            res = res + rowIndexStr;
+            return res;
+        }
         public List<string> SheetListNames()
         {
             var ssRequest = service.Spreadsheets.Get(SPREADSHEET_ID);
@@ -239,48 +235,6 @@ namespace Application.BBL.BusinessServices
                 sheetList.Add(sheet.Properties.Title);
             }
             return sheetList;
-        }
-
-        public bool AddNewSheet(AddSheetViewModel addSheetModel)
-        {
-            try
-            {
-                service = ConfigureSheetService();
-                var addSheetRequest = new AddSheetRequest();
-                addSheetRequest.Properties = new SheetProperties();
-                //addSheetRequest.Properties.Title = addSheetModel.SheetName;
-                addSheetRequest.Properties.Title = addSheetModel.SheetName;
-
-                BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
-                batchUpdateSpreadsheetRequest.Requests = new List<Request>();
-
-                batchUpdateSpreadsheetRequest.Requests.Add(new Request
-                {
-                    AddSheet = addSheetRequest
-                });
-                var batchUpdateRequest = service.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, SPREADSHEET_ID);
-                var responce = batchUpdateRequest.Execute();
-
-                //get data from parrent
-                //var getRequest = new GetRequest(service, SPREADSHEET_ID);
-                //var getParrentResponse = getRequest.Execute();
-
-                //var sheetIndex = 0;
-                //var listOfSheets = SheetListNames();
-
-                //if (!string.IsNullOrEmpty(addSheetModel.ParrentSheetName))
-                //{
-                //    sheetIndex = listOfSheets.FindIndex(x => x == addSheetModel.ParrentSheetName);
-                //}
-                //var sheetValues = getParrentResponse.Sheets[sheetIndex].Data[0].RowData;
-
-                return true;
-
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
         }
     }
 }

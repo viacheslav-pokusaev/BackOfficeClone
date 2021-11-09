@@ -1,11 +1,11 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
-import { AddSheetViewModel } from '../../../models/month-activity-models/add-sheet-view.model';
 import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
+import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
 import { MonthActivityService } from '../../../services/month-activity.service';
 
 @Component({
@@ -17,7 +17,15 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
-    public sheetName: string = "default";
+    public previusSheetName:string = "default";
+    public getModel: MonthActivityGetModel = {
+        SheetName: "default",
+        StartIndex: 1,
+        EndIndex: 10
+    };
+
+    public isAll;
+
     loading: boolean;
 
     constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
@@ -31,36 +39,33 @@ export class MonthActivityComponent implements OnInit {
         color: "#1574b3"
     };   
 
-    ngOnInit(): void {      
-        this.GetData();        
+    ngOnInit(): void {
+        this.loading = true;
+        this.isAll = false;
+        this.GetData();
     }
 
     GetSheetName(value: string){
-        if(this.sheetName != value){
-            this.sheetName = value;
-            this.loading = true;
+        if(this.getModel.SheetName != value){
+            this.previusSheetName = this.getModel.SheetName;
+            this.getModel.SheetName = value;
             this.GetData();
         }
     }
    
     GetData(){
-        this.http.get('/api/vacations-table/all' + this.sheetName).subscribe((res: MonthActivityViewModel) => 
+
+        this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
-            if(res.MonthActivityModels != undefined){
-                this.tableData = res.MonthActivityModels;
-                this.sheetList = res.Sheets;            
-                this.loading = false;
-            }
+                if(res){
+                    this.tableData = res.MonthActivityModels;
+                    this.sheetList = res.Sheets;            
+                    this.loading = false;
+                }
+                else{
+                    alert("The table is empty!");
+                }
         });
-    }
-    
-    AddNewList(){
-        var sheetModel = new AddSheetViewModel();
-        sheetModel.SheetName = "TestWithData";
-        sheetModel.ParrentSheetName = "Лист1";
-        this.http.post('/api/vacations-table/add', sheetModel).subscribe(res => {
-            console.log(res);
-        })
     }
 
     public editMonthCell(cellData: MonthActivityModel) {
@@ -75,5 +80,14 @@ export class MonthActivityComponent implements OnInit {
                 cellData.Color = this.monthActivityService.monthActivity.Color;
             }            
         });      
-    }         
+    }           
+
+    get mydata(): MonthActivityModel{
+        return this.monthActivityService.monthActivity;        
+    };
+
+    public getNewRange() {
+        this.getModel.EndIndex += 10;
+        this.GetData();
+    }
 }
