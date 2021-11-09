@@ -69,13 +69,11 @@ export class MonthActivityComponent implements OnInit {
             data: { RowIndex: cellData.RowIndex, ColumnIndex: cellData.ColumnIndex, Data: cellData.Data, Color: cellData.Color }
         });        
 
-        dialogRes.afterClosed().subscribe(result => {                   
-            cellData.Data = this.monthActivityService.monthActivity.Data;
-            cellData.Color = this.monthActivityService.monthActivity.Color;
+        dialogRes.afterClosed().subscribe(result => {
+            if (this.monthActivityService.monthActivity != null) {
+                cellData.Data = this.monthActivityService.monthActivity.Data;
+                cellData.Color = this.monthActivityService.monthActivity.Color;
+            }            
         });      
-    }           
-
-    get mydata(): MonthActivityModel{
-        return this.monthActivityService.monthActivity;        
-    };
+    }         
 }

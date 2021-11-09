@@ -48,13 +48,16 @@ export class EditMonthCellComponent {
                 if (result == true) {
                     this.monthActivityService.monthActivity = monthActivity;
                     this.dialogRef.close();
+
                 }                
             }
         );       
     }
 
     public cancel(): void {
-        if (this.dialogRef != null && this.dialogRef != undefined) this.dialogRef.close();
+        if (this.dialogRef != null && this.dialogRef != undefined)
+            this.monthActivityService.monthActivity = null;
+            this.dialogRef.close();
     }
 
     onChange(color: string) {
