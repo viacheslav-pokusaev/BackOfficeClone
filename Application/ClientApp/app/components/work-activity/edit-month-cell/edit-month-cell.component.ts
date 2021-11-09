@@ -25,7 +25,7 @@ export class EditMonthCellComponent {
         { Vacation: 'работа в выходной (доплата к зп)', HexColor: '#FFFF00' }
     ];
 
-    public selectedColor: string;
+    public selectedColor = '#FFFFFF';
 
     public spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
