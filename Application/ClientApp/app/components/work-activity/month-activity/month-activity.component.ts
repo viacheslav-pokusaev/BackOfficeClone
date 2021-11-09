@@ -6,6 +6,7 @@ import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -16,6 +17,7 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
+    subject: Subject<any>;
     public previusSheetName:string = "default";
     public getModel: MonthActivityGetModel = {
         SheetName: "default",
@@ -23,9 +25,11 @@ export class MonthActivityComponent implements OnInit {
         EndIndex: 10
     };
 
-    public isAll;
+    public isAll:boolean;
 
     loading: boolean;
+
+    subscription: Subscription;
 
     constructor(private http: HttpClient, private dialog: MatDialog) { };
 
@@ -39,23 +43,26 @@ export class MonthActivityComponent implements OnInit {
     ngOnInit(): void {
         this.loading = true;
         this.isAll = false;
+        this.getModel.EndIndex = 10;
         this.GetData();
     }
 
     GetSheetName(value: string){
         if(this.getModel.SheetName != value){
+            this.isAll = false;
             this.previusSheetName = this.getModel.SheetName;
             this.getModel.SheetName = value;
             this.isAll = false;
+            this.getModel.EndIndex = 10;
             this.GetData();
         }
     }
    
     GetData(){
-
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
-                if(res){
+            if(res){
+                if(res.IsEmpty == false){
                     this.tableData = res.MonthActivityModels;
                     this.sheetList = res.Sheets;            
                     this.loading = false;
@@ -63,6 +70,11 @@ export class MonthActivityComponent implements OnInit {
                 else{
                     alert("The table is empty!");
                 }
+            }
+            else{
+                this.isAll = true;
+                alert("The table is allready loaded!");
+            }
         });
     }
 
@@ -74,7 +86,12 @@ export class MonthActivityComponent implements OnInit {
     }   
 
     public getNewRange(){
+        if(this.isAll == false){
             this.getModel.EndIndex += 10;
             this.GetData();
+        }
+        else{
+            alert("The table is allready loaded!");
+        }
     }
 }

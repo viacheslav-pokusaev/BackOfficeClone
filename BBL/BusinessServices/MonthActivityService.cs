@@ -35,7 +35,7 @@ namespace Application.BBL.BusinessServices
             var listOfSheets = SheetListNames();
             List<string> listOfRanges = new List<string>();
 
-            if(getModel.SheetName == "default") 
+            if (getModel.SheetName == "default")
                 getModel.SheetName = listOfSheets.FirstOrDefault();
 
             foreach (var range in listOfSheets)
@@ -48,18 +48,19 @@ namespace Application.BBL.BusinessServices
             getRequest.Ranges = listOfRanges;
 
             // Ecexuting Read Operation...
-            var response = getRequest.Execute();
-
+            var response = getRequest.Execute(); //responce->Sheets[]->id->properties->gridProperties->RowCount
             var sheetIndex = 0;
 
             if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
             {
                 sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
             }
+            //var rowCount = response.Sheets[sheetIndex].Properties.GridProperties.RowCount;
+            var rowCount = service.Spreadsheets.Values.Get(SPREADSHEET_ID, "A:ZZ").Execute().Values.Count;
 
             var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
 
-            if (sheetValues == null) return null;
+            if (sheetValues == null) return new MonthActivityVewModel() { IsEmpty = true };
 
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
@@ -92,8 +93,9 @@ namespace Application.BBL.BusinessServices
                 columnIndex = 0;
                 rowIndex++;
             }
+            if (rowCount == readSheetResponce.Count) return null;
            
-            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets};
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false};
         }
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)
