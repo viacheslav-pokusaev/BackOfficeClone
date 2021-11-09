@@ -20,9 +20,8 @@ namespace Application.BBL.BusinessServices
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         //static readonly string ApplicationName = "Dot Tutorials";
         //static readonly string sheet = "October'21";
-        //static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        //private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
+        private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        //private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
         private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
         private const int RGB_FACTOR = 255;
 
@@ -55,8 +54,7 @@ namespace Application.BBL.BusinessServices
             {
                 sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
             }
-            //var rowCount = response.Sheets[sheetIndex].Properties.GridProperties.RowCount;
-            var rowCount = service.Spreadsheets.Values.Get(SPREADSHEET_ID, "A:ZZ").Execute().Values.Count;
+            var rowCount = response.Sheets[sheetIndex].Properties.GridProperties.RowCount;
 
             var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
 
@@ -93,9 +91,11 @@ namespace Application.BBL.BusinessServices
                 columnIndex = 0;
                 rowIndex++;
             }
-            if (rowCount == readSheetResponce.Count) return null;
+            //if (rowCount <= readSheetResponce.Count) return null;
+            bool isAll = false;
+            if (getModel.GetCount >= 25) isAll = true;
            
-            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false};
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false, IsAll = isAll};
         }
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)

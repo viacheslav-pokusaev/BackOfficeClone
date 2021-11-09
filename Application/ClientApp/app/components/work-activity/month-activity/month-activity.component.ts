@@ -6,7 +6,6 @@ import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
-import { Subject, Subscription } from 'rxjs';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -17,20 +16,18 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
-    subject: Subject<any>;
+    step: number = 10;
     public previusSheetName:string = "default";
     public getModel: MonthActivityGetModel = {
         SheetName: "default",
         StartIndex: 1,
-        EndIndex: 10
+        EndIndex: 10,
+        GetCount: this.step
     };
 
     public isAll:boolean;
 
     loading: boolean;
-
-    subscription: Subscription;
-
     constructor(private http: HttpClient, private dialog: MatDialog) { };
 
     spinnerConfig: ISpinnerConfig = {
@@ -47,13 +44,14 @@ export class MonthActivityComponent implements OnInit {
         this.GetData();
     }
 
-    GetSheetName(value: string){
+    ChangeTargetSheet(value: string){
         if(this.getModel.SheetName != value){
-            this.isAll = false;
-            this.previusSheetName = this.getModel.SheetName;
             this.getModel.SheetName = value;
             this.isAll = false;
+            this.tableData = Array<Array<MonthActivityModel>>();
+            this.getModel.StartIndex = 1;
             this.getModel.EndIndex = 10;
+            this.getModel.GetCount = this.step;
             this.GetData();
         }
     }
@@ -63,17 +61,24 @@ export class MonthActivityComponent implements OnInit {
         {            
             if(res){
                 if(res.IsEmpty == false){
-                    this.tableData = res.MonthActivityModels;
-                    this.sheetList = res.Sheets;            
+                    //this.tableData = res.MonthActivityModels;
+                    res.MonthActivityModels.forEach(row =>{
+                        this.tableData.push(row);
+                    });
+                    this.sheetList = res.Sheets; 
+                    this.getModel.GetCount += 10;           
                     this.loading = false;
                 }
                 else{
                     alert("The table is empty!");
                 }
+                if(res.IsAll == true){
+                    this.isAll = res.IsAll;
+                    alert("The table is allready loaded!");
+                }
             }
             else{
-                this.isAll = true;
-                alert("The table is allready loaded!");
+                alert("Error, when trying load the table!");
             }
         });
     }
@@ -87,6 +92,7 @@ export class MonthActivityComponent implements OnInit {
 
     public getNewRange(){
         if(this.isAll == false){
+            this.getModel.StartIndex += 10;
             this.getModel.EndIndex += 10;
             this.GetData();
         }
