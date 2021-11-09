@@ -6,6 +6,7 @@ import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
+import { MonthActivityService } from '../../../services/month-activity.service';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -27,7 +28,9 @@ export class MonthActivityComponent implements OnInit {
 
     loading: boolean;
 
-    constructor(private http: HttpClient, private dialog: MatDialog) { };
+    constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
+        this.loading = true;        
+    };
 
     spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
@@ -46,7 +49,6 @@ export class MonthActivityComponent implements OnInit {
         if(this.getModel.SheetName != value){
             this.previusSheetName = this.getModel.SheetName;
             this.getModel.SheetName = value;
-            this.isAll = false;
             this.GetData();
         }
     }
@@ -69,12 +71,21 @@ export class MonthActivityComponent implements OnInit {
     public editMonthCell(cellData: MonthActivityModel) {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: '1050px',
-            data: { rowIndex: cellData.RowIndex, columnIndex: cellData.ColumnIndex, data: cellData.Data, color: cellData.Color }
-        });
-    }   
+            data: { RowIndex: cellData.RowIndex, ColumnIndex: cellData.ColumnIndex, Data: cellData.Data, Color: cellData.Color }
+        });        
 
-    public getNewRange(){
-            this.getModel.EndIndex += 10;
-            this.GetData();
+        dialogRes.afterClosed().subscribe(result => {                   
+            cellData.Data = this.monthActivityService.monthActivity.Data;
+            cellData.Color = this.monthActivityService.monthActivity.Color;
+        });      
+    }           
+
+    get mydata(): MonthActivityModel{
+        return this.monthActivityService.monthActivity;        
+    };
+
+    public getNewRange() {
+        this.getModel.EndIndex += 10;
+        this.GetData();
     }
 }

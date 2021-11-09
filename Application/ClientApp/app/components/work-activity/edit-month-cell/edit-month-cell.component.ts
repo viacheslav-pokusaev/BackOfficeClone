@@ -45,15 +45,12 @@ export class EditMonthCellComponent {
         this.monthActivity.Color = this.selectedColor;
         this.monthActivityService.update(monthActivity).subscribe(
             result => {
-                this.dialogRef.close()
+                if (result == true) {
+                    this.monthActivityService.monthActivity = monthActivity;
+                    this.dialogRef.close();
+                }                
             }
-        );
-
-        //this.http.put('/api/vacations-table/edit', monthActivity).subscribe(
-        //    result => {                
-        //        this.dialogRef.close()
-        //    }
-        //);
+        );       
     }
 
     public cancel(): void {
@@ -62,5 +59,5 @@ export class EditMonthCellComponent {
 
     onChange(color: string) {
         this.selectedColor = color;
-    }
+    }   
 }
