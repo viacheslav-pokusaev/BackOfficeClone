@@ -19,11 +19,9 @@ namespace Application.BBL.BusinessServices
 {
     public class MonthActivityService : IMonthActivityService
     {
-        static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        //static readonly string ApplicationName = "Dot Tutorials";
-        //static readonly string sheet = "October'21";
-        private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        //private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
+        static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };        
+        //private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
         private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
         private const int RGB_FACTOR = 255;
 
@@ -34,15 +32,9 @@ namespace Application.BBL.BusinessServices
 
             //get list of Sheets
             var listOfSheets = SheetListNames();
-            //List<string> listOfRanges = new List<string>();
 
             if (getModel.SheetName == "default")
                 getModel.SheetName = listOfSheets.FirstOrDefault();
-
-            //foreach (var range in listOfSheets)
-            //{
-            //    listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
-            //}
 
             var getRequest = new GetRequest(service, SPREADSHEET_ID);
             getRequest.IncludeGridData = true;
@@ -50,15 +42,7 @@ namespace Application.BBL.BusinessServices
             getRequest.Ranges = new List<string> { $"{getModel.SheetName}!A{getModel.StartIndex}:ZZ{getModel.EndIndex}" };
 
             // Ecexuting Read Operation...
-            var response = getRequest.Execute(); //responce->Sheets[]->id->properties->gridProperties->RowCount
-            //var colCount = response.Sheets[0].Properties.GridProperties.ColumnCount;
-            //var sheetIndex = 0;
-
-            //if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
-            //{
-            //    sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
-            //}
-            //var rowCount = response.Sheets[0].Properties.GridProperties.RowCount;
+            var response = getRequest.Execute(); 
 
             var sheetValues = response.Sheets[0].Data[0].RowData;
 
@@ -75,14 +59,9 @@ namespace Application.BBL.BusinessServices
                 foreach (var sheetValue in sheetRow.Values)
                 {
                     string hex;
-                    System.Drawing.Color myColor;
                     if (sheetValue.EffectiveFormat != null)
                     {
-                        var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * RGB_FACTOR);
-                        var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * RGB_FACTOR);
-                        var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * RGB_FACTOR);
-                        myColor = System.Drawing.Color.FromArgb(red, green, blue);
-                        hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                        hex = GetHEXColor(sheetValue.EffectiveFormat?.BackgroundColor);
                     }
                     else
                     {
@@ -97,10 +76,6 @@ namespace Application.BBL.BusinessServices
                 rowIndex++;
             }
             
-            //bool isAll = false;
-            ////if (getModel.GetCount >= 25) isAll = true;
-            //if (rowCount <= readSheetResponce.Count) isAll = true;
-
             return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false};
         }
         public bool UpdateVacationOnSheet(MonthActivityEditModel vacation)
@@ -119,15 +94,7 @@ namespace Application.BBL.BusinessServices
             Sheet sh = spr.Sheets.Where(s => s.Properties.Title == vacation.SheetName).FirstOrDefault();
             //get sheet id by sheet name
             int sheetId = (int)sh.Properties.SheetId;
-
-            if (vacation.Color.IndexOf('#') != -1)
-                vacation.Color = vacation.Color.Replace("#", "");
-
-            int red = int.Parse(vacation.Color.Substring(0, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
-            int green = int.Parse(vacation.Color.Substring(2, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
-            int blue = int.Parse(vacation.Color.Substring(4, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
-
-            var color = System.Drawing.Color.FromArgb(red, green, blue);
+            var color = GetRGBColor(vacation.Color);
 
             //define cell color
             var userEnteredFormat = new CellFormat()
@@ -196,6 +163,27 @@ namespace Application.BBL.BusinessServices
             valuesResource1.Execute();
 
             return true;
+        }
+        private System.Drawing.Color GetRGBColor(string hexColor)
+        {
+            if (hexColor.IndexOf('#') != -1)
+                hexColor = hexColor.Replace("#", "");
+
+            int red = int.Parse(hexColor.Substring(0, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
+            int green = int.Parse(hexColor.Substring(2, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
+            int blue = int.Parse(hexColor.Substring(4, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
+
+            var rgbColor = System.Drawing.Color.FromArgb(red, green, blue);
+            return rgbColor;
+        }
+        private string GetHEXColor(Google.Apis.Sheets.v4.Data.Color color)
+        {
+            var red = Convert.ToInt32(color.Red * RGB_FACTOR);
+            var green = Convert.ToInt32(color.Green * RGB_FACTOR);
+            var blue = Convert.ToInt32(color.Blue * RGB_FACTOR);
+            System.Drawing.Color myColor = System.Drawing.Color.FromArgb(red, green, blue);
+            var hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+            return hex;
         }
         private SheetsService ConfigureSheetService()
         {
