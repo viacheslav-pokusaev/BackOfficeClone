@@ -39,8 +39,7 @@ export class EditMonthCellComponent {
         public dialogRef: MatDialogRef<EditMonthCellComponent>,
         private monthActivityService: MonthActivityService,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        this.monthEditActivity = data;
-        this.monthActivityService.monthActivityEdit = null;
+        this.monthEditActivity = data;        
     }
 
     public updateMonthCell(monthEditActivity: MonthActivityEditModel) {
