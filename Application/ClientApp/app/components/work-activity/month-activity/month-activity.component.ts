@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
 import { MonthActivityService } from '../../../services/month-activity.service';
+import { MonthActivityEditModel } from '../../../models/month-activity-models/month-activity-edit.model';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -68,22 +69,29 @@ export class MonthActivityComponent implements OnInit {
         });
     }
 
-    public editMonthCell(cellData: MonthActivityModel) {
+    public editMonthCell(cellData: MonthActivityEditModel) {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: '1050px',
-            data: { RowIndex: cellData.RowIndex, ColumnIndex: cellData.ColumnIndex, Data: cellData.Data, Color: cellData.Color }
+            data: {               
+                    RowIndex: cellData.RowIndex,
+                    ColumnIndex: cellData.ColumnIndex,
+                    Data: cellData.Data,
+                    Color: cellData.Color,                
+                    SheetName: this.getModel.SheetName
+            }                              
+           
         });        
 
         dialogRes.afterClosed().subscribe(result => {
-            if (this.monthActivityService.monthActivity != null) {
-                cellData.Data = this.monthActivityService.monthActivity.Data;
-                cellData.Color = this.monthActivityService.monthActivity.Color;
+            if (this.monthActivityService.monthActivityEdit !== null) {
+                cellData.Data = this.monthActivityService.monthActivityEdit.Data;
+                cellData.Color = this.monthActivityService.monthActivityEdit.Color;
             }            
         });      
     }           
 
-    get mydata(): MonthActivityModel{
-        return this.monthActivityService.monthActivity;        
+    get mydata(): MonthActivityEditModel{
+        return this.monthActivityService.monthActivityEdit;
     };
 
     public getNewRange() {

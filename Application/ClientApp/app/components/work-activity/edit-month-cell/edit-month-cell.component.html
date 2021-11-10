@@ -9,7 +9,7 @@
                 <div class="col-md-12 col-lg-12">
                     <form name="editCell" class="form-horizontal  container-fluid">
                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
-                            <input type="text" class="form-control " id="inputSuccess2" [(ngModel)]="monthActivity.Data" name="EditCell" autocomplete="off">
+                            <input type="text" class="form-control " id="inputSuccess2" [(ngModel)]="monthEditActivity.Data" name="EditCell" autocomplete="off">
                             <span class="tooltiptext">
                                 Month cell data
                             </span>
@@ -27,7 +27,7 @@
 
                         <div class="col-md-12 col-xs-12">
                             <div class="form-group col-md-6 col-xs-6 text-center">
-                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="updateMonthCell(monthActivity)">
+                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="updateMonthCell(monthEditActivity)">
                                     Edit
                                 </button>
                             </div>

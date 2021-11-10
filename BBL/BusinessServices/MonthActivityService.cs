@@ -37,7 +37,7 @@ namespace Application.BBL.BusinessServices
             var listOfSheets = SheetListNames();
             List<string> listOfRanges = new List<string>();
 
-            if(getModel.SheetName == "default") 
+            if (getModel.SheetName == "default")
                 getModel.SheetName = listOfSheets.FirstOrDefault();
 
             foreach (var range in listOfSheets)
@@ -67,7 +67,7 @@ namespace Application.BBL.BusinessServices
 
             int rowIndex = 0;
             int columnIndex = 0;
-            
+
             foreach (var sheetRow in sheetValues)
             {
                 var responceBuff = new List<MonthActivityModel>();
@@ -75,48 +75,56 @@ namespace Application.BBL.BusinessServices
                 {
                     string hex;
                     System.Drawing.Color myColor;
-                        if (sheetValue.EffectiveFormat != null)
-                        {                          
-                            var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * RGB_FACTOR);
-                            var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * RGB_FACTOR);
-                            var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * RGB_FACTOR);
-                            myColor = System.Drawing.Color.FromArgb(red, green, blue);
-                            hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                        }
-                        else
-                        {
-                            hex = INITIAL_BACKGROUND_COLOR;
-                        }                        
-
-                        responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex/*, ColorRGB = color*/ });
-                        columnIndex++;                       
+                    if (sheetValue.EffectiveFormat != null)
+                    {
+                        var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * RGB_FACTOR);
+                        var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * RGB_FACTOR);
+                        var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * RGB_FACTOR);
+                        myColor = System.Drawing.Color.FromArgb(red, green, blue);
+                        hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
                     }
-                    readSheetResponce.Add(responceBuff);
-                    columnIndex = 0;
-                    rowIndex++;
-                }            
-           
-            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets};
+                    else
+                    {
+                        hex = INITIAL_BACKGROUND_COLOR;
+                    }
+
+                    responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
+                    columnIndex++;
+                }
+                readSheetResponce.Add(responceBuff);
+                columnIndex = 0;
+                rowIndex++;
+            }
+
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets };
         }
 
-        public bool UpdateVacationOnSheet(MonthActivityModel vacation)
-        {           
+        public bool UpdateVacationOnSheet(MonthActivityEditModel vacation)
+        {
             //get all sheets
             Spreadsheet spr = service.Spreadsheets.Get(SPREADSHEET_ID).Execute();
+
+            //get list of Sheets
+            var listOfSheets = SheetListNames();
+            List<string> listOfRanges = new List<string>();
+
+            if (vacation.SheetName == "default")
+                vacation.SheetName = listOfSheets.FirstOrDefault();
+
             //get currunt sheet
-            Sheet sh = spr.Sheets.Where(s => s.Properties.Title == "Лист1").FirstOrDefault();
+            Sheet sh = spr.Sheets.Where(s => s.Properties.Title == vacation.SheetName).FirstOrDefault();
             //get sheet id by sheet name
             int sheetId = (int)sh.Properties.SheetId;
 
             if (vacation.Color.IndexOf('#') != -1)
-                vacation.Color = vacation.Color.Replace("#", "");      
+                vacation.Color = vacation.Color.Replace("#", "");
 
             int red = int.Parse(vacation.Color.Substring(0, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
             int green = int.Parse(vacation.Color.Substring(2, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
             int blue = int.Parse(vacation.Color.Substring(4, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
-            
+
             var color = System.Drawing.Color.FromArgb(red, green, blue);
-            
+
             //define cell color
             var userEnteredFormat = new CellFormat()
             {
@@ -125,7 +133,7 @@ namespace Application.BBL.BusinessServices
                     Red = color.R,
                     Green = color.G,
                     Blue = color.B
-                }                
+                }
             };
 
             var userEnteredValue = new ExtendedValue()
@@ -152,8 +160,8 @@ namespace Application.BBL.BusinessServices
                     {
                         UserEnteredFormat = userEnteredFormat,
                         UserEnteredValue = userEnteredValue
-                    },                 
-                    Fields = "UserEnteredFormat(BackgroundColor)"                   
+                    },
+                    Fields = "UserEnteredFormat(BackgroundColor)"
                 }
             };
 
@@ -171,7 +179,7 @@ namespace Application.BBL.BusinessServices
                     },
                     Cell = new CellData()
                     {
-                        
+
                         UserEnteredValue = userEnteredValue
                     },
                     Fields = "UserEnteredValue(StringValue)"
@@ -206,8 +214,8 @@ namespace Application.BBL.BusinessServices
         }
         private string ColumnNumberToLetter(int columnIndex, int rowIndex)
         {
-            if(columnIndex < 26)
-            columnIndex++;
+            if (columnIndex < 26)
+                columnIndex++;
             rowIndex++;
             var rowIndexStr = rowIndex.ToString();
             var res = "";
