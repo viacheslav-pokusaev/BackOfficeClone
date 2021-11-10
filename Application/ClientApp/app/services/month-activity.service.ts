@@ -3,17 +3,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { MonthActivityModel } from '../models/month-activity-models/month-activity-model';
+import { MonthActivityEditModel } from '../models/month-activity-models/month-activity-edit.model';
+
 
 
 @Injectable()
 
 export class MonthActivityService  {
-    public monthActivity: MonthActivityModel = new MonthActivityModel();
+    public monthActivityEdit: MonthActivityEditModel = new MonthActivityEditModel();
 
     constructor(private http: HttpClient) {   
     }
 
-    update(monthActivity: MonthActivityModel) {
-        return this.http.put('/api/vacations-table/edit', monthActivity);
+    update(monthActivityEdit: MonthActivityEditModel) {
+        return this.http.put('/api/vacations-table/edit', monthActivityEdit);
     };
 }

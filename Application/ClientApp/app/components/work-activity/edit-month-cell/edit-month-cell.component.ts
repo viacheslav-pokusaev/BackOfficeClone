@@ -5,6 +5,7 @@ import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VacationColor } from '../../../models/month-activity-models/vacation-color.model';
 import { MonthActivityService } from '../../../services/month-activity.service';
+import { MonthActivityEditModel } from '../../../models/month-activity-models/month-activity-edit.model';
 
 @Component({
     selector: 'edit-month-cell',
@@ -14,8 +15,8 @@ import { MonthActivityService } from '../../../services/month-activity.service';
 export class EditMonthCellComponent {
 
     public loading: boolean = false;
-    public monthActivity: MonthActivityModel = new MonthActivityModel();
-    
+    public monthEditActivity: MonthActivityEditModel = new MonthActivityEditModel();    
+
 
     arrayColors: VacationColor[] = [
         { Vacation: '', HexColor: '#FFFFFF' },
@@ -25,7 +26,7 @@ export class EditMonthCellComponent {
         { Vacation: 'работа в выходной (доплата к зп)', HexColor: '#FFFF00' }
     ];
 
-    public selectedColor: string;
+    public selectedColor = '#FFFFFF';
 
     public spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
@@ -38,23 +39,27 @@ export class EditMonthCellComponent {
         public dialogRef: MatDialogRef<EditMonthCellComponent>,
         private monthActivityService: MonthActivityService,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        this.monthActivity = data;
+        this.monthEditActivity = data;
+        this.monthActivityService.monthActivityEdit = null;
     }
 
-    public updateMonthCell(monthActivity: MonthActivityModel) {
-        this.monthActivity.Color = this.selectedColor;
-        this.monthActivityService.update(monthActivity).subscribe(
+    public updateMonthCell(monthEditActivity: MonthActivityEditModel) {
+        this.monthEditActivity.Color = this.selectedColor;
+        this.monthActivityService.update(this.monthEditActivity).subscribe(
             result => {
                 if (result == true) {
-                    this.monthActivityService.monthActivity = monthActivity;
+                    this.monthActivityService.monthActivityEdit = monthEditActivity;
                     this.dialogRef.close();
+
                 }                
             }
         );       
     }
 
     public cancel(): void {
-        if (this.dialogRef != null && this.dialogRef != undefined) this.dialogRef.close();
+        if (this.dialogRef != null && this.dialogRef != undefined)
+            this.monthActivityService.monthActivityEdit = null;
+            this.dialogRef.close();
     }
 
     onChange(color: string) {

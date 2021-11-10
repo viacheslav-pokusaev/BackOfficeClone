@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using static Google.Apis.Sheets.v4.SpreadsheetsResource;
+using static Google.Apis.Sheets.v4.Data.Color;
+using System.Globalization;
 
 namespace Application.BBL.BusinessServices
 {
@@ -66,28 +68,29 @@ namespace Application.BBL.BusinessServices
 
             int rowIndex = 0;
             int columnIndex = 0;
-            
+
             foreach (var sheetRow in sheetValues)
             {
                 var responceBuff = new List<MonthActivityModel>();
                 foreach (var sheetValue in sheetRow.Values)
                 {
                     string hex;
-                    if(sheetValue.EffectiveFormat != null)
+                    System.Drawing.Color myColor;
+                    if (sheetValue.EffectiveFormat != null)
                     {
                         var red = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Red * RGB_FACTOR);
                         var green = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Green * RGB_FACTOR);
                         var blue = Convert.ToInt32(sheetValue.EffectiveFormat?.BackgroundColor.Blue * RGB_FACTOR);
-                        System.Drawing.Color myColor = System.Drawing.Color.FromArgb(red, green, blue);
+                        myColor = System.Drawing.Color.FromArgb(red, green, blue);
                         hex = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
                     }
                     else
                     {
                         hex = INITIAL_BACKGROUND_COLOR;
-                    }                        
-            
+                    }
+
                     responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
-                    columnIndex++;                       
+                    columnIndex++;
                 }
                 readSheetResponce.Add(responceBuff);
                 columnIndex = 0;
@@ -100,18 +103,98 @@ namespace Application.BBL.BusinessServices
 
             return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false};
         }
-
-        public bool UpdateVacationOnSheet(MonthActivityModel vacation)
+        public bool UpdateVacationOnSheet(MonthActivityEditModel vacation)
         {
-            var valuesResource = ConfigureSheetService().Spreadsheets.Values;
-            //var WriteRange = ColumnNumberToLetter(3, 1);
-            var WriteRange = ColumnNumberToLetter(vacation.ColumnIndex, vacation.RowIndex);
-            //var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { "ConvertTest3" } } };
-            var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { vacation.Data } } };         
+            //get all sheets
+            Spreadsheet spr = service.Spreadsheets.Get(SPREADSHEET_ID).Execute();
 
-            var update = valuesResource.Update(valueRange, SPREADSHEET_ID, WriteRange);
-            update.ValueInputOption = ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
-            var response = update.Execute();
+            //get list of Sheets
+            var listOfSheets = SheetListNames();
+            List<string> listOfRanges = new List<string>();
+
+            if (vacation.SheetName == "default")
+                vacation.SheetName = listOfSheets.FirstOrDefault();
+
+            //get currunt sheet
+            Sheet sh = spr.Sheets.Where(s => s.Properties.Title == vacation.SheetName).FirstOrDefault();
+            //get sheet id by sheet name
+            int sheetId = (int)sh.Properties.SheetId;
+
+            if (vacation.Color.IndexOf('#') != -1)
+                vacation.Color = vacation.Color.Replace("#", "");
+
+            int red = int.Parse(vacation.Color.Substring(0, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
+            int green = int.Parse(vacation.Color.Substring(2, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
+            int blue = int.Parse(vacation.Color.Substring(4, 2), NumberStyles.AllowHexSpecifier) / RGB_FACTOR;
+
+            var color = System.Drawing.Color.FromArgb(red, green, blue);
+
+            //define cell color
+            var userEnteredFormat = new CellFormat()
+            {
+                BackgroundColor = new Google.Apis.Sheets.v4.Data.Color()
+                {
+                    Red = color.R,
+                    Green = color.G,
+                    Blue = color.B
+                }
+            };
+
+            var userEnteredValue = new ExtendedValue()
+            {
+                StringValue = (string)vacation.Data
+            };
+
+            BatchUpdateSpreadsheetRequest bussr = new BatchUpdateSpreadsheetRequest();
+
+            //create the update request for cell
+            var updateCellsBackgroundColor = new Request()
+            {
+                RepeatCell = new RepeatCellRequest()
+                {
+                    Range = new GridRange()
+                    {
+                        SheetId = sheetId,
+                        StartColumnIndex = vacation.ColumnIndex,
+                        StartRowIndex = vacation.RowIndex,
+                        EndColumnIndex = vacation.ColumnIndex + 1,
+                        EndRowIndex = vacation.RowIndex + 1
+                    },
+                    Cell = new CellData()
+                    {
+                        UserEnteredFormat = userEnteredFormat,
+                        UserEnteredValue = userEnteredValue
+                    },
+                    Fields = "UserEnteredFormat(BackgroundColor)"
+                }
+            };
+            var updateCellsValue = new Request()
+            {
+                RepeatCell = new RepeatCellRequest()
+                {
+                    Range = new GridRange()
+                    {
+                        SheetId = sheetId,
+                        StartColumnIndex = vacation.ColumnIndex,
+                        StartRowIndex = vacation.RowIndex,
+                        EndColumnIndex = vacation.ColumnIndex + 1,
+                        EndRowIndex = vacation.RowIndex + 1
+                    },
+                    Cell = new CellData()
+                    {
+
+                        UserEnteredValue = userEnteredValue
+                    },
+                    Fields = "UserEnteredValue(StringValue)"
+                }
+            };
+
+            bussr.Requests = new List<Request>();
+            bussr.Requests.Add(updateCellsBackgroundColor);
+            bussr.Requests.Add(updateCellsValue);
+            var valuesResource1 = service.Spreadsheets.BatchUpdate(bussr, SPREADSHEET_ID);
+            valuesResource1.Execute();
+
             return true;
         }
         private SheetsService ConfigureSheetService()
@@ -134,8 +217,8 @@ namespace Application.BBL.BusinessServices
         }
         private string ColumnNumberToLetter(int columnIndex, int rowIndex)
         {
-            if(columnIndex < 26)
-            columnIndex++;
+            if (columnIndex < 26)
+                columnIndex++;
             rowIndex++;
             var rowIndexStr = rowIndex.ToString();
             var res = "";

@@ -87,6 +87,7 @@
     <None Remove="ClientApp\app\models\ChangePassword.model.ts" />
     <None Remove="ClientApp\app\models\feedback.model.ts" />
     <None Remove="ClientApp\app\models\listVacation.model.ts" />
+    <None Remove="ClientApp\app\models\month-activity-models\month-activity-edit.model.ts" />
     <None Remove="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
     <None Remove="ClientApp\app\models\overtime.model.ts" />
     <None Remove="ClientApp\app\models\proposal.model.ts" />
@@ -139,6 +140,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\work-activity\edit-month-cell\edit-month-cell.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\constants\constants.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\feedback.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\month-activity-models\month-activity-edit.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
 	<TypeScriptCompile Include="ClientApp\app\models\overtime.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\proposal.model.ts" />

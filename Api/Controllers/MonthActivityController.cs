@@ -24,7 +24,7 @@ namespace Application.Api.Controllers
         }
         [HttpPut]
         [Route("api/vacations-table/edit")]
-        public IActionResult Edit([FromBody]MonthActivityModel vacation)
+        public IActionResult Edit([FromBody]MonthActivityEditModel vacation)
         {
             return InvokeMethodWithParam(_vacationsTableService.UpdateVacationOnSheet, vacation);
         }
