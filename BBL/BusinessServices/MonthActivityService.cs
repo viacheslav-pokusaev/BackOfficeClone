@@ -20,9 +20,8 @@ namespace Application.BBL.BusinessServices
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         //static readonly string ApplicationName = "Dot Tutorials";
         //static readonly string sheet = "October'21";
-        //static readonly string SpreadsheetId = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        //private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
+        private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
+        //private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4";
         private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
         private const int RGB_FACTOR = 255;
 
@@ -33,33 +32,35 @@ namespace Application.BBL.BusinessServices
 
             //get list of Sheets
             var listOfSheets = SheetListNames();
-            List<string> listOfRanges = new List<string>();
+            //List<string> listOfRanges = new List<string>();
 
-            if(getModel.SheetName == "default") 
+            if (getModel.SheetName == "default")
                 getModel.SheetName = listOfSheets.FirstOrDefault();
 
-            foreach (var range in listOfSheets)
-            {
-                listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
-            }
+            //foreach (var range in listOfSheets)
+            //{
+            //    listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
+            //}
 
             var getRequest = new GetRequest(service, SPREADSHEET_ID);
             getRequest.IncludeGridData = true;
-            getRequest.Ranges = listOfRanges;
+            //getRequest.Ranges = listOfRanges;
+            getRequest.Ranges = new List<string> { $"{getModel.SheetName}!A{getModel.StartIndex}:ZZ{getModel.EndIndex}" };
 
             // Ecexuting Read Operation...
-            var response = getRequest.Execute();
+            var response = getRequest.Execute(); //responce->Sheets[]->id->properties->gridProperties->RowCount
+            //var colCount = response.Sheets[0].Properties.GridProperties.ColumnCount;
+            //var sheetIndex = 0;
 
-            var sheetIndex = 0;
+            //if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
+            //{
+            //    sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
+            //}
+            //var rowCount = response.Sheets[0].Properties.GridProperties.RowCount;
 
-            if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
-            {
-                sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
-            }
+            var sheetValues = response.Sheets[0].Data[0].RowData;
 
-            var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
-
-            if (sheetValues == null) return null;
+            if (sheetValues == null) return new MonthActivityVewModel() { IsEmpty = true };
 
             var readSheetResponce = new List<List<MonthActivityModel>>();
 
@@ -92,8 +93,12 @@ namespace Application.BBL.BusinessServices
                 columnIndex = 0;
                 rowIndex++;
             }
-           
-            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets};
+            
+            //bool isAll = false;
+            ////if (getModel.GetCount >= 25) isAll = true;
+            //if (rowCount <= readSheetResponce.Count) isAll = true;
+
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false};
         }
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)

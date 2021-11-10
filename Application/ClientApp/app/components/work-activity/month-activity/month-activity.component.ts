@@ -17,14 +17,16 @@ export class MonthActivityComponent implements OnInit {
 
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
+    step: number = 10;
     public previusSheetName:string = "default";
     public getModel: MonthActivityGetModel = {
         SheetName: "default",
         StartIndex: 1,
-        EndIndex: 10
+        EndIndex: 10,
+        GetCount: this.step
     };
 
-    public isAll;
+    public isAll:boolean;
 
     loading: boolean;
 
@@ -42,29 +44,42 @@ export class MonthActivityComponent implements OnInit {
     ngOnInit(): void {
         this.loading = true;
         this.isAll = false;
+        this.getModel.EndIndex = 10;
         this.GetData();
     }
 
-    GetSheetName(value: string){
+    ChangeTargetSheet(value: string){
         if(this.getModel.SheetName != value){
-            this.previusSheetName = this.getModel.SheetName;
             this.getModel.SheetName = value;
+            this.isAll = false;
+            this.tableData = Array<Array<MonthActivityModel>>();
+            this.getModel.StartIndex = 1;
+            this.getModel.EndIndex = 10;
+            this.getModel.GetCount = this.step;
             this.GetData();
         }
     }
    
     GetData(){
-
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
-                if(res){
-                    this.tableData = res.MonthActivityModels;
-                    this.sheetList = res.Sheets;            
+            if(res){
+                if(res.IsEmpty == false){
+                    res.MonthActivityModels.forEach(row =>{
+                        this.tableData.push(row);
+                    });
+                    this.sheetList = res.Sheets; 
+                    this.getModel.GetCount += 10;           
                     this.loading = false;
                 }
                 else{
-                    alert("The table is empty!");
+                    this.isAll = res.IsEmpty;
+                    alert("The table is empty or all rows are allready loaded!");
                 }
+            }
+            else{
+                alert("Error, when trying load the table!");
+            }
         });
     }
 
@@ -80,12 +95,14 @@ export class MonthActivityComponent implements OnInit {
         });      
     }           
 
-    get mydata(): MonthActivityModel{
-        return this.monthActivityService.monthActivity;        
-    };
-
-    public getNewRange() {
-        this.getModel.EndIndex += 10;
-        this.GetData();
+    public getNewRange(){
+        if(this.isAll == false){
+            this.getModel.StartIndex += 10;
+            this.getModel.EndIndex += 10;
+            this.GetData();
+        }
+        else{
+            alert("The table is allready loaded!");
+        }
     }
 }

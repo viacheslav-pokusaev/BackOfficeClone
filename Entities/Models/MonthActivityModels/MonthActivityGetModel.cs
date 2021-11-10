@@ -9,5 +9,6 @@ namespace Application.EntitiesModels.Models.MonthActivityModels
         public string SheetName { get; set; }
         public int StartIndex { get; set; }
         public int EndIndex { get; set; }
+        public int GetCount { get; set; }
     }
 }
