@@ -32,31 +32,33 @@ namespace Application.BBL.BusinessServices
 
             //get list of Sheets
             var listOfSheets = SheetListNames();
-            List<string> listOfRanges = new List<string>();
+            //List<string> listOfRanges = new List<string>();
 
             if (getModel.SheetName == "default")
                 getModel.SheetName = listOfSheets.FirstOrDefault();
 
-            foreach (var range in listOfSheets)
-            {
-                listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
-            }
+            //foreach (var range in listOfSheets)
+            //{
+            //    listOfRanges.Add($"{range}!A{getModel.StartIndex}:AJ{getModel.EndIndex}");
+            //}
 
             var getRequest = new GetRequest(service, SPREADSHEET_ID);
             getRequest.IncludeGridData = true;
-            getRequest.Ranges = listOfRanges;
+            //getRequest.Ranges = listOfRanges;
+            getRequest.Ranges = new List<string> { $"{getModel.SheetName}!A{getModel.StartIndex}:ZZ{getModel.EndIndex}" };
 
             // Ecexuting Read Operation...
             var response = getRequest.Execute(); //responce->Sheets[]->id->properties->gridProperties->RowCount
-            var sheetIndex = 0;
+            //var colCount = response.Sheets[0].Properties.GridProperties.ColumnCount;
+            //var sheetIndex = 0;
 
-            if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
-            {
-                sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
-            }
-            var rowCount = response.Sheets[sheetIndex].Properties.GridProperties.RowCount;
+            //if (!string.IsNullOrEmpty(getModel.SheetName) && getModel.SheetName != "default")
+            //{
+            //    sheetIndex = listOfSheets.FindIndex(x => x == getModel.SheetName);
+            //}
+            //var rowCount = response.Sheets[0].Properties.GridProperties.RowCount;
 
-            var sheetValues = response.Sheets[sheetIndex].Data[0].RowData;
+            var sheetValues = response.Sheets[0].Data[0].RowData;
 
             if (sheetValues == null) return new MonthActivityVewModel() { IsEmpty = true };
 
@@ -91,11 +93,12 @@ namespace Application.BBL.BusinessServices
                 columnIndex = 0;
                 rowIndex++;
             }
-            //if (rowCount <= readSheetResponce.Count) return null;
-            bool isAll = false;
-            if (getModel.GetCount >= 25) isAll = true;
-           
-            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false, IsAll = isAll};
+            
+            //bool isAll = false;
+            ////if (getModel.GetCount >= 25) isAll = true;
+            //if (rowCount <= readSheetResponce.Count) isAll = true;
+
+            return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false};
         }
 
         public bool UpdateVacationOnSheet(MonthActivityModel vacation)

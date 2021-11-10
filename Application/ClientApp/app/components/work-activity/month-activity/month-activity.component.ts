@@ -61,7 +61,6 @@ export class MonthActivityComponent implements OnInit {
         {            
             if(res){
                 if(res.IsEmpty == false){
-                    //this.tableData = res.MonthActivityModels;
                     res.MonthActivityModels.forEach(row =>{
                         this.tableData.push(row);
                     });
@@ -70,11 +69,8 @@ export class MonthActivityComponent implements OnInit {
                     this.loading = false;
                 }
                 else{
-                    alert("The table is empty!");
-                }
-                if(res.IsAll == true){
-                    this.isAll = res.IsAll;
-                    alert("The table is allready loaded!");
+                    this.isAll = res.IsEmpty;
+                    alert("The table is empty or all rows are allready loaded!");
                 }
             }
             else{

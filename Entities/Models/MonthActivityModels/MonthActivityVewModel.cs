@@ -9,6 +9,5 @@ namespace Application.EntitiesModels.Models.MonthActivityModels
         public List<List<MonthActivityModel>> MonthActivityModels { get; set; }
         public IList<string> Sheets { get; set; }
         public bool IsEmpty { get; set; }
-        public bool IsAll { get; set; }
     }
 }
