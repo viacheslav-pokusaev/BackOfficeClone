@@ -31,6 +31,8 @@ export class MonthActivityComponent implements OnInit {
 
     loading: boolean;
 
+    isClear:boolean = false;
+
     constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
         this.loading = true;        
     };
@@ -49,34 +51,44 @@ export class MonthActivityComponent implements OnInit {
         this.GetData();
     }
 
-    ChangeTargetSheet(value: string){
-        if(this.getModel.SheetName != value){
-            this.getModel.SheetName = value;
+    ChangeTargetSheet(value: any){
+        if(this.getModel.SheetName != value.target.value){
+
+            this.getModel.SheetName = value.target.value;
+            this.tableData.length = 0;
             this.isAll = false;
-            this.tableData = Array<Array<MonthActivityModel>>();
             this.getModel.StartIndex = 1;
             this.getModel.EndIndex = 10;
             this.getModel.GetCount = this.step;
-            this.GetData();
+            
+            if(this.tableData.length == 0){
+                console.log("if case says: table data lenght + " + this.tableData.length);
+                this.GetData();
+            }
+            else{
+                console.log("tableData lenght more than zero: " + this.tableData.length);
+            }
         }
     }
-   
+
     GetData(){
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res){
-                if(res.IsEmpty == false){
-                    res.MonthActivityModels.forEach(row =>{
-                        this.tableData.push(row);
-                    });
-                    this.sheetList = res.Sheets; 
-                    this.getModel.GetCount += 10;           
-                    this.loading = false;
-                }
-                else{
-                    this.isAll = res.IsEmpty;
-                    alert("The table is empty or all rows are allready loaded!");
-                }
+                    if(res.IsEmpty == false){
+                        console.log("table data lenght: " + this.tableData.length);
+                        console.log("res lenght: " + res.MonthActivityModels.length);
+                        res.MonthActivityModels.forEach(row =>{
+                            this.tableData.push(row);
+                        });
+                        this.sheetList = res.Sheets; 
+                        this.getModel.GetCount += 10;           
+                        this.loading = false;
+                    }
+                    else{
+                        this.isAll = res.IsEmpty;
+                        alert("The table is empty or all rows are allready loaded!");
+                    }
             }
             else{
                 alert("Error, when trying load the table!");

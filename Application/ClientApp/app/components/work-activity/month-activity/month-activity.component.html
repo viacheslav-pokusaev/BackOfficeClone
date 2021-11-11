@@ -6,7 +6,7 @@
     </div>    
     <div class="row">
         <div class="col-md-2">
-            <select id="SheetSelectId" class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="ChangeTargetSheet($event.target.value)">
+            <select id="SheetSelectId" class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="ChangeTargetSheet($event)">
                 <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
             </select>
             <br />
@@ -20,7 +20,7 @@
             <div class="col-md-12" style="overflow-x:auto;">
                 <table class="table my-table-striped table-bordered projects">
                     <thead style="color: #73879C;">
-                        <tr *ngIf="tableData[0].length > 0">
+                        <tr *ngIf="tableData[0]">
                             <th *ngFor="let cell of tableData[0]">{{cell.Data}}</th>
                         </tr>
                     </thead>
