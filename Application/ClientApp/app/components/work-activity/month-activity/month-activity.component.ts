@@ -48,10 +48,10 @@ export class MonthActivityComponent implements OnInit {
         this.loading = true;
         this.isAll = false;
         this.getModel.EndIndex = 10;
-        this.GetData();
+        this.getData();
     }
 
-    ChangeTargetSheet(value: any){
+    changeTargetSheet(value: any){
         if(this.getModel.SheetName != value.target.value){
 
             this.getModel.SheetName = value.target.value;
@@ -63,7 +63,7 @@ export class MonthActivityComponent implements OnInit {
             
             if(this.tableData.length == 0){
                 console.log("if case says: table data lenght + " + this.tableData.length);
-                this.GetData();
+                this.getData();
             }
             else{
                 console.log("tableData lenght more than zero: " + this.tableData.length);
@@ -71,7 +71,7 @@ export class MonthActivityComponent implements OnInit {
         }
     }
 
-    GetData(){
+    getData(){
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res){
@@ -121,7 +121,7 @@ export class MonthActivityComponent implements OnInit {
         if(this.isAll == false){
             this.getModel.StartIndex += 10;
             this.getModel.EndIndex += 10;
-            this.GetData();
+            this.getData();
         }
         else{
             alert("The table is allready loaded!");
