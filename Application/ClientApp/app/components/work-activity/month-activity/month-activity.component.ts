@@ -1,4 +1,4 @@
-﻿import { Component, ElementRef, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
@@ -8,9 +8,8 @@ import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.compo
 import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
 import { MonthActivityService } from '../../../services/month-activity.service';
 import { MonthActivityEditModel } from '../../../models/month-activity-models/month-activity-edit.model';
-
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -23,13 +22,11 @@ export class MonthActivityComponent implements OnInit {
     
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
-    step: number = 10;
-    public previusSheetName:string = "default";
     public getModel: MonthActivityGetModel = {
         SheetName: "default",
         StartIndex: 1,
         EndIndex: 10,
-        GetCount: this.step
+        GetCount: 10
     };
 
     public isAll:boolean;
@@ -38,18 +35,14 @@ export class MonthActivityComponent implements OnInit {
 
     modelChange: string;
 
-    isClear:boolean = false;
-
     constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
         this.loading = true;
-        this.sheetChange
-      .pipe(debounceTime(1000), distinctUntilChanged())
-      .subscribe((value) => {
+        this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe((value) => {
             this.tableData.length = 0;
             this.isAll = false;
             this.getModel.StartIndex = 1;
             this.getModel.EndIndex = 10;
-            this.getModel.GetCount = this.step;
+            this.getModel.GetCount = 10;
             
             if(this.tableData.length == 0){
                 this.getData();
@@ -69,7 +62,6 @@ export class MonthActivityComponent implements OnInit {
         this.isAll = false;
         this.getModel.EndIndex = 10;
         this.getData();
-        this.modelChange = this.getModel.SheetName;
     }
 
     changeTargetSheet(value: any){
@@ -90,7 +82,7 @@ export class MonthActivityComponent implements OnInit {
             //     console.log("tableData lenght more than zero: " + this.tableData.length);
             // }
             this.getModel.SheetName = value.target.value;
-            this.modelChange = this.getModel.SheetName;
+            this.modelChange = this.sheetList[0];
 
         }
     }
@@ -100,12 +92,10 @@ export class MonthActivityComponent implements OnInit {
         {            
             if(res){
                     if(res.IsEmpty == false){
-                        console.log("table data lenght: " + this.tableData.length);
-                        console.log("res lenght: " + res.MonthActivityModels.length);
                         res.MonthActivityModels.forEach(row =>{
                             this.tableData.push(row);
                         });
-                        this.sheetList = res.Sheets; 
+                        this.sheetList = res.Sheets;
                         this.getModel.GetCount += 10;           
                         this.loading = false;
                     }
@@ -145,7 +135,6 @@ export class MonthActivityComponent implements OnInit {
         if(this.isAll == false){
             this.getModel.StartIndex += 10;
             this.getModel.EndIndex += 10;
-            console.log("getNewRange getData call");
             this.getData();
         }
         else{
