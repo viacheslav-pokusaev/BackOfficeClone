@@ -14,6 +14,8 @@ export class NavMenuComponent {
     firstName: string;
     lastName: string;
 
+    public imgPath: string = ""
+
     private $BODY;
     private $MENU_TOGGLE;
     private $SIDEBAR_MENU;
@@ -23,10 +25,11 @@ export class NavMenuComponent {
     private $NAV_MENU;
     private $FOOTER;
 
+    private previewSpan: HTMLSpanElement;
+
     constructor(
-        private userStorageService: UserStorageService, 
-        private route: ActivatedRoute,
-        private router: Router
+        private userStorageService: UserStorageService,
+        private router: Router,
     ) {
     } 
     ngOnInit() {
@@ -34,6 +37,7 @@ export class NavMenuComponent {
         this.id = this.userStorageService.getId();
         this.firstName = this.userStorageService.getUser().FirstName;
         this.lastName = this.userStorageService.getUser().LastName;
+        this.imgPath = "/img/navbar-logo.png";
     }      
 
     public isLinkWorkActivitiesActive() {
@@ -47,41 +51,90 @@ export class NavMenuComponent {
         return (segments.length < 3 || userId != this.id);
     }
 
-    public anchorClicked(event: MouseEvent)
-  {
-        var target = this.getTarget(event).id;
+    public anchorClicked(targetId: string)
+    {
+        var target = document.getElementById(targetId);
+        //get li to open
+        var $li = $('#' + targetId).parent();
+        if(target && $li){
+            //get arrow to rotate
+            var span = target.getElementsByTagName('span')[0];
+            if(!span){
+             console.error("Error: element span with parrent, where" +
+             "Id = '" + targetId + "' does not exist in current context!");
+            }
+            else{
+                if ($li.is('.active')) {
+                    //move span to start rotate
+                    this.flipArrow(span, true);
+                    
+                    $li.removeClass('active active-sm');
+                    
+                    var ulFirst = $('ul:first', $li);
 
-      var $li = $('#' + target.replace("chevron","li")).parent(); 
+                    if(ulFirst){
+                        ulFirst.slideUp(function() {
+                            //this.setContentHeight();
+                        });
+                    }
+                    else{
+                        console.error("Error: 'ul:first' does not exist in current context!");
+                    }
+                } 
+                else {
+                    //move span to close rotate(270deg)
+                    this.flipArrow(span, false);
+                    // prevent closing menu if we are on child menu
+                    var sidebarMenuLi = $('#sidebar-menu').find('li');
+                    var sidebarMenuLiUl = $('#sidebar-menu').find('li ul');
 
-      //this.targetId = target;
-      var span = document.getElementById(target);
+                    if (!$li.parent().is('.child_menu') && sidebarMenuLi && sidebarMenuLiUl) {
+                        sidebarMenuLi.removeClass('active active-sm');
+                        sidebarMenuLiUl.slideUp();
+                    }
+                    else{
+                        console.error("Error: element, where" +
+                        "Id = 'sidebar-menu' does not exist in current context, or did not have li or ul inside!");
+                    }
+                  
+                    $li.addClass('active');
 
-      if ($li.is('.active')) {
-            //move span to start rotate
-            span.classList.remove('span-open');
+                    var ulFirst2 = $('ul:first', $li);
+
+                    if(ulFirst2){
+                        ulFirst2.slideDown(function() {
+                            //this.setContentHeight();
+                        });
+                    }
+                    else{
+                        console.error("Error: element, where" +
+                        "Id = 'sidebar-menu' does not exist in current context, or did not have li or ul inside!");
+                    }
+                }
+            }
+        }
+        else{
+            console.error("Error: element with Id = '" + targetId + "' does not exist in current context!");
+        }
+      
+    }
+
+    private flipArrow(span: HTMLSpanElement,isOpen: boolean){
+        if(span){
+            if(isOpen){
+                span.classList.remove('span-open');
                 span.classList.add('span-close');
-            
-
-          $li.removeClass('active active-sm');
-              $('ul:first', $li).slideUp(function() {
-                  //this.setContentHeight();
-              });
-          } else {
-              //move span to open rotate(270deg)
-              span.classList.remove('span-close');
-              span.classList.add('span-open');
-              // prevent closing menu if we are on child menu
-              if (!$li.parent().is('.child_menu')) {
-                  $('#sidebar-menu').find('li').removeClass('active active-sm');
-                  $('#sidebar-menu').find('li ul').slideUp();
-              }
-              
-              $li.addClass('active');
-
-              $('ul:first', $li).slideDown(function() {
-                  //this.setContentHeight();
-              });
-          }
+            }
+            else{
+                span.classList.remove('span-close');
+                span.classList.add('span-open');
+                if(this.previewSpan && this.previewSpan != span){
+                    this.previewSpan.classList.remove('span-open');
+                    this.previewSpan.classList.add('span-close');
+                }
+            }
+            this.previewSpan = span;
+        }
     }
 
     public getTarget(e: MouseEvent) {

@@ -4,3 +4,7 @@
 .span-close{
     transform: rotate(270deg);
 }
+.navbarLogo{
+    width: 35px;
+    height: auto;
+}
