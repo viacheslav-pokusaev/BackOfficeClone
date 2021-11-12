@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
@@ -16,10 +16,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     styleUrls: ['./month-activity.component.css']
 })
 
-export class MonthActivityComponent implements OnInit {    
+export class MonthActivityComponent implements OnInit, OnDestroy {    
 
     sheetChange = new Subject<string>();
-    
+
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
     public getModel: MonthActivityGetModel = {
@@ -38,7 +38,7 @@ export class MonthActivityComponent implements OnInit {
     constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
         this.loading = true;
         this.modelChange = 'default';
-        this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe((value) => {
+        this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe(() => {
             this.tableData.length = 0;
             this.isAll = false;
             this.getModel.StartIndex = 1;
@@ -49,7 +49,8 @@ export class MonthActivityComponent implements OnInit {
                 this.getData();
             }
       });  
-    };
+    }
+
 
     spinnerConfig: ISpinnerConfig = {
         placement: SPINNER_PLACEMENT.block_ui,
@@ -67,21 +68,6 @@ export class MonthActivityComponent implements OnInit {
 
     changeTargetSheet(value: any){
         if(this.getModel.SheetName != value.target.value){
-
-            // this.getModel.SheetName = value.target.value;
-            // this.tableData.length = 0;
-            // this.isAll = false;
-            // this.getModel.StartIndex = 1;
-            // this.getModel.EndIndex = 10;
-            // this.getModel.GetCount = this.step;
-            
-            // if(this.tableData.length == 0){
-            //     console.log("changeTargetSheet getData call");
-            //     this.getData();
-            // }
-            // else{
-            //     console.log("tableData lenght more than zero: " + this.tableData.length);
-            // }
             this.getModel.SheetName = value.target.value;
             this.modelChange = this.sheetList[0];
 
@@ -92,6 +78,7 @@ export class MonthActivityComponent implements OnInit {
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res){
+                if(!res.ErrorMessage){
                     if(res.IsEmpty == false){
                         res.MonthActivityModels.forEach(row =>{
                             this.tableData.push(row);
@@ -104,6 +91,10 @@ export class MonthActivityComponent implements OnInit {
                         this.isAll = res.IsEmpty;
                         alert("The table is empty or all rows are allready loaded!");
                     }
+                }
+                else{
+                    alert(res.ErrorMessage);
+                }
             }
             else{
                 alert("Error, when trying load the table!");
@@ -141,5 +132,9 @@ export class MonthActivityComponent implements OnInit {
         else{
             alert("The table is allready loaded!");
         }
+    }
+
+    ngOnDestroy(): void {
+        this.sheetChange.unsubscribe();
     }
 }
