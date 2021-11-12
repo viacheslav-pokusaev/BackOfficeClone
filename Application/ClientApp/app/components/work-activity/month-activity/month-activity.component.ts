@@ -45,7 +45,8 @@ export class MonthActivityComponent implements OnInit, OnDestroy {
             this.getModel.EndIndex = 10;
             this.getModel.GetCount = 10;
             
-            if(this.tableData.length == 0){
+            if (this.tableData.length == 0) {
+                this.loading = true;
                 this.getData();
             }
       });  
@@ -74,8 +75,7 @@ export class MonthActivityComponent implements OnInit, OnDestroy {
         }
     }
 
-    getData() {
-        this.loading = true;
+    getData() {        
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res){
