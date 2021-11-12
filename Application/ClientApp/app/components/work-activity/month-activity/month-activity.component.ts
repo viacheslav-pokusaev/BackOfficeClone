@@ -37,6 +37,7 @@ export class MonthActivityComponent implements OnInit {
 
     constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
         this.loading = true;
+        this.modelChange = 'default';
         this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe((value) => {
             this.tableData.length = 0;
             this.isAll = false;
