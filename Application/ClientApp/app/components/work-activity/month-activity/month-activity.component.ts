@@ -74,7 +74,8 @@ export class MonthActivityComponent implements OnInit, OnDestroy {
         }
     }
 
-    getData(){
+    getData() {
+        this.loading = true;
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res){
