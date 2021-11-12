@@ -242,33 +242,6 @@ namespace Application.BBL.BusinessServices
                 return null;
             }
         }
-        //private string ColumnNumberToLetter(int columnIndex, int rowIndex)
-        //{
-        //    try
-        //    {
-        //        if (columnIndex < 26)
-        //            columnIndex++;
-        //        rowIndex++;
-        //        var rowIndexStr = rowIndex.ToString();
-        //        var res = "";
-        //        var Base = 26;
-        //        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        //        var TempNumber = columnIndex;
-        //        while (TempNumber > 0)
-        //        {
-        //            var position = TempNumber % Base;
-        //            res = (position == 0 ? 'Z' : chars[position > 0 ? position - 1 : 0]) + res;
-        //            TempNumber = (TempNumber - 1) / Base;
-        //        }
-        //        res = res + rowIndexStr;
-        //        return res;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
         public List<string> SheetListNames()
         {
             try
