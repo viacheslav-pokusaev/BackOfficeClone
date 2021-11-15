@@ -1,6 +1,6 @@
 export class MonthActivityGetModel{
-    public SheetName: string;
-    public StartIndex: number;
-    public EndIndex: number;
-    public GetCount: number;
+    public sheetName: string;
+    public startIndex: number;
+    public endIndex: number;
+    public getCount: number;
 }

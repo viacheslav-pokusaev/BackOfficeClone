@@ -10,6 +10,7 @@ import { MonthActivityService } from '../../../services/month-activity.service';
 import { MonthActivityEditModel } from '../../../models/month-activity-models/month-activity-edit.model';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { SPINNER_CONFIG, DIALOG_WIDTH } from '../../../constants/constants';
 
 @Component({
     templateUrl: './month-activity.component.html',
@@ -23,10 +24,10 @@ export class MonthActivityComponent implements OnInit {
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
     public getModel: MonthActivityGetModel = {
-        SheetName: "default",
-        StartIndex: 1,
-        EndIndex: 10,
-        GetCount: 10
+        sheetName: "default",
+        startIndex: 1,
+        endIndex: 10,
+        getCount: 10
     };
 
     public isAll:boolean;
@@ -41,9 +42,9 @@ export class MonthActivityComponent implements OnInit {
         this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe(() => {
             this.tableData.length = 0;
             this.isAll = false;
-            this.getModel.StartIndex = 1;
-            this.getModel.EndIndex = 10;
-            this.getModel.GetCount = 10;
+            this.getModel.startIndex = 1;
+            this.getModel.endIndex = 10;
+            this.getModel.getCount = 10;
             
             if (this.tableData.length == 0) {
                 this.loading = true;
@@ -52,22 +53,16 @@ export class MonthActivityComponent implements OnInit {
       });  
     }
 
-
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };   
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;    
 
     ngOnInit(): void {
-        this.getModel.EndIndex = 10;
+        this.getModel.endIndex = 10;
         this.getData();
     }
 
     changeTargetSheet(value: any){
-        if(this.getModel.SheetName !== value.target.value){
-            this.getModel.SheetName = value.target.value;
+        if(this.getModel.sheetName !== value.target.value){
+            this.getModel.sheetName = value.target.value;
             this.modelChange = this.sheetList[0];
             this.sheetChange.next(value);
         }
@@ -83,7 +78,7 @@ export class MonthActivityComponent implements OnInit {
                             this.tableData.push(row);
                         });
                         this.sheetList = res.Sheets;
-                        this.getModel.GetCount += 10;           
+                        this.getModel.getCount += 10;           
                         this.loading = false;
                     }
                     else{
@@ -103,13 +98,13 @@ export class MonthActivityComponent implements OnInit {
 
     public editMonthCell(cellData: MonthActivityEditModel) {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
-            width: '1050px',
+            width: DIALOG_WIDTH,
             data: {               
                     RowIndex: cellData.RowIndex,
                     ColumnIndex: cellData.ColumnIndex,
                     Data: cellData.Data,
                     Color: cellData.Color,                
-                    SheetName: this.getModel.SheetName
+                    SheetName: this.getModel.sheetName
             }                              
            
         });        
@@ -124,8 +119,8 @@ export class MonthActivityComponent implements OnInit {
 
     public getNewRange(){
         if(this.isAll === false){
-            this.getModel.StartIndex += 10;
-            this.getModel.EndIndex += 10;
+            this.getModel.startIndex += 10;
+            this.getModel.endIndex += 10;
             this.getData();
         }
         else{

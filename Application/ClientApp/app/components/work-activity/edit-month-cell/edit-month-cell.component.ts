@@ -1,39 +1,21 @@
 ﻿import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { VacationColor } from '../../../models/month-activity-models/vacation-color.model';
 import { MonthActivityService } from '../../../services/month-activity.service';
 import { MonthActivityEditModel } from '../../../models/month-activity-models/month-activity-edit.model';
+import { ARRAY_COLORS } from '../../../constants/constants';
 
 @Component({
     selector: 'edit-month-cell',
-    templateUrl: './edit-month-cell.component.html'    
+    templateUrl: './edit-month-cell.component.html',
+    styleUrls: ['./edit-month-cell.component.css']
 })
 
 export class EditMonthCellComponent {
-
-    public loading: boolean = false;
+    
     public monthEditActivity: MonthActivityEditModel = new MonthActivityEditModel();    
-
-
-    arrayColors: VacationColor[] = [
-        { Vacation: '', HexColor: '#FFFFFF' },
-        { Vacation: 'отпуск', HexColor: '#0000FF' },
-        { Vacation: 'больничный', HexColor: '#FF0000' },
-        { Vacation: 'работа в выходной (+ день к отпуску)', HexColor: '#00FF00' },
-        { Vacation: 'работа в выходной (доплата к зп)', HexColor: '#FFFF00' }
-    ];
-
-    public selectedColor = '#FFFFFF';
-
-    public spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    public arrayColors = ARRAY_COLORS;
+    public selectedColor = '#FFFFFF';    
 
     constructor(private http: HttpClient,
         public dialogRef: MatDialogRef<EditMonthCellComponent>,
@@ -47,7 +29,7 @@ export class EditMonthCellComponent {
         this.monthEditActivity.Color = this.selectedColor;
         this.monthActivityService.update(this.monthEditActivity).subscribe(
             result => {
-                if (result == true) {
+                if (result) {
                     this.monthActivityService.monthActivityEdit = monthEditActivity;
                     this.dialogRef.close();
 
@@ -57,7 +39,7 @@ export class EditMonthCellComponent {
     }
 
     public cancel(): void {
-        if (this.dialogRef != null && this.dialogRef != undefined)
+        if (this.dialogRef)
             this.monthActivityService.monthActivityEdit = null;
             this.dialogRef.close();
     }

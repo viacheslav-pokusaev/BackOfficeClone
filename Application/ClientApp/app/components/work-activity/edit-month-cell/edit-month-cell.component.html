@@ -1,22 +1,21 @@
-﻿<modal-wrapper [dialogRef]="dialogRef">
-    <ngx-spinner [visible]="loading" [config]="spinnerConfig"></ngx-spinner>
-    <div class="card x_panel" *ngIf="!loading">
+﻿<modal-wrapper [dialogRef]="dialogRef">    
+    <div class="card x_panel">
         <div id="divDataBody" class="container entity">
             <div class="row">
                 <div class="col-md-12 form-title">
-                    <h2 style="color: #73879C;">Edit month cell </h2>
+                    <h2>Edit month cell </h2>
                 </div>
                 <div class="col-md-12 col-lg-12">
                     <form name="editCell" class="form-horizontal  container-fluid">
                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback black-tooltip">
-                            <input type="text" class="form-control " id="inputSuccess2" [(ngModel)]="monthEditActivity.Data" name="EditCell" autocomplete="off">
+                            <input type="text" class="form-control " [(ngModel)]="monthEditActivity.Data" name="EditCell" autocomplete="off">
                             <span class="tooltiptext">
                                 Month cell data
                             </span>
                         </div>
                         <div class="form-group col-md-12 col-xs-12  black-tooltip">
                             <select class="select2_single form-control" tabindex="-1" (change)="onChange($event.target.value)">
-                                <option *ngFor="let color of arrayColors; let i = index" [value]="color.HexColor">
+                                <option *ngFor="let color of arrayColors" [value]="color.HexColor">
                                     {{color.Vacation}}
                                 </option>
                             </select>
@@ -27,12 +26,12 @@
 
                         <div class="col-md-12 col-xs-12">
                             <div class="form-group col-md-6 col-xs-6 text-center">
-                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="updateMonthCell(monthEditActivity)">
+                                <button class="btn btn-primary align-center-btn black-tooltip" (click)="updateMonthCell(monthEditActivity)">
                                     Edit
                                 </button>
                             </div>
                             <div class="form-group col-md-6 col-xs-6 text-center">
-                                <button class="btn btn-primary alignCenterBtn black-tooltip" (click)="cancel()">
+                                <button class="btn btn-primary align-center-btn black-tooltip" (click)="cancel()">
                                     Cancel
                                 </button>
                             </div>
