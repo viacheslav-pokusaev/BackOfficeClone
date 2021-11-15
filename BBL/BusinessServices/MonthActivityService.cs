@@ -20,7 +20,6 @@ namespace Application.BBL.BusinessServices
 {
     public class MonthActivityService : IMonthActivityService
     {
-
         private readonly IConfiguration _configuration;
 
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
@@ -223,7 +222,7 @@ namespace Application.BBL.BusinessServices
             try
             {
                 //Reading Credentials File...
-                using (var stream = new FileStream("inlaid-crowbar-330810-0492784c4579.json", FileMode.Open, FileAccess.Read))
+                using (var stream = new FileStream(_configuration.GetValue<string>("GoogleApi:appClientSecret"), FileMode.Open, FileAccess.Read))
                 {
                     credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
                 }

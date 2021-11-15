@@ -46,7 +46,6 @@ import { EditMonthCellComponent } from './edit-month-cell/edit-month-cell.compon
         WorkAtHomeUserListComponent,
         MonthActivityComponent        
     ],
-    providers: [],
-    entryComponents: [ EditMonthCellComponent ]
+    providers: []
 })
 export class WorkActivityModule {}
