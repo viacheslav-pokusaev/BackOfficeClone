@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Application.EntitiesModels.Models.MonthActivityModels
 {
-    public class MonthActivityEditModel
+    public class MonthActivityEditModel : MonthActivityModel
     {        
-        public int RowIndex { get; set; }
-        public int ColumnIndex { get; set; }
-        public object Data { get; set; }
-        public string Color { get; set; }
+    //    public int RowIndex { get; set; }
+    //    public int ColumnIndex { get; set; }
+    //    public object Data { get; set; }
+    //    public string Color { get; set; }
         public string SheetName { get; set; }
     }
 }

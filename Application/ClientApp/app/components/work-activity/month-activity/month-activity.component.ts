@@ -16,7 +16,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     styleUrls: ['./month-activity.component.css']
 })
 
-export class MonthActivityComponent implements OnInit, OnDestroy {    
+export class MonthActivityComponent implements OnInit {    
 
     sheetChange = new Subject<string>();
 
@@ -61,14 +61,12 @@ export class MonthActivityComponent implements OnInit, OnDestroy {
     };   
 
     ngOnInit(): void {
-        this.loading = true;
-        this.isAll = false;
         this.getModel.EndIndex = 10;
         this.getData();
     }
 
     changeTargetSheet(value: any){
-        if(this.getModel.SheetName != value.target.value){
+        if(this.getModel.SheetName !== value.target.value){
             this.getModel.SheetName = value.target.value;
             this.modelChange = this.sheetList[0];
 
@@ -125,7 +123,7 @@ export class MonthActivityComponent implements OnInit, OnDestroy {
     }           
 
     public getNewRange(){
-        if(this.isAll == false){
+        if(this.isAll === false){
             this.getModel.StartIndex += 10;
             this.getModel.EndIndex += 10;
             this.getData();
@@ -133,9 +131,5 @@ export class MonthActivityComponent implements OnInit, OnDestroy {
         else{
             alert("The table is allready loaded!");
         }
-    }
-
-    ngOnDestroy(): void {
-        this.sheetChange.unsubscribe();
     }
 }

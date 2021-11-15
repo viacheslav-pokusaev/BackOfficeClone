@@ -14,18 +14,25 @@ using System.Text;
 using static Google.Apis.Sheets.v4.SpreadsheetsResource;
 using static Google.Apis.Sheets.v4.Data.Color;
 using System.Globalization;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.BBL.BusinessServices
 {
     public class MonthActivityService : IMonthActivityService
     {
-        static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };        
-        private const string SPREADSHEET_ID = "18XJpskb88AAKQEBKE0C49z43NQfwKJR5JEMTgE-EYSc";
-        //private const string SPREADSHEET_ID = "1WvLttGVFL3vFWlEo2JFAVY86G-vaKmBxSEiBqmvPXs4"; //need for tests
+
+        private readonly IConfiguration _configuration;
+
+        static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         private const string INITIAL_BACKGROUND_COLOR = "#FFFFFF";
         private const int RGB_FACTOR = 255;
 
         static SheetsService service;
+
+        public MonthActivityService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public MonthActivityVewModel GetAllVacationsFromSheet(MonthActivityGetModel getModel)
         {
             try
@@ -41,7 +48,7 @@ namespace Application.BBL.BusinessServices
                     getModel.SheetName = listOfSheets.FirstOrDefault();
 
 
-                var getRequest = new GetRequest(service, SPREADSHEET_ID);
+                var getRequest = new GetRequest(service, _configuration.GetValue<string>("GoogleApi:sheetId"));
                 getRequest.IncludeGridData = true;
                 getRequest.Ranges = new List<string> { $"{getModel.SheetName}!A{getModel.StartIndex}:ZZ{getModel.EndIndex}" };
 
@@ -52,35 +59,27 @@ namespace Application.BBL.BusinessServices
 
                 if (sheetValues == null) return new MonthActivityVewModel() { IsEmpty = true };
 
-                var readSheetResponce = new List<List<MonthActivityModel>>();
+                var readSheetResponse = new List<List<MonthActivityModel>>();
 
                 int rowIndex = getModel.StartIndex - 1;
                 int columnIndex = 0;
 
                 foreach (var sheetRow in sheetValues)
                 {
-                    var responceBuff = new List<MonthActivityModel>();
+                    var responseBuff = new List<MonthActivityModel>();
                     foreach (var sheetValue in sheetRow.Values)
                     {
-                        string hex;
-                        if (sheetValue.EffectiveFormat != null)
-                        {
-                            hex = GetHEXColor(sheetValue.EffectiveFormat?.BackgroundColor);
-                        }
-                        else
-                        {
-                            hex = INITIAL_BACKGROUND_COLOR;
-                        }
+                        string hex = sheetValue.EffectiveFormat != null ? GetHEXColor(sheetValue.EffectiveFormat?.BackgroundColor) : INITIAL_BACKGROUND_COLOR;
 
-                        responceBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
+                        responseBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
                         columnIndex++;
                     }
-                    readSheetResponce.Add(responceBuff);
+                    readSheetResponse.Add(responseBuff);
                     columnIndex = 0;
                     rowIndex++;
                 }
 
-                return new MonthActivityVewModel() { MonthActivityModels = readSheetResponce, Sheets = listOfSheets, IsEmpty = false, ErrorMessage = null };
+                return new MonthActivityVewModel() { MonthActivityModels = readSheetResponse, Sheets = listOfSheets, IsEmpty = false, ErrorMessage = null };
             }
             catch(Exception ex)
             {
@@ -92,7 +91,7 @@ namespace Application.BBL.BusinessServices
             try
             {
                 //get all sheets
-                Spreadsheet spr = service.Spreadsheets.Get(SPREADSHEET_ID).Execute();
+                Spreadsheet spr = service.Spreadsheets.Get(_configuration.GetValue<string>("GoogleApi:sheetId")).Execute();
 
                 //get list of Sheets
                 var listOfSheets = SheetListNames();
@@ -173,7 +172,7 @@ namespace Application.BBL.BusinessServices
                 bussr.Requests = new List<Request>();
                 bussr.Requests.Add(updateCellsBackgroundColor);
                 bussr.Requests.Add(updateCellsValue);
-                var valuesResource1 = service.Spreadsheets.BatchUpdate(bussr, SPREADSHEET_ID);
+                var valuesResource1 = service.Spreadsheets.BatchUpdate(bussr, _configuration.GetValue<string>("GoogleApi:sheetId"));
                 valuesResource1.Execute();
 
                 return true;
@@ -246,7 +245,7 @@ namespace Application.BBL.BusinessServices
         {
             try
             {
-                var ssRequest = service.Spreadsheets.Get(SPREADSHEET_ID);
+                var ssRequest = service.Spreadsheets.Get(_configuration.GetValue<string>("GoogleApi:sheetId"));
                 Spreadsheet ss = ssRequest.Execute();
                 List<string> sheetList = new List<string>();
 

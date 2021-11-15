@@ -10,23 +10,23 @@ namespace Application.Api.Controllers
 {
     public class MonthActivityController : ApplicationApiController
     {
-        private readonly IMonthActivityService _vacationsTableService;
-        public MonthActivityController(IMonthActivityService vacationsTableService)
+        private readonly IMonthActivityService _monthActivityService;
+        public MonthActivityController(IMonthActivityService monthActivityService)
         {
-            _vacationsTableService = vacationsTableService;
+            _monthActivityService = monthActivityService;
         }
-        //[Authorize(Roles = "Admin, Super_Admin")]
+        [Authorize(Roles = "Admin, Super_Admin")]
         [HttpPost]
         [Route("api/vacations-table/all")]
         public IActionResult Get([FromBody]MonthActivityGetModel getModel)
         {
-            return InvokeMethodWithParam(_vacationsTableService.GetAllVacationsFromSheet, getModel);
+            return InvokeMethodWithParam(_monthActivityService.GetAllVacationsFromSheet, getModel);
         }
         [HttpPut]
         [Route("api/vacations-table/edit")]
         public IActionResult Edit([FromBody]MonthActivityEditModel vacation)
         {
-            return InvokeMethodWithParam(_vacationsTableService.UpdateVacationOnSheet, vacation);
+            return InvokeMethodWithParam(_monthActivityService.UpdateVacationOnSheet, vacation);
         }
     }
 }

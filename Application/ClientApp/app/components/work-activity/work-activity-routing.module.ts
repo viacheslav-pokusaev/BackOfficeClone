@@ -51,13 +51,13 @@ const routes: Routes = [
 
     {
         path: 'monthactivity', children: [
-            { path: '', component: MonthActivityComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } }
+            { path: '', component: MonthActivityComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource'], forCurrentUser: true } }
         ]
     },
 
     {
         path: 'editmonthcell', children: [
-            { path: '', component: EditMonthCellComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource', 'ProjectManager', 'Developer'], forCurrentUser: true } }
+            { path: '', component: EditMonthCellComponent, canActivate: [PermissionGuard], data: { roles: ['Super_Admin', 'Admin', 'HumanResource'], forCurrentUser: true } }
         ]
     }
 

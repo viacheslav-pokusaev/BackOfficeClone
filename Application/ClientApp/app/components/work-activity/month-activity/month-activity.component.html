@@ -20,13 +20,10 @@
             <ng-container *ngIf="!loading">
             <div class="col-md-12" style="overflow-x:auto;">
                 <table class="table my-table-striped table-bordered projects">
-                    <thead style="color: #73879C;">
-                        <tr *ngIf="tableData[0]">
-                            <th *ngFor="let cell of tableData[0]">{{cell.Data}}</th>
-                        </tr>
+                    <thead>
                     </thead>
                     <tbody>                        
-                        <tr *ngFor="let row of tableData | slice:1">
+                        <tr *ngFor="let row of tableData">
                             <td *ngFor="let cell of row" [style.background-color]="cell.Color" (click)="editMonthCell(cell)">
                                 {{cell.Data}}                                
                             </td>
