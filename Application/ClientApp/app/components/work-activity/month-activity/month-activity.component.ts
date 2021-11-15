@@ -69,7 +69,7 @@ export class MonthActivityComponent implements OnInit {
         if(this.getModel.SheetName !== value.target.value){
             this.getModel.SheetName = value.target.value;
             this.modelChange = this.sheetList[0];
-
+            this.sheetChange.next(value);
         }
     }
 

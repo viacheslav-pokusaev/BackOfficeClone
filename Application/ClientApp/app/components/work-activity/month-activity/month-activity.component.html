@@ -6,7 +6,7 @@
     </div>    
     <div class="row">
         <div class="col-md-2">
-            <select [ngModel]="modelChange" (ngModelChange)="this.sheetChange.next($event)" class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="changeTargetSheet($event)">
+            <select [ngModel]="modelChange" class="form-control input-sm ng-untouched ng-pristine ng-valid" (change)="changeTargetSheet($event)">
                 <option value="default" selected hidden>--Select sheet list--</option>
                 <option *ngFor="let sheet of sheetList" value={{sheet}}>{{sheet}}</option>
             </select>
