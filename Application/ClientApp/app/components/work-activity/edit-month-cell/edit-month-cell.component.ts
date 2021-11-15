@@ -26,7 +26,7 @@ export class EditMonthCellComponent {
     }
 
     public updateMonthCell(monthEditActivity: MonthActivityEditModel) {
-        this.monthEditActivity.Color = this.selectedColor;
+        this.monthEditActivity.color = this.selectedColor;
         this.monthActivityService.update(this.monthEditActivity).subscribe(
             result => {
                 if (result) {

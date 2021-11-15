@@ -1,6 +1,6 @@
 export class MonthActivityModel{
-    RowIndex: number;
-    ColumnIndex: number;
-    Data: object;
-    Color: string;
+    rowIndex: number;
+    columnIndex: number;
+    data: object;
+    color: string;
 }

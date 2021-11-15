@@ -72,22 +72,22 @@ export class MonthActivityComponent implements OnInit {
         this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
         {            
             if(res){
-                if(!res.ErrorMessage){
-                    if(res.IsEmpty == false){
-                        res.MonthActivityModels.forEach(row =>{
+                if(!res.errorMessage){
+                    if(res.isEmpty == false){
+                        res.monthActivityModels.forEach(row =>{
                             this.tableData.push(row);
                         });
-                        this.sheetList = res.Sheets;
+                        this.sheetList = res.sheets;
                         this.getModel.getCount += 10;           
                         this.loading = false;
                     }
                     else{
-                        this.isAll = res.IsEmpty;
+                        this.isAll = res.isEmpty;
                         alert("The table is empty or all rows are allready loaded!");
                     }
                 }
                 else{
-                    alert(res.ErrorMessage);
+                    alert(res.errorMessage);
                 }
             }
             else{
@@ -100,10 +100,10 @@ export class MonthActivityComponent implements OnInit {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: DIALOG_WIDTH,
             data: {               
-                    RowIndex: cellData.RowIndex,
-                    ColumnIndex: cellData.ColumnIndex,
-                    Data: cellData.Data,
-                    Color: cellData.Color,                
+                    RowIndex: cellData.rowIndex,
+                    ColumnIndex: cellData.columnIndex,
+                    Data: cellData.data,
+                    Color: cellData.color,                
                     SheetName: this.getModel.sheetName
             }                              
            
@@ -111,8 +111,8 @@ export class MonthActivityComponent implements OnInit {
 
         dialogRes.afterClosed().subscribe(result => {
             if (this.monthActivityService.monthActivityEdit !== null) {
-                cellData.Data = this.monthActivityService.monthActivityEdit.Data;
-                cellData.Color = this.monthActivityService.monthActivityEdit.Color;
+                cellData.data = this.monthActivityService.monthActivityEdit.data;
+                cellData.color = this.monthActivityService.monthActivityEdit.color;
             }            
         });      
     }           

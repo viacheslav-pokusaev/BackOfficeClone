@@ -24,8 +24,8 @@
                     </thead>
                     <tbody>                        
                         <tr *ngFor="let row of tableData">
-                            <td *ngFor="let cell of row" [style.background-color]="cell.Color" (click)="editMonthCell(cell)">
-                                {{cell.Data}}                                
+                            <td *ngFor="let cell of row" [style.background-color]="cell.color" (click)="editMonthCell(cell)">
+                                {{cell.data}}                                
                             </td>
                         </tr>
                     </tbody>
