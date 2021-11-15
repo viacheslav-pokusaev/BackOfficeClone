@@ -91,6 +91,7 @@
     <None Remove="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
     <None Remove="ClientApp\app\models\overtime.model.ts" />
     <None Remove="ClientApp\app\models\proposal.model.ts" />
+    <None Remove="ClientApp\app\models\query-models\month-activity-edit-query.model.ts" />
 	<None Remove="ClientApp\app\models\sickDay.model.ts" />
 	<None Remove="ClientApp\app\models\sizeVacation.model.ts" />
     <None Remove="ClientApp\app\models\vacation.model.ts" />
@@ -144,6 +145,7 @@
     <TypeScriptCompile Include="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
 	<TypeScriptCompile Include="ClientApp\app\models\overtime.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\proposal.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\query-models\month-activity-edit-query.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\user.model.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\models\vacation.model.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\services\feedback.service.ts" />

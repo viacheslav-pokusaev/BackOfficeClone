@@ -98,11 +98,11 @@ export class MonthActivityComponent implements OnInit {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: DIALOG_WIDTH,
             data: {               
-                    RowIndex: cellData.rowIndex,
-                    ColumnIndex: cellData.columnIndex,
-                    Data: cellData.data,
-                    Color: cellData.color,                
-                    SheetName: this.getModel.sheetName
+                    rowIndex: cellData.rowIndex,
+                    columnIndex: cellData.columnIndex,
+                    data: cellData.data,
+                    color: cellData.color,                
+                    sheetName: this.getModel.sheetName
             }                              
            
         });        
