@@ -20,7 +20,6 @@ import { SPINNER_CONFIG, DIALOG_WIDTH } from '../../../constants/constants';
 export class MonthActivityComponent implements OnInit {    
 
     sheetChange = new Subject<string>();
-
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
     public getModel: MonthActivityGetModel = {
@@ -69,29 +68,28 @@ export class MonthActivityComponent implements OnInit {
     }
 
     getData() {        
-        this.http.post('/api/vacations-table/all', this.getModel).subscribe((res: MonthActivityViewModel) => 
-        {            
-            if(res){
-                if(!res.errorMessage){
-                    if(res.isEmpty == false){
-                        res.monthActivityModels.forEach(row =>{
-                            this.tableData.push(row);
-                        });
-                        this.sheetList = res.sheets;
-                        this.getModel.getCount += 10;           
-                        this.loading = false;
-                    }
-                    else{
-                        this.isAll = res.isEmpty;
-                        alert("The table is empty or all rows are allready loaded!");
-                    }
-                }
-                else{
-                    alert(res.errorMessage);
-                }
-            }
-            else{
+        this.monthActivityService.get(this.getModel).subscribe((res: MonthActivityViewModel) => 
+        {       
+            if(!res){
                 alert("Error, when trying load the table!");
+                 return;
+                }   
+            else if(res.errorMessage){
+                alert(res.errorMessage);
+                 return;
+                }
+            else if(res.isEmpty){
+                this.isAll = res.isEmpty;
+                alert("The table is empty or all rows are allready loaded!");
+                return;
+                }
+            else{
+                res.monthActivityModels.forEach(row =>{
+                    this.tableData.push(row);
+                });
+                this.sheetList = res.sheets;
+                this.getModel.getCount += 10;           
+                this.loading = false;
             }
         });
     }
@@ -100,11 +98,11 @@ export class MonthActivityComponent implements OnInit {
         let dialogRes = this.dialog.open(EditMonthCellComponent, {
             width: DIALOG_WIDTH,
             data: {               
-                    rowIndex: cellData.rowIndex,
-                    columnIndex: cellData.columnIndex,
-                    data: cellData.data,
-                    color: cellData.color,                
-                    sheetName: this.getModel.sheetName
+                    RowIndex: cellData.rowIndex,
+                    ColumnIndex: cellData.columnIndex,
+                    Data: cellData.data,
+                    Color: cellData.color,                
+                    SheetName: this.getModel.sheetName
             }                              
            
         });        
