@@ -68,7 +68,7 @@ export class MonthActivityComponent implements OnInit {
     }
 
     getData() {        
-        this.monthActivityService.get(this.getModel).subscribe((res: MonthActivityViewModel) => 
+        this.monthActivityService.getTable(this.getModel).subscribe((res: MonthActivityViewModel) =>
         {       
             if(!res){
                 alert("Error, when trying load the table!");

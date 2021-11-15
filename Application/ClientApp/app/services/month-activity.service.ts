@@ -22,4 +22,8 @@ export class MonthActivityService extends BaseRestService<MonthActivityEditModel
     editVacationTable(monthActivityEdit: MonthActivityEditModel) {
         return this.http.put('/api/vacations-table/edit', monthActivityEdit);
     };    
+
+    getTable(getModel: MonthActivityGetModel) {
+        return this.http.post('/api/vacations-table/all', getModel);
+    }
 }
