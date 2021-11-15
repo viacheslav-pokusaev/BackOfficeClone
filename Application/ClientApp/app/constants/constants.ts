@@ -14,11 +14,11 @@ export const FROM_COMPONENT = "component";
 
 //for edit-month-cell.component
 export const ARRAY_COLORS: VacationColor[] = [
-    { Vacation: '', HexColor: '#FFFFFF' },
-    { Vacation: 'отпуск', HexColor: '#0000FF' },
-    { Vacation: 'больничный', HexColor: '#FF0000' },
-    { Vacation: 'работа в выходной (+ день к отпуску)', HexColor: '#00FF00' },
-    { Vacation: 'работа в выходной (доплата к зп)', HexColor: '#FFFF00' }
+    { vacation: '', hexColor: '#FFFFFF' },
+    { vacation: 'отпуск', hexColor: '#0000FF' },
+    { vacation: 'больничный', hexColor: '#FF0000' },
+    { vacation: 'работа в выходной (+ день к отпуску)', hexColor: '#00FF00' },
+    { vacation: 'работа в выходной (доплата к зп)', hexColor: '#FFFF00' }
 ];
 
 export const SPINNER_CONFIG: ISpinnerConfig = {

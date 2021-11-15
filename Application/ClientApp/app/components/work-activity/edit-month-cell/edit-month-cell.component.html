@@ -15,8 +15,8 @@
                         </div>
                         <div class="form-group col-md-12 col-xs-12  black-tooltip">
                             <select class="select2_single form-control" tabindex="-1" (change)="onChange($event.target.value)">
-                                <option *ngFor="let color of arrayColors" [value]="color.HexColor">
-                                    {{color.Vacation}}
+                                <option *ngFor="let color of arrayColors" [value]="color.hexColor">
+                                    {{color.vacation}}
                                 </option>
                             </select>
                             <span class="tooltiptext">

@@ -1,4 +1,4 @@
 ﻿export class VacationColor {
-    Vacation: string;
-    HexColor: string;
+    vacation: string;
+    hexColor: string;
 }
