@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
 import { ISpinnerConfig } from '@hardpool/ngx-spinner';
@@ -36,7 +36,6 @@ export class MonthActivityComponent implements OnInit {
 
     constructor(private dialog: MatDialog, private monthActivityService: MonthActivityService) {
         this.loading = true;
-        this.modelChange;
         this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe(() => {
             this.tableData.length = 0;
             this.isAll = false;
