@@ -4,7 +4,8 @@ import { UserStorageService } from '../../../services/user-storage.service';
 import { SizeVacation } from '../../../models/size-vacation.model';
 import { SizeVacationsService } from '../../../services/size-vacations.service';
 import { SizeVacationQueryModel } from '../../../models/query-models/size-vacation-query.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     templateUrl: './sizevacations-list.component.html',
@@ -57,12 +58,7 @@ export class SizeVacationsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.spinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
+        this.spinnerConfig = SPINNER_CONFIG;
         this.loading = true;
         this.isAdmin = this.userStorageService.hasRole('Admin');
         this.isUser = this.userStorageService.hasRole('User');

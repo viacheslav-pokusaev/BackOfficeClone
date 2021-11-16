@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from '../../../models/project.model';
 import { Client } from '../../../models/client.model';
 import { User } from '../../../models/user.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { UserQueryModel } from '../../../models/query-models/user-query.model';
 import { UserStorageService } from '../../../services/user-storage.service';
 import { UsersService } from '../../../services/users.service';
@@ -16,6 +16,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angu
 import { ProjectsEmploeesEditComponent } from '../projects-emploees-edit/projects-emploees-edit.component';
 import { Subject, Subscription } from 'rxjs';
 import { DeleteConfirmationComponent } from '../../modals/delete-confirmation/delete-confirmation.component';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'projects-emploees',
@@ -64,14 +65,7 @@ export class ProjectsEmploeesComponent implements OnInit {
 
     subscription: Subscription;
 
-
-
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     @Input('projectId') projectId: number;
     @Input('projectName') projectName: string;

@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { UsersShortInfoComponent } from '../users-short-info/users-short-info.component';
 import { UserFeedbackCreateComponent } from '../user-feedback-create/user-feedback-create.component';
 import { UserFeedbacksComponent } from '../user-feedbacks/user-feedbacks.component';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 
 @Component({
@@ -28,13 +29,7 @@ export class UsersListComponent implements OnInit {
 
     testlist = [1,2,3,4,5,6,7,8,9];
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
-
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(
         private usersService: UsersService,

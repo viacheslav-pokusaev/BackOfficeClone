@@ -4,7 +4,8 @@ import { UserProfileProjectService } from '../../../services/user-profile-projec
 import { UserProfileProject } from '../../../models/user-profile-project.model';
 import { User } from '../../../models/user.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'users-short-info',
@@ -20,12 +21,7 @@ export class UsersShortInfoComponent implements OnInit {
 
     emploees: Array<UserProfileProject>;
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(private userProfileProjectService: UserProfileProjectService,
         public dialogRef: MatDialogRef<UsersShortInfoComponent>,

@@ -10,9 +10,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { VacationQueryModel } from '../../../../models/query-models/vacation.query.model';
 import { User } from '../../../../models/user.model';
 import { UserQueryModel } from '../../../../models/query-models/user-query.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { Location } from '@angular/common';
 import { Subject, Subscription } from 'rxjs';
+import { SPINNER_CONFIG } from '../../../../constants/constants';
 
 @Component({
     selector: 'user-vacations',
@@ -44,12 +45,7 @@ export class VacationsUserListComponent implements OnInit {
     isWaitingExist: boolean = false;
     isAdmin: boolean;
 
-    spinnerConfig: ISpinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     @Input('userId') userId: number;
 

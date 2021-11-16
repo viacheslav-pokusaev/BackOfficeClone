@@ -1,12 +1,13 @@
 ﻿import { Component, Inject } from '@angular/core';
 import { UserProfileProjectService } from '../../../services/user-profile-project.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { Feedback } from '../../../models/feedback.model';
 import { FeedbackService } from '../../../services/feedback.service';
 import { ProjectsService } from '../../../services/projects.service';
 import { Project } from '../../../models/project.model';
 import { ProjectQueryModel } from '../../../models/query-models/project-query.model';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'user-feedback-create',
@@ -17,12 +18,7 @@ export class UserFeedbackCreateComponent {
     public loading: boolean = false;
     public feedback: Feedback = new Feedback();
     public projects: Array<Project>;
-    public spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(public dialogRef: MatDialogRef<UserFeedbackCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
         private feedbackService: FeedbackService, private projectService: ProjectsService, ) {

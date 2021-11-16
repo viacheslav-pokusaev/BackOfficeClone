@@ -1,19 +1,16 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { UserStorageService } from '../../../services/user-storage.service';
 import { User } from '../../../models/user.model';
 import { UsersService } from '../../../services/users.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { UsersAvatarSelectModalComponent } from '../users-avatar-select-modal/users-avatar-select-modal.component';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { DateRangePickerDirective } from 'angular2-daterangepicker';
 import * as moment from 'moment';
-
-
-
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     templateUrl: './users-edit.component.html',
@@ -51,12 +48,7 @@ export class UsersEditComponent implements OnInit{
     ){}
 
     ngOnInit() {  
-        this.spinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
+        this.spinnerConfig = SPINNER_CONFIG;
         this.loading = true;    
         this.initForm();
         this.route.params.subscribe(params => {

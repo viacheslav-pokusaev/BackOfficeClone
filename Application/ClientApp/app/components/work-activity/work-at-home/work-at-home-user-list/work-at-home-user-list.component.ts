@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { WorkAtHome } from '../../../../models/work-at-home.model';
 import { User } from '../../../../models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { UserQueryModel } from '../../../../models/query-models/user-query.model
 import { Location } from '@angular/common';
 import { Subject, Subscription } from 'rxjs';
 import { DeleteConfirmationComponent } from '../../../modals/delete-confirmation/delete-confirmation.component';
+import { SPINNER_CONFIG } from '../../../../constants/constants';
 
 @Component({
     selector: 'user-work-at-home',
@@ -45,14 +46,7 @@ export class WorkAtHomeUserListComponent implements OnInit {
 
     @Input('userId') userId: number;
 
-    spinnerConfig: ISpinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
-
-  
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;  
   
     constructor(        
         private route: ActivatedRoute,

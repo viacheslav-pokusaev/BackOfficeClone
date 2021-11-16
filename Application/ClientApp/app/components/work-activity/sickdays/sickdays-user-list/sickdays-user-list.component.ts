@@ -1,9 +1,7 @@
 ﻿﻿import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { UserStorageService } from '../../../../services/user-storage.service';
-
 import { SickDay } from '../../../../models/sick-day.model';
 import { SickDayService } from '../../../../services/sick-day.service';
 import { SickDayQueryModel } from '../../../../models/query-models/sick-day-query.model';
@@ -12,9 +10,10 @@ import { UserQueryModel } from '../../../../models/query-models/user-query.model
 import { User } from '../../../../models/user.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { DeleteConfirmationComponent } from '../../../modals/delete-confirmation/delete-confirmation.component';
 import { Subject, Subscription } from 'rxjs';
+import { SPINNER_CONFIG } from '../../../../constants/constants';
 
 @Component({
     selector: 'user-sickdays',
@@ -46,12 +45,7 @@ export class SickDaysUserListComponent implements OnInit {
 
     @Input('userId') userId: number;
 
-    spinnerConfig: ISpinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(
         private route: ActivatedRoute,
