@@ -1,8 +1,7 @@
 ﻿import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MonthActivityModel } from '../../../models/month-activity-models/month-activity-model';
 import { MonthActivityViewModel } from '../../../models/month-activity-models/month-activity-view.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { MatDialog } from '@angular/material';
 import { EditMonthCellComponent } from '../edit-month-cell/edit-month-cell.component';
 import { MonthActivityGetModel } from '../../../models/month-activity-models/month-activity-get.model';
@@ -35,9 +34,9 @@ export class MonthActivityComponent implements OnInit {
 
     modelChange: string;
 
-    constructor(private http: HttpClient, private dialog: MatDialog, private monthActivityService: MonthActivityService) {
+    constructor(private dialog: MatDialog, private monthActivityService: MonthActivityService) {
         this.loading = true;
-        this.modelChange = 'default';
+        this.modelChange;
         this.sheetChange.pipe(debounceTime(1000), distinctUntilChanged()).subscribe(() => {
             this.tableData.length = 0;
             this.isAll = false;
@@ -91,6 +90,7 @@ export class MonthActivityComponent implements OnInit {
                 this.getModel.getCount += 10;           
                 this.loading = false;
             }
+            this.modelChange = res.sheets[0];
         });
     }
 
