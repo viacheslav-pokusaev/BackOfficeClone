@@ -22,7 +22,7 @@ export class MonthActivityComponent implements OnInit {
     public tableData = Array<Array<MonthActivityModel>>();
     public sheetList = Array<string>();
     public getModel: MonthActivityGetModel = {
-        sheetName: "default",
+        sheetName: null,
         startIndex: 1,
         endIndex: 10,
         getCount: 10

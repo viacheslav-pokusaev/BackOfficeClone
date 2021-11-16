@@ -43,7 +43,7 @@ namespace Application.BBL.BusinessServices
 
                 if (listOfSheets == null) return new MonthActivityVewModel() { ErrorMessage = "The sheet list is empty" };
 
-                if (getModel.SheetName == "default")
+                if (getModel.SheetName == null)
                     getModel.SheetName = listOfSheets.FirstOrDefault();
 
 
@@ -99,7 +99,7 @@ namespace Application.BBL.BusinessServices
 
                 List<string> listOfRanges = new List<string>();
 
-                if (vacation.SheetName == "default")
+                if (vacation.SheetName == null)
                     vacation.SheetName = listOfSheets.FirstOrDefault();
 
                 //get current sheet
