@@ -1,13 +1,13 @@
 ﻿import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { User } from '../../../models/user.model';
 import { ListVacation } from '../../../models/list-vacation.model';
 import { UsersService } from '../../../services/users.service';
 import { UserStorageService } from '../../../services/user-storage.service';
 import { Subscription } from 'rxjs';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'user-info',
@@ -44,12 +44,7 @@ export class UsersInfoComponent implements OnInit {
     }    
 
     ngOnInit() {
-        this.spinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
+        this.spinnerConfig = SPINNER_CONFIG;
         this.route.params.subscribe(params => {
             this.loading = true;
             if (+params['id'] == 0) {

@@ -1,13 +1,14 @@
 ﻿import { Component, Inject } from '@angular/core';
 import { UserProfileProjectService } from '../../../services/user-profile-project.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig, MatDialog } from '@angular/material';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { Feedback } from '../../../models/feedback.model';
 import { DeleteConfirmationComponent } from '../../modals/delete-confirmation/delete-confirmation.component';
 import { FeedbackService } from '../../../services/feedback.service';
 import { UsersFeedbackEditComponent } from '../users-feedback-edit/users-feedback-edit.component';
 import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/user.model';
+import { SPINNER_CONFIG } from '../../../constants/constants';
                                                             
 @Component({
     selector: 'user-feedbacks',
@@ -17,12 +18,7 @@ import { User } from '../../../models/user.model';
 export class UserFeedbacksComponent {
     loading: boolean = false;
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     public feedbacks: Array<Feedback>;
     private userId: number;

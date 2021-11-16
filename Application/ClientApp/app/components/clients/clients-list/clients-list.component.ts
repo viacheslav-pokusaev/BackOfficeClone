@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { UserStorageService } from '../../../services/user-storage.service';
 import { ClientsEditComponent } from '../clients-edit/clients-edit.component';
 import { DeleteConfirmationComponent } from '../../modals/delete-confirmation/delete-confirmation.component';
@@ -15,6 +15,7 @@ import { ClientsCreateComponent } from '../clients-create/clients-create.compone
 import { ClientsInfoComponent } from '../clients-info/clients-info.component';
 import { ProjectsListComponent } from '../../projects/projects-list/projects-list.component';
 import { ProjectsCreateComponent } from '../../projects/projects-create/projects-create.component';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'clients-list',
@@ -41,12 +42,7 @@ export class ClientsListComponent implements OnInit {
 
     public phoneNumberMask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(private clientsService: ClientsService,
         private userStorageService: UserStorageService,

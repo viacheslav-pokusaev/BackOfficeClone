@@ -15,7 +15,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Feedback } from '../../../models/feedback.model';
 import { FeedbackService } from '../../../services/feedback.service';
 import { ProjectQueryModel } from '../../../models/query-models/project-query.model';
-import { ISpinnerConfig, SPINNER_PLACEMENT, SPINNER_ANIMATIONS } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'users-feedback-edit',
@@ -27,12 +28,7 @@ export class UsersFeedbackEditComponent {
     public projects: Array<Project>;
     public feedback: Feedback;
     public originalFeedback: Feedback;
-    public spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(private feedbackService: FeedbackService,
         private projectService: ProjectsService,

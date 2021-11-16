@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.2" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.51.0.2338" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
@@ -81,17 +82,22 @@
     <None Remove="ClientApp\app\components\users\user-edit-clicable.component.ts" />
     <None Remove="ClientApp\app\components\users\user-info-clicable.component.ts" />
     <None Remove="ClientApp\app\components\users\users-table\users-table.component.ts" />
+    <None Remove="ClientApp\app\components\work-activity\edit-month-cell\edit-month-cell.component.ts" />
     <None Remove="ClientApp\app\constants\constants.ts" />
     <None Remove="ClientApp\app\models\ChangePassword.model.ts" />
     <None Remove="ClientApp\app\models\feedback.model.ts" />
     <None Remove="ClientApp\app\models\listVacation.model.ts" />
+    <None Remove="ClientApp\app\models\month-activity-models\month-activity-edit.model.ts" />
+    <None Remove="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
     <None Remove="ClientApp\app\models\overtime.model.ts" />
     <None Remove="ClientApp\app\models\proposal.model.ts" />
+    <None Remove="ClientApp\app\models\query-models\month-activity-edit-query.model.ts" />
 	<None Remove="ClientApp\app\models\sickDay.model.ts" />
 	<None Remove="ClientApp\app\models\sizeVacation.model.ts" />
     <None Remove="ClientApp\app\models\vacation.model.ts" />
     <None Remove="ClientApp\app\models\workActivity.model.ts" />
     <None Remove="ClientApp\app\services\feedback.service.ts" />
+    <None Remove="ClientApp\app\services\month-activity.service.ts" />
     <None Remove="ClientApp\app\services\overtime.service.ts" />
     <None Remove="ClientApp\app\services\proposal.service.ts" />
     <None Remove="ClientApp\app\services\role.services.ts" />	
@@ -132,13 +138,18 @@
     <TypeScriptCompile Include="ClientApp\app\components\modals\notification-no-vacation\notification-no-vacation.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\proposals\proposals-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\users\users-table\users-table.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\work-activity\edit-month-cell\edit-month-cell.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\constants\constants.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\feedback.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\month-activity-models\month-activity-edit.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\month-activity-models\vacation-color.model.ts" />
 	<TypeScriptCompile Include="ClientApp\app\models\overtime.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\proposal.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\query-models\month-activity-edit-query.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\user.model.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\models\vacation.model.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\services\feedback.service.ts" />
+	 <TypeScriptCompile Include="ClientApp\app\services\month-activity.service.ts" />
 	 <TypeScriptCompile Include="ClientApp\app\services\overtime.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\proposal.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\users.service.ts" />
@@ -153,6 +164,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+	<ItemGroup>
+		<None Update="inlaid-crowbar-330810-0492784c4579.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->

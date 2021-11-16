@@ -27,6 +27,7 @@ import { LogfileService } from './services/logfile.service';
 import { AuditTrailComponent } from './components/audit-trail/audit-trail.component';
 import { AuditTrailService } from './services/audit-trail.service';
 import { FeedbackService } from './services/feedback.service';
+import { MonthActivityService } from './services/month-activity.service';
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import { FeedbackService } from './services/feedback.service';
         LogfileService,
         AuditTrailService,
         PermissionGuard,
-        FeedbackService
+        FeedbackService,
+        MonthActivityService
     ],
     bootstrap: [AppComponent],
     exports: [

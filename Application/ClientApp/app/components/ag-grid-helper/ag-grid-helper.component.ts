@@ -2,7 +2,8 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { GridOptions, IDatasource } from 'ag-grid';
 import { RestInterface } from '../../interfaces/rest.interface';
 import { BaseQueryModel } from '../../models/query-models/base-query.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { SPINNER_CONFIG } from '../../constants/constants';
 
 @Component({
   selector: 'app-ag-grid-helper',
@@ -18,13 +19,7 @@ export class AgGridHelperComponent implements OnInit,AfterViewInit {
   private _queryModel:any;
   loading = false;
 
-  spinnerConfig: ISpinnerConfig = {
-    placement: SPINNER_PLACEMENT.block_ui,
-    animation: SPINNER_ANIMATIONS.spin_3,
-    size: "3rem",
-    color: "#1574b3"
-};
-
+  spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
   @Input('columnDefs') set columnDefs(value:Array<object>){
     this._columnDefs = value;

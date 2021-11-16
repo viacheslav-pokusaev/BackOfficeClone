@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { UserStorageService } from '../../../services/user-storage.service';
 import { Project } from '../../../models/project.model';
 import { ProjectsService } from '../../../services/projects.service';
@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { ProjectsEmploeesComponent } from '../projects-emploees/projects-emploees.component';
 import { MatDialog } from '@angular/material';
 import { Subject, Subscription } from 'rxjs';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'projects-list-for-user',
@@ -43,12 +44,7 @@ export class ProjectsListForUserComponent implements OnInit {
 
     subscription: Subscription;
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(private projectService: ProjectsService,
         private userStorageService: UserStorageService,

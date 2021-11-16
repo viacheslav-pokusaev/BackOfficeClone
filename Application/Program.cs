@@ -6,12 +6,15 @@ using Application.Server;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using System.Collections.Generic;
 
 namespace Application
 {
     public class Program
     {
-      
         public static void Main(string[] args)
         {
             var logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
@@ -29,7 +32,7 @@ namespace Application
             finally
             {
                 NLog.LogManager.Shutdown();
-            }       
+            }            
         }
 
         public static IWebHost BuildWebHost(string[] args)
@@ -63,5 +66,6 @@ namespace Application
 
             commonArgs = args.Except(dbArgs).ToArray();            
         }
+
     }
 }

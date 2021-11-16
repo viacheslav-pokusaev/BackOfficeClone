@@ -2,10 +2,11 @@
 import { WorkActivity } from '../../../models/work-activity.model';
 import { WorkActivityService } from '../../../services/work-activity.service';
 import { WorkActivityQueryModel } from '../../../models/query-models/work-activity-query.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { Location } from '@angular/common';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     templateUrl: './workactivities-list.component.html',
@@ -21,12 +22,7 @@ export class WorkActivitiesListComponent implements OnInit{
     subject: Subject<any>;
     subscription: Subscription;
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(
         private workActivityService: WorkActivityService,

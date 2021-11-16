@@ -1,14 +1,13 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { UserStorageService } from '../../../services/user-storage.service';
-
 import { ListVacation } from '../../../models/list-vacation.model';
 import { UsersService } from '../../../services/users.service';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { Subscription, Subject } from 'rxjs';
 import { OvertimeQueryModel } from '../../../models/query-models/overtime-query.model';
 import { ListVacationQueryModel } from '../../../models/query-models/list-vacation-query.model';
+import { SPINNER_CONFIG } from '../../../constants/constants';
 
 @Component({
     selector: 'user-vacations-statistic',
@@ -44,12 +43,7 @@ export class UsersVacationsStatisticListComponent implements OnInit  {
     @Input('userId') userId: number;
 
     ngOnInit(): void {
-        this.spinnerConfig = {
-            placement: SPINNER_PLACEMENT.block_ui,
-            animation: SPINNER_ANIMATIONS.spin_3,
-            size: "3rem",
-            color: "#1574b3"
-        };
+        this.spinnerConfig = SPINNER_CONFIG;
         this.loading = true;
         this.isAddVisible = false;
         this.id = this.userId;

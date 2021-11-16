@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AuditTrailService } from '../../services/audit-trail.service';
 import { AuditTrailQueryModel } from '../../models/query-models/audit-trail-query.model';
 import { AuditTrailEntity } from '../../models/audit-trail-entity.model';
-import { SPINNER_ANIMATIONS, SPINNER_PLACEMENT, ISpinnerConfig } from '@hardpool/ngx-spinner';
+import { ISpinnerConfig } from '@hardpool/ngx-spinner';
 import { Subject, Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AuditTrailDetailsComponent } from '../audit-trail-details/audit-trail-details.component';
 import { Router } from '@angular/router';
 import { AuditTrailParentComponent } from '../audit-trail-parent/audit-trail-parent.component';
+import { SPINNER_CONFIG } from '../../constants/constants';
 
 @Component({
     selector: 'audit-trail',
@@ -26,12 +27,7 @@ export class AuditTrailComponent implements OnInit {
 
     queryModel: AuditTrailQueryModel;
 
-    spinnerConfig: ISpinnerConfig = {
-        placement: SPINNER_PLACEMENT.block_ui,
-        animation: SPINNER_ANIMATIONS.spin_3,
-        size: "3rem",
-        color: "#1574b3"
-    };
+    spinnerConfig: ISpinnerConfig = SPINNER_CONFIG;
 
     constructor(private auditTrailService: AuditTrailService,
         private dialog: MatDialog,
