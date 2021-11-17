@@ -91,18 +91,18 @@ namespace Application.BBL.BusinessServices
             {
                 GenereteRecipients(checkPeriod);
                 if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Month) && birthdayMonthCollegues.Count > 0)
-                    GenerateEmail(emailSubject: "List of " + DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture) + " upcoming birthdays!", checkPeriod);
+                    GenerateEmail($"List of {DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture)} upcoming birthdays!", checkPeriod);
 
                 else
                 if (checkPeriod.Equals(UpcomingBirthdaysPeriod.TwoWeek) && birthdayTwoWeekCollegues.Count > 0)
                 {
-                    GenerateEmail(emailSubject: "Soon Birthday! List of two week birthdays!", checkPeriod);
+                    GenerateEmail("Soon Birthday! List of two week birthdays!", checkPeriod);
                 }
 
                 else
                 if (checkPeriod.Equals(UpcomingBirthdaysPeriod.Week) && birthdayWeekCollegues.Count > 0)
                 {
-                    GenerateEmail(emailSubject: "Soon Birthday! List of week birthdays!", checkPeriod);
+                    GenerateEmail("Soon Birthday! List of week birthdays!", checkPeriod);
                 }
 
 
