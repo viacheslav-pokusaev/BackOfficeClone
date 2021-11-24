@@ -66,14 +66,17 @@ namespace Application.BBL.BusinessServices
                 foreach (var sheetRow in sheetValues)
                 {
                     var responseBuff = new List<MonthActivityModel>();
-                    foreach (var sheetValue in sheetRow.Values)
+                    if (sheetRow.Values != null)
                     {
-                        string hex = sheetValue.EffectiveFormat != null ? GetHEXColor(sheetValue.EffectiveFormat?.BackgroundColor) : INITIAL_BACKGROUND_COLOR;
+                        foreach (var sheetValue in sheetRow.Values)
+                        {
+                            string hex = sheetValue.EffectiveFormat != null ? GetHEXColor(sheetValue.EffectiveFormat?.BackgroundColor) : INITIAL_BACKGROUND_COLOR;
 
-                        responseBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
-                        columnIndex++;
+                            responseBuff.Add(new MonthActivityModel() { RowIndex = rowIndex, ColumnIndex = columnIndex, Data = sheetValue.FormattedValue?.ToString(), Color = hex });
+                            columnIndex++;
+                        }
+                        readSheetResponse.Add(responseBuff);
                     }
-                    readSheetResponse.Add(responseBuff);
                     columnIndex = 0;
                     rowIndex++;
                 }
