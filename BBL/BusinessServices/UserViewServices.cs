@@ -28,6 +28,8 @@ namespace Application.BBL.BusinessServices
         private readonly IRoleDBEntityMapper _roleDBEntityMapper;
         private IPictureAttacherService _pictureAttacherService;
 
+        private const int TRIAL_PERIOD = 3;
+
         private readonly DataProtector _dataProtector;
 
         private readonly DatabaseManager _databaseManager;
@@ -66,7 +68,7 @@ namespace Application.BBL.BusinessServices
                 _databaseManager.EncryptDecrypt("ApplicationUsers", _dataProtector.Decrypt, profile.ApplicationUser);
 
                 if (profile.ApplicationUser == null)
-                    throw new Exception("AspNetUser not found");
+                    throw new Exception("AspNetUser not found");                
 
                 var userViewModel = _roleDBEntityMapper.MapDBEntity(profile);
 
@@ -83,6 +85,15 @@ namespace Application.BBL.BusinessServices
                 else
                 {
                     userViewModel.Avatar = _pictureAttacherService.GetBase64String();
+                }
+
+                if (profile.DateBeginTrialWork == profile.DateBeginWork)
+                {
+                    userViewModel.DateBeginWork = profile.DateBeginTrialWork.Value.AddMonths(TRIAL_PERIOD);
+                }
+                else
+                {
+                    userViewModel.DateBeginWork = profile.DateBeginWork.Value;
                 }
 
                 return userViewModel;
